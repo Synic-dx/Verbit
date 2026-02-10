@@ -1,0 +1,25 @@
+import { Schema, model, models } from "mongoose";
+
+const QuestionSchema = new Schema({
+  topic: { type: String, required: true, index: true },
+  question: { type: String },
+  options: [{ type: String }],
+  correctIndex: { type: Number },
+  explanation: { type: String },
+  passage: { type: String },
+  passageTitle: { type: String },
+  questions: [
+    {
+      text: { type: String },
+      options: [{ type: String }],
+      correctIndex: { type: Number },
+      explanation: { type: String },
+    },
+  ],
+  pjSentences: [{ type: String }],
+  pjCorrectOrder: { type: String },
+  difficulty: { type: Number, required: true, min: 0, max: 100 },
+  createdAt: { type: Date, default: Date.now },
+});
+
+export const QuestionModel = models.Question || model("Question", QuestionSchema);

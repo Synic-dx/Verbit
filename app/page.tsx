@@ -1,64 +1,161 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/logo";
+import { Badge } from "@/components/ui/badge";
+import { verScoreToPercentile } from "@/lib/scoring";
 
 export default function Home() {
+  const snapshots = [
+    [
+      { label: "Reading Comprehension Sets", score: 66 },
+      { label: "Parajumbles", score: 58 },
+      { label: "Sentence Completions", score: 69 },
+      { label: "Idioms & Phrases", score: 56 },
+    ],
+    [
+      { label: "Conversation Sets", score: 62 },
+      { label: "Vocabulary Usage", score: 71 },
+      { label: "Paracompletions", score: 64 },
+      { label: "Reading Comprehension Sets", score: 60 },
+    ],
+    [
+      { label: "Sentence Completions", score: 73 },
+      { label: "Idioms & Phrases", score: 59 },
+      { label: "Parajumbles", score: 55 },
+      { label: "Vocabulary Usage", score: 68 },
+    ],
+  ];
+
+  const [snapshotIndex, setSnapshotIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
+  const [viewMode, setViewMode] = useState<"verscore" | "percentile">(
+    "verscore"
+  );
+
+  useEffect(() => {
+    let swapId: ReturnType<typeof setTimeout> | null = null;
+    const timer = setInterval(() => {
+      setIsFading(true);
+      swapId = setTimeout(() => {
+        setSnapshotIndex((prev) => (prev + 1) % snapshots.length);
+        setIsFading(false);
+      }, 420);
+    }, 5000);
+    return () => {
+      clearInterval(timer);
+      if (swapId) clearTimeout(swapId);
+    };
+  }, [snapshots.length]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="min-h-screen bg-grid">
+      <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-16 px-6 py-12">
+        <header className="flex items-center justify-between">
+          <Logo />
+          <nav className="flex items-center gap-4">
+            <Link href="/auth/sign-in">
+              <Button size="sm">Sign in</Button>
+            </Link>
+          </nav>
+        </header>
+
+        <section className="grid gap-12 lg:grid-cols-2">
+          <div className="space-y-6">
+            <Badge>LLM-powered verbal practice</Badge>
+            <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
+              Adaptive verbal aptitude training for CAT and IPMAT.
+            </h1>
+            <p className="text-lg text-white/60">
+              Verbit generates fresh verbal questions, tracks VerScore per topic,
+              and adjusts difficulty in real time. Fast, modern, and built for
+              serious aspirants.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/auth/sign-in">
+                <Button size="lg">Start Practicing</Button>
+              </Link>
+            </div>
+          </div>
+          <div className="rounded-4xl border border-white/10 bg-linear-to-br from-white/5 via-white/5 to-cyan-500/10 p-8">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-white">
+                  Adaptive Score Example Snapshot
+                </h2>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setViewMode((prev) =>
+                      prev === "verscore" ? "percentile" : "verscore"
+                    )
+                  }
+                  className="transition hover:-translate-y-0.5"
+                >
+                  <Badge
+                    className={
+                      viewMode === "verscore"
+                        ? "bg-blue-500/20 text-blue-200"
+                        : "bg-purple-500/20 text-purple-200"
+                    }
+                  >
+                    {viewMode === "verscore" ? "VerScore" : "Percentile"}
+                  </Badge>
+                </button>
+              </div>
+              <div
+                className="space-y-4"
+                style={{ opacity: isFading ? 0 : 1, transition: "opacity 300ms ease" }}
+              >
+                {snapshots[snapshotIndex].map((item, index) => (
+                  <div
+                    key={item.label}
+                    className="space-y-2"
+                    style={{
+                      opacity: isFading ? 0 : 1,
+                      transition: "opacity 300ms ease",
+                      transitionDelay: `${index * 70}ms`,
+                    }}
+                  >
+                    <div className="flex items-center justify-between text-sm text-white/70">
+                      <span>{item.label}</span>
+                      <span>
+                        {viewMode === "verscore"
+                          ? item.score.toFixed(0)
+                          : `${verScoreToPercentile(item.score).toFixed(1)}%ile`}
+                      </span>
+                    </div>
+                    <div className="h-2 rounded-full bg-white/10">
+                      <div
+                        className={
+                          viewMode === "verscore"
+                            ? "h-2 rounded-full bg-linear-to-r from-blue-400 via-sky-400 to-cyan-400"
+                            : "h-2 rounded-full bg-linear-to-r from-purple-400 via-fuchsia-400 to-indigo-400"
+                        }
+                        style={{
+                          width: `${
+                            viewMode === "verscore"
+                              ? item.score
+                              : verScoreToPercentile(item.score)
+                          }%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-white/50">
+                VerScore uses a logarithmic scale: 0 maps to the 50th percentile,
+                50 maps to about the 90th, and 100 maps to the 100th. Each update
+                converts your VerScore to a live percentile so you see your
+                standing instantly.
+              </p>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );

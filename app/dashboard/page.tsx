@@ -1,0 +1,59 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+
+import { authOptions } from "@/lib/auth";
+import { connectDb } from "@/lib/db";
+import { TOPICS } from "@/lib/topics";
+import { UserAptitudeModel } from "@/models/UserAptitude";
+import { Logo } from "@/components/logo";
+import ScoreGrid from "@/app/dashboard/score-grid";
+import SignOutButton from "@/components/sign-out-button";
+
+export default async function DashboardPage() {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    redirect("/auth/sign-in");
+  }
+
+  await connectDb();
+  const aptitudes = await UserAptitudeModel.find({
+    userId: session.user.id,
+  }).lean();
+
+  const scoreMap = new Map(aptitudes.map((a) => [a.topic, a.verScore]));
+
+  return (
+    <div className="min-h-screen bg-grid">
+      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-10">
+        <header className="flex items-center justify-between">
+          <Logo />
+          <div className="flex items-center gap-3">
+            <nav className="flex items-center gap-2 rounded-full border border-white/10 bg-black/30 p-1">
+            <Link
+              href="/dashboard"
+              className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5"
+            >
+              Dashboard
+            </Link>
+            <Link
+              href="/analytics"
+              className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
+            >
+              Analytics
+            </Link>
+            </nav>
+            <SignOutButton />
+          </div>
+        </header>
+
+        <ScoreGrid
+          items={TOPICS.map((topic) => ({
+            topic,
+            verScore: scoreMap.get(topic) ?? 0,
+          }))}
+        />
+      </div>
+    </div>
+  );
+}
