@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Logo } from "@/components/logo";
+import { Button } from "@/components/ui/button";
 import SignOutButton from "@/components/sign-out-button";
 
 export const metadata = {
@@ -50,7 +51,16 @@ export default async function AboutPage() {
               </nav>
               <SignOutButton />
             </div>
-          ) : null}
+          ) : (
+            <div className="flex items-center gap-3">
+              <Link href="/">
+                <Button size="sm" variant="secondary">Home</Button>
+              </Link>
+              <Link href="/auth/sign-in">
+                <Button size="sm">Sign In</Button>
+              </Link>
+            </div>
+          )}
         </header>
 
         <article className="prose-invert prose-sm space-y-8 text-white/80 leading-relaxed">
