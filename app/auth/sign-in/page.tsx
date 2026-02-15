@@ -191,15 +191,18 @@ export default function SignInPage() {
                   ? "Sign in"
                   : "Create account"}
               </Button>
-              <button
-                type="button"
-                className="text-sm text-white/60"
-                onClick={() => switchMode(mode === "sign-in" ? "sign-up" : "sign-in")}
-              >
+              <p className="text-sm text-white/50">
                 {mode === "sign-in"
-                  ? "Need an account? Create one"
-                  : "Already have an account? Sign in"}
-              </button>
+                  ? "Need an account? "
+                  : "Already have an account? "}
+                <button
+                  type="button"
+                  className="underline decoration-white/30 underline-offset-2 text-white/70 transition hover:text-white hover:decoration-white/60 active:text-white/50"
+                  onClick={() => switchMode(mode === "sign-in" ? "sign-up" : "sign-in")}
+                >
+                  {mode === "sign-in" ? "Create one" : "Sign in"}
+                </button>
+              </p>
             </form>
           </Card>
         </div>

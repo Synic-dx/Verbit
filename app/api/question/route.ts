@@ -79,6 +79,21 @@ async function saveGenerated(generated: Awaited<ReturnType<typeof generateQuesti
   });
 }
 
+/** Max RC/Conversation sets per user per day. */
+const DAILY_SET_LIMIT = 5;
+
+/** Get the start of today in IST (UTC+5:30). */
+function getTodayStartIST(): Date {
+  const now = new Date();
+  // IST is UTC+5:30
+  const istOffset = 5.5 * 60 * 60 * 1000;
+  const istNow = new Date(now.getTime() + istOffset);
+  const istMidnight = new Date(istNow);
+  istMidnight.setUTCHours(0, 0, 0, 0);
+  // Convert back to UTC
+  return new Date(istMidnight.getTime() - istOffset);
+}
+
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
@@ -94,6 +109,23 @@ export async function GET(req: Request) {
   await connectDb();
 
   const userId = new Types.ObjectId(session.user.id);
+
+  // ── Daily limit check for RC / Conversation Sets ──
+  const isSetTopic = topic === "Reading Comprehension Sets" || topic === "Conversation Sets";
+  if (isSetTopic) {
+    const todayStart = getTodayStartIST();
+    const todayCount = await ServedQuestionModel.countDocuments({
+      userId,
+      topic,
+      createdAt: { $gte: todayStart },
+    });
+    if (todayCount >= DAILY_SET_LIMIT) {
+      return NextResponse.json(
+        { error: "daily_limit", message: `You have exhausted your daily limit of ${DAILY_SET_LIMIT} ${topic} sets. Wait for 12:00 AM IST to attempt more.`, used: todayCount, limit: DAILY_SET_LIMIT },
+        { status: 429 }
+      );
+    }
+  }
 
   const aptitude = await UserAptitudeModel.findOneAndUpdate(
     { userId, topic },
@@ -185,7 +217,8 @@ export async function GET(req: Request) {
   let question: QuestionRecord | null = null;
 
   if (topic === "Reading Comprehension Sets" || topic === "Conversation Sets") {
-    // Passage-level dedup: sample candidates and pick one whose passage title hasn't been seen
+    // RC/Conversation: always prefer existing DB questions to avoid unnecessary generation.
+    // Step 1: Try within difficulty band
     const candidates = await QuestionModel.aggregate<QuestionRecord>([
       { $match: matchFilter },
       { $sample: { size: 10 } },
@@ -195,6 +228,25 @@ export async function GET(req: Request) {
       if (!title || !avoidPassageTitles.includes(title)) {
         question = c;
         break;
+      }
+    }
+
+    // Step 2: If nothing in-band, try ANY unseen question for this topic (ignore difficulty band)
+    if (!question) {
+      const widerFilter: Record<string, unknown> = { topic };
+      if (excludedIds.length > 0) {
+        widerFilter._id = { $nin: excludedIds };
+      }
+      const widerCandidates = await QuestionModel.aggregate<QuestionRecord>([
+        { $match: widerFilter },
+        { $sample: { size: 10 } },
+      ]);
+      for (const c of widerCandidates) {
+        const title = (c as any).passageTitle as string | undefined;
+        if (!title || !avoidPassageTitles.includes(title)) {
+          question = c;
+          break;
+        }
       }
     }
   } else if (avoidWords.length > 0) {
@@ -219,18 +271,25 @@ export async function GET(req: Request) {
   }
 
   if (!question) {
-    // Generate TWO fresh questions, save both, serve the first
-    const [gen1, gen2] = await Promise.all([
-      generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles),
-      generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles),
-    ]);
+    if (isSetTopic) {
+      // RC/Conversation: generate only ONE set to conserve tokens
+      const gen = await generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles);
+      const saved = await saveGenerated(gen);
+      question = saved as unknown as QuestionRecord;
+    } else {
+      // Other topics: generate TWO fresh questions, save both, serve the first
+      const [gen1, gen2] = await Promise.all([
+        generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles),
+        generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles),
+      ]);
 
-    const [saved1] = await Promise.all([
-      saveGenerated(gen1),
-      saveGenerated(gen2),
-    ]);
+      const [saved1] = await Promise.all([
+        saveGenerated(gen1),
+        saveGenerated(gen2),
+      ]);
 
-    question = saved1 as unknown as QuestionRecord;
+      question = saved1 as unknown as QuestionRecord;
+    }
   }
 
   // ── Record that this question has been served (prevents re-serving) ──
@@ -250,6 +309,20 @@ export async function GET(req: Request) {
     explanation: item.explanation,
   }));
 
+  // Compute daily usage for RC/Conversation so frontend can display it
+  let dailyUsed: number | undefined;
+  let dailyLimit: number | undefined;
+  if (isSetTopic) {
+    const todayStart = getTodayStartIST();
+    // Count after the new served record was inserted
+    dailyUsed = await ServedQuestionModel.countDocuments({
+      userId,
+      topic,
+      createdAt: { $gte: todayStart },
+    });
+    dailyLimit = DAILY_SET_LIMIT;
+  }
+
   return NextResponse.json({
     id: String(question._id),
     topic: question.topic,
@@ -265,5 +338,6 @@ export async function GET(req: Request) {
     calibrating: !isCalibrated && calibrationStep < calConfig.total,
     calibrationStep: calibrationStep,
     calibrationTotal: calConfig.total,
+    ...(dailyUsed !== undefined && { dailyUsed, dailyLimit }),
   });
 }

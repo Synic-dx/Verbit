@@ -98,6 +98,9 @@ export default function PracticePage() {
   const [calibrating, setCalibrating] = useState(false);
   const [calibrationStep, setCalibrationStep] = useState(0);
   const [calibrationTotal, setCalibrationTotal] = useState(10);
+  const [dailyUsed, setDailyUsed] = useState(0);
+  const [dailyLimit, setDailyLimit] = useState(0);
+  const [showLimitModal, setShowLimitModal] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -111,6 +114,12 @@ export default function PracticePage() {
     setLoading(true);
     const res = await fetch(`/api/question?topic=${encodeURIComponent(topic)}`);
     if (!res.ok) {
+      if (res.status === 429) {
+        const errData = await res.json();
+        setDailyUsed(errData.used ?? 0);
+        setDailyLimit(errData.limit ?? 5);
+        setShowLimitModal(true);
+      }
       setLoading(false);
       return;
     }
@@ -126,6 +135,10 @@ export default function PracticePage() {
     setCalibrating(data.calibrating ?? false);
     setCalibrationStep(data.calibrationStep ?? 0);
     setCalibrationTotal(data.calibrationTotal ?? 10);
+    if (data.dailyUsed !== undefined) {
+      setDailyUsed(data.dailyUsed);
+      setDailyLimit(data.dailyLimit ?? 5);
+    }
     setStartTime(Date.now());
     setLoading(false);
   }, [topic]);
@@ -259,6 +272,11 @@ export default function PracticePage() {
                   />
                 </div>
               </div>
+            ) : null}
+            {dailyLimit > 0 && (topic === "Reading Comprehension Sets" || topic === "Conversation Sets") ? (
+              <p className="mt-1 text-xs text-white/40">
+                Sets today: {dailyUsed}/{dailyLimit}
+              </p>
             ) : null}
           </div>
           <div className="flex flex-wrap items-center gap-3">
@@ -525,7 +543,7 @@ export default function PracticePage() {
             <textarea
               className="mt-3 w-full rounded-md border border-white/10 bg-white/5 p-3 text-sm text-white placeholder-white/30 outline-none focus:border-white/30"
               rows={3}
-              placeholder="Eg repeated qs, no correct option, multiple correct option..."
+              placeholder={question && (isRC(question) || topic === "Conversation Sets") ? "[Question Number] Eg repeated qs, no correct option, multiple correct option..." : "Eg repeated qs, no correct option, multiple correct option..."}
               value={reportReason}
               onChange={(e) => setReportReason(e.target.value)}
               autoFocus
@@ -544,6 +562,24 @@ export default function PracticePage() {
               >
                 Submit Report
               </button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Daily limit exhausted modal */}
+      {showLimitModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <Card className="mx-4 w-full max-w-md border-white/10 bg-zinc-900 p-6 text-center">
+            <h3 className="text-lg font-semibold text-white">Daily Limit Reached</h3>
+            <p className="mt-3 text-sm text-white/60">
+              You have exhausted your daily limit of <strong className="text-white">{dailyLimit}</strong> {topic} sets.
+              Wait for <strong className="text-white">12:00 AM IST</strong> to attempt more.
+            </p>
+            <div className="mt-5">
+              <Link href="/dashboard">
+                <Button size="sm">Back to Dashboard</Button>
+              </Link>
             </div>
           </Card>
         </div>

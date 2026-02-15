@@ -54,6 +54,12 @@ export default async function DashboardPage() {
             >
               Analytics
             </Link>
+            <Link
+              href="/about"
+              className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
+            >
+              About
+            </Link>
             {isAdmin ? (
               <Link
                 href="/admin"

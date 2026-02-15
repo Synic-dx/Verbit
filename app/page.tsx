@@ -57,6 +57,9 @@ export default function Home() {
         <header className="flex items-center justify-between">
           <Logo />
           <nav className="flex items-center gap-4">
+            <Link href="/about" className="text-sm text-white/50 transition hover:text-white/80">
+              About
+            </Link>
             <Link href="/auth/sign-in">
               <Button size="sm">Sign in</Button>
             </Link>
