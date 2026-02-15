@@ -79,8 +79,8 @@ async function saveGenerated(generated: Awaited<ReturnType<typeof generateQuesti
   });
 }
 
-/** Max RC/Conversation sets per user per day. */
-const DAILY_SET_LIMIT = 5;
+/** Max RC/Conversation sets per user per day (configurable via env). */
+const DAILY_SET_LIMIT = Number(process.env.DAILY_SET_LIMIT) || 5;
 
 /** Get the start of today in IST (UTC+5:30). */
 function getTodayStartIST(): Date {

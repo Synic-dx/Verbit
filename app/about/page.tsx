@@ -7,6 +7,8 @@ export const metadata = {
 };
 
 export default function AboutPage() {
+  const dailyLimit = Number(process.env.DAILY_SET_LIMIT) || 5;
+
   return (
     <div className="min-h-screen bg-grid">
       <div className="mx-auto max-w-3xl px-6 py-12">
@@ -24,12 +26,16 @@ export default function AboutPage() {
 
           <section className="space-y-4">
             <p>
-              Hi, I&apos;m Shinjan — 1st Year IPM student at IIM Indore (AIR 27, IPMAT 2025).
-              Verbit is a project I built over two weeks because I felt the verbal
-              aptitude prep ecosystem was broken. Expensive courses, recycled PDFs,
-              and zero adaptivity. I wanted to see what a fully automated, AI-powered
-              trainer could look like — one that generates fresh questions, adapts to
-              you in real time, and costs you nothing.
+              Hi, I&apos;m Shinjan — 1st Year IPM student at IIM Indore.
+              I&apos;ve always guided aspirants to use carefully curated prompts to
+              leverage the full power of LLMs for verbal ability practice — and it
+              genuinely works well. But the process is inefficient: crafting the right
+              prompt every time, copy-pasting outputs, manually tracking what
+              you&apos;ve already done. A lot of time gets wasted on logistics instead
+              of actual practice. So I decided to automate the entire workflow into
+              a single platform — one that generates fresh questions, adapts to you
+              in real time, and costs you nothing. That&apos;s Verbit. Two weeks of
+              building, and here we are.
             </p>
           </section>
 
@@ -59,12 +65,12 @@ export default function AboutPage() {
             <p>
               Reading Comprehension and Conversation Sets are the most token-heavy
               features on the platform — each set involves generating a full passage
-              plus 4–5 questions with explanations. To keep costs sustainable, each
-              user is limited to <strong>5 sets per day</strong> for each of these
+              plus 6 questions with explanations. To keep costs sustainable, each
+              user is limited to <strong>{dailyLimit} sets per day</strong> for each of these
               two topics. The limit resets at 12:00 AM IST.
             </p>
             <p>
-              Honestly, 5 sets a day is a lot more than most people will bother doing
+              Honestly, {dailyLimit} sets a day is a lot more than most people will bother doing
               in a single sitting. If you&apos;re consistently hitting the cap, you&apos;re
               already putting in serious work.
             </p>

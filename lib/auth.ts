@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import { compare } from "bcryptjs";
+import { ObjectId } from "mongodb";
 
 import { getMongoClient } from "@/lib/mongodb";
 import { connectDb } from "@/lib/db";
@@ -16,6 +17,7 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      allowDangerousEmailAccountLinking: true,
     }),
     CredentialsProvider({
       name: "Email and Password",
@@ -49,6 +51,54 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/sign-in",
   },
   callbacks: {
+    async signIn({ user, account }) {
+      // When signing in with Google, merge into existing credentials-based account
+      if (account?.provider === "google" && user.email) {
+        const client = await getMongoClient();
+        const db = client.db();
+        const existingUser = await db.collection("users").findOne({
+          email: user.email.toLowerCase(),
+        });
+
+        if (existingUser) {
+          // Check if a Google account link already exists for this user
+          const existingAccount = await db.collection("accounts").findOne({
+            userId: existingUser._id,
+            provider: "google",
+          });
+
+          if (!existingAccount) {
+            // Link the Google account to the existing user
+            await db.collection("accounts").insertOne({
+              userId: existingUser._id,
+              type: account.type,
+              provider: account.provider,
+              providerAccountId: account.providerAccountId,
+              access_token: account.access_token,
+              token_type: account.token_type,
+              scope: account.scope,
+              id_token: account.id_token,
+              expires_at: account.expires_at,
+            });
+          }
+
+          // Update user profile with Google image/name if missing
+          const updates: Record<string, unknown> = {};
+          if (!existingUser.image && user.image) updates.image = user.image;
+          if (!existingUser.name && user.name) updates.name = user.name;
+          if (Object.keys(updates).length > 0) {
+            await db.collection("users").updateOne(
+              { _id: existingUser._id },
+              { $set: updates },
+            );
+          }
+
+          // Override the user.id so the JWT uses the existing user's ID
+          user.id = String(existingUser._id);
+        }
+      }
+      return true;
+    },
     async jwt({ token, user }) {
       if (user?.id) token.sub = user.id;
       if (token.sub && !token.isAdmin) {
