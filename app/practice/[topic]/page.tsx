@@ -51,6 +51,7 @@ type SubmitResponse = {
   correctIndex: number | null;
   correctIndices: (number | null)[];
   pjCorrectOrder: string | null;
+  pjExplanation: string | null;
   calibrating: boolean;
   calibrationComplete: boolean;
   calibrationStep: number;
@@ -330,7 +331,27 @@ export default function PracticePage() {
               value={pjInput}
               onChange={(event) => setPjInput(event.target.value)}
               disabled={Boolean(submitted)}
+              className={
+                submitted
+                  ? submitted.correct
+                    ? "border-emerald-500 text-emerald-300"
+                    : "border-rose-500 text-rose-300"
+                  : ""
+              }
             />
+            {submitted && submitted.pjCorrectOrder && (
+              <div className="space-y-2 rounded-xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm font-semibold text-white/70">
+                  Correct order:{" "}
+                  <span className="text-emerald-400">
+                    {submitted.pjCorrectOrder.split("").join(" ")}
+                  </span>
+                </p>
+                {submitted.pjExplanation && (
+                  <p className="text-sm text-white/60">{submitted.pjExplanation}</p>
+                )}
+              </div>
+            )}
             <div className="flex items-center justify-end gap-3">
               {!submitted ? (
                 <Button onClick={handleSubmit} disabled={Boolean(submitted)}>

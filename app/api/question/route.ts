@@ -17,6 +17,30 @@ import {
 } from "@/lib/scoring";
 import type { Topic } from "@/lib/topics";
 
+/** Extract the target word or idiom from a question's text for dedup. */
+function extractTargetWord(questionText: string, topic: string): string | null {
+  if (!questionText) return null;
+  if (topic === "Idioms & Phrases") {
+    // Format A: "What is the meaning of the idiom/phrase: [IDIOM]?"
+    const meaningMatch = questionText.match(/idiom\/phrase[:\s]+['"]?([^'"?]+?)['"]?\s*\?/i);
+    if (meaningMatch) return meaningMatch[1].trim().toLowerCase();
+    // Format B: "In which sentence is the idiom/phrase used correctly?"
+    // The idiom is typically in the options/sentences — extract from question if embedded
+    const usageMatch = questionText.match(/idiom\/phrase[:\s]+['"]?([^'"?]+?)['"]?\s+used/i);
+    if (usageMatch) return usageMatch[1].trim().toLowerCase();
+    // Fallback: look for quoted text
+    const quoted = questionText.match(/['“”‘’"]([^'"]+)['“”‘’"]/); 
+    if (quoted) return quoted[1].trim().toLowerCase();
+  }
+  if (topic === "Vocabulary Usage") {
+    // Format A: "...contains the word [WORD] used incorrectly..."
+    const wordMatch = questionText.match(/the word[:\s]+['"]?([a-zA-Z]+)['"]?/i);
+    if (wordMatch) return wordMatch[1].trim().toLowerCase();
+    // Format B: fill-in-the-blank — no single target word, skip
+  }
+  return null;
+}
+
 type QuestionRecord = {
   _id: unknown;
   topic: string;
@@ -34,6 +58,7 @@ type QuestionRecord = {
   }[];
   pjSentences?: string[];
   pjCorrectOrder?: string;
+  pjExplanation?: string;
   difficulty: number;
 };
 
@@ -50,6 +75,7 @@ async function saveGenerated(generated: Awaited<ReturnType<typeof generateQuesti
     questions: (generated as any).questions,
     pjSentences: (generated as any).pjSentences,
     pjCorrectOrder: (generated as any).pjCorrectOrder,
+    pjExplanation: (generated as any).pjExplanation,
     difficulty: generated.difficulty,
   });
 }
@@ -127,18 +153,48 @@ export async function GET(req: Request) {
     matchFilter._id = { $nin: excludedIds };
   }
 
-  const candidates = await QuestionModel.aggregate<QuestionRecord>([
-    { $match: matchFilter },
-    { $sample: { size: 1 } },
-  ]);
+  // For Vocab/Idioms, collect past words so we can avoid repeats even from the pool
+  let avoidWords: string[] = [];
+  if (topic === "Vocabulary Usage" || topic === "Idioms & Phrases") {
+    if (excludedIds.length > 0) {
+      const pastQs = await QuestionModel.find(
+        { _id: { $in: excludedIds }, topic },
+        { question: 1 }
+      ).lean();
+      avoidWords = pastQs
+        .map((q: any) => extractTargetWord(q.question ?? "", topic))
+        .filter((w): w is string => w !== null);
+    }
+  }
 
-  let question: QuestionRecord | null = candidates[0] ?? null;
+  let question: QuestionRecord | null = null;
+
+  if (avoidWords.length > 0) {
+    // Sample several candidates and pick the first whose word hasn't been used
+    const candidates = await QuestionModel.aggregate<QuestionRecord>([
+      { $match: matchFilter },
+      { $sample: { size: 10 } },
+    ]);
+    for (const c of candidates) {
+      const word = extractTargetWord(c.question ?? "", topic);
+      if (!word || !avoidWords.includes(word)) {
+        question = c;
+        break;
+      }
+    }
+  } else {
+    const candidates = await QuestionModel.aggregate<QuestionRecord>([
+      { $match: matchFilter },
+      { $sample: { size: 1 } },
+    ]);
+    question = candidates[0] ?? null;
+  }
 
   if (!question) {
     // Generate TWO fresh questions, save both, serve the first
     const [gen1, gen2] = await Promise.all([
-      generateQuestion(topic, targetDifficulty),
-      generateQuestion(topic, targetDifficulty),
+      generateQuestion(topic, targetDifficulty, avoidWords),
+      generateQuestion(topic, targetDifficulty, avoidWords),
     ]);
 
     const [saved1] = await Promise.all([
@@ -177,6 +233,7 @@ export async function GET(req: Request) {
     questions: safeQuestions,
     pjSentences: question.pjSentences,
     difficulty: question.difficulty,
+    pjExplanation: question.pjExplanation,
     calibrating: !isCalibrated && calibrationStep < CALIBRATION_TOTAL,
     calibrationStep: calibrationStep,
     calibrationTotal: CALIBRATION_TOTAL,

@@ -35,6 +35,7 @@ const rcSchema = z.object({
 const pjSchema = z.object({
   pjSentences: z.array(z.string().min(5)).min(4).max(5),
   pjCorrectOrder: z.string().regex(/^[A-E]{4,5}$/),
+  pjExplanation: z.string(),
 });
 
 export type GeneratedQuestion =
@@ -248,7 +249,8 @@ function buildPrompt(topic: Topic, difficulty: number) {
         "Each question has text, options (4 strings), correctIndex (0-3), explanation."
       : config.schemaName === "pj"
         ? "Return JSON with keys: pjSentences (array of sentences in scrambled order), " +
-          "pjCorrectOrder (string like BDAC using letters A-E matching sentence indices)."
+          "pjCorrectOrder (string like BDAC using letters A-E matching sentence indices), " +
+          "pjExplanation (a brief explanation of why this is the correct order, referencing logical flow and connectors)."
         : "Return JSON with keys: question, options (4 strings), correctIndex (0-3), explanation.";
 
   return {
@@ -257,8 +259,21 @@ function buildPrompt(topic: Topic, difficulty: number) {
   };
 }
 
-export async function generateQuestion(topic: Topic, difficulty: number) {
+export async function generateQuestion(topic: Topic, difficulty: number, avoidWords?: string[]) {
   const { schemaName, prompt } = buildPrompt(topic, difficulty);
+
+  // For Vocab/Idioms: inject a "do not reuse" list so the same word/idiom never repeats
+  let avoidWordsClause = "";
+  if (
+    avoidWords &&
+    avoidWords.length > 0 &&
+    (topic === "Vocabulary Usage" || topic === "Idioms & Phrases")
+  ) {
+    avoidWordsClause =
+      "\n\nCRITICAL — Do NOT use any of these words/idioms (they have already appeared for this user):\n" +
+      avoidWords.map((w) => `- ${w}`).join("\n") +
+      "\nPick a completely different word/idiom that has NOT been used before.";
+  }
 
   // RAG: retrieve similar PYQ examples + avoidance rules in parallel
   const [ragExamples, avoidanceRules] = await Promise.all([
@@ -266,7 +281,7 @@ export async function generateQuestion(topic: Topic, difficulty: number) {
     getAvoidanceRules(topic),
   ]);
   const ragContext = formatExamplesForPrompt(ragExamples);
-  const systemPrompt = BASE_SYSTEM_PROMPT + ragContext + avoidanceRules;
+  const systemPrompt = BASE_SYSTEM_PROMPT + ragContext + avoidanceRules + avoidWordsClause;
 
   // Model selection: fine-tuned → gpt-4o (long-form) → gpt-4o-mini
   // Fine-tuned model is only used for short-form topics (not RC/Conversation)

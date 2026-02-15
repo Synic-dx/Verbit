@@ -18,6 +18,7 @@ type QuestionRecord = {
   correctIndex?: number;
   questions?: { correctIndex: number }[];
   pjCorrectOrder?: string;
+  pjExplanation?: string;
   difficulty: number;
 };
 
@@ -150,6 +151,7 @@ export async function POST(req: Request) {
             questions: (generated as any).questions,
             pjSentences: (generated as any).pjSentences,
             pjCorrectOrder: (generated as any).pjCorrectOrder,
+            pjExplanation: (generated as any).pjExplanation,
             difficulty: generated.difficulty,
           });
         } catch { /* best-effort */ }
@@ -172,6 +174,7 @@ export async function POST(req: Request) {
         correctIndex,
         correctIndices,
         pjCorrectOrder,
+        pjExplanation: question.pjExplanation ?? null,
       });
     }
 
@@ -198,6 +201,7 @@ export async function POST(req: Request) {
       correctIndex,
       correctIndices,
       pjCorrectOrder,
+      pjExplanation: question.pjExplanation ?? null,
     });
   }
 
@@ -248,6 +252,7 @@ export async function POST(req: Request) {
         questions: (generated as any).questions,
         pjSentences: (generated as any).pjSentences,
         pjCorrectOrder: (generated as any).pjCorrectOrder,
+        pjExplanation: (generated as any).pjExplanation,
         difficulty: generated.difficulty,
       });
     } catch {
@@ -273,5 +278,6 @@ export async function POST(req: Request) {
     correctIndex,
     correctIndices,
     pjCorrectOrder,
+    pjExplanation: question.pjExplanation ?? null,
   });
 }
