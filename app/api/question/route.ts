@@ -9,7 +9,12 @@ import { UserAptitudeModel } from "@/models/UserAptitude";
 import { AttemptModel } from "@/models/Attempt";
 import { ServedQuestionModel } from "@/models/ServedQuestion";
 import { generateQuestion } from "@/lib/question-generator";
-import { percentileToVerScore, verScoreToPercentile } from "@/lib/scoring";
+import {
+  percentileToVerScore,
+  verScoreToPercentile,
+  CALIBRATION_DIFFICULTIES,
+  CALIBRATION_TOTAL,
+} from "@/lib/scoring";
 import type { Topic } from "@/lib/topics";
 
 type QuestionRecord = {
@@ -67,15 +72,36 @@ export async function GET(req: Request) {
 
   const aptitude = await UserAptitudeModel.findOneAndUpdate(
     { userId, topic },
-    { $setOnInsert: { verScore: 0, lastUpdated: new Date() } },
+    { $setOnInsert: { verScore: 0, calibrated: false, calibrationAttempts: 0, lastUpdated: new Date() } },
     { upsert: true, new: true }
   ).lean();
 
-  const verScore = aptitude?.verScore ?? 0;
-  const userPercentile = verScoreToPercentile(verScore);
-  const band = 6;
-  const lower = percentileToVerScore(userPercentile - band);
-  const upper = percentileToVerScore(userPercentile + band);
+  // Determine if user is still in calibration phase.
+  // Existing users without the `calibrated` field are treated as already calibrated.
+  const isCalibrated =
+    (aptitude as any).calibrated === true ||
+    (aptitude as any).calibrated === undefined;
+  const calibrationStep: number = (aptitude as any).calibrationAttempts ?? 0;
+
+  let targetDifficulty: number;
+  let lower: number;
+  let upper: number;
+
+  if (!isCalibrated && calibrationStep < CALIBRATION_TOTAL) {
+    // Calibration: use the next predetermined difficulty
+    targetDifficulty = CALIBRATION_DIFFICULTIES[calibrationStep];
+    const band = 5;
+    lower = Math.max(0, targetDifficulty - band);
+    upper = Math.min(100, targetDifficulty + band);
+  } else {
+    // Normal adaptive flow
+    const verScore = aptitude?.verScore ?? 0;
+    const userPercentile = verScoreToPercentile(verScore);
+    const band = 6;
+    lower = percentileToVerScore(userPercentile - band);
+    upper = percentileToVerScore(userPercentile + band);
+    targetDifficulty = verScore;
+  }
 
   // ── Strict exclusion: collect ALL question IDs ever served OR attempted ──
   const [servedDocs, attemptedDocs] = await Promise.all([
@@ -111,8 +137,8 @@ export async function GET(req: Request) {
   if (!question) {
     // Generate TWO fresh questions, save both, serve the first
     const [gen1, gen2] = await Promise.all([
-      generateQuestion(topic, verScore),
-      generateQuestion(topic, verScore),
+      generateQuestion(topic, targetDifficulty),
+      generateQuestion(topic, targetDifficulty),
     ]);
 
     const [saved1] = await Promise.all([
@@ -151,5 +177,8 @@ export async function GET(req: Request) {
     questions: safeQuestions,
     pjSentences: question.pjSentences,
     difficulty: question.difficulty,
+    calibrating: !isCalibrated && calibrationStep < CALIBRATION_TOTAL,
+    calibrationStep: calibrationStep,
+    calibrationTotal: CALIBRATION_TOTAL,
   });
 }

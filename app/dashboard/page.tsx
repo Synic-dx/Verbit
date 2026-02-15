@@ -6,6 +6,7 @@ import { authOptions } from "@/lib/auth";
 import { connectDb } from "@/lib/db";
 import { TOPICS } from "@/lib/topics";
 import { UserAptitudeModel } from "@/models/UserAptitude";
+import { UserModel } from "@/models/User";
 import { Logo } from "@/components/logo";
 import ScoreGrid from "@/app/dashboard/score-grid";
 import SignOutButton from "@/components/sign-out-button";
@@ -17,11 +18,22 @@ export default async function DashboardPage() {
   }
 
   await connectDb();
-  const aptitudes = await UserAptitudeModel.find({
-    userId: session.user.id,
-  }).lean();
+  const [aptitudes, dbUser] = await Promise.all([
+    UserAptitudeModel.find({ userId: session.user.id }).lean(),
+    UserModel.findById(session.user.id).lean() as any,
+  ]);
+  const isAdmin = dbUser?.isAdmin === true;
 
   const scoreMap = new Map(aptitudes.map((a) => [a.topic, a.verScore]));
+  const calibrationMap = new Map(
+    aptitudes.map((a: any) => [
+      a.topic,
+      {
+        calibrated: a.calibrated === true || a.calibrated === undefined,
+        calibrationAttempts: a.calibrationAttempts ?? 0,
+      },
+    ])
+  );
 
   return (
     <div className="min-h-screen bg-grid">
@@ -42,16 +54,29 @@ export default async function DashboardPage() {
             >
               Analytics
             </Link>
+            {isAdmin ? (
+              <Link
+                href="/admin"
+                className="rounded-full px-4 py-2 text-xs font-medium text-amber-300/70 transition hover:bg-amber-500/10 hover:text-amber-200"
+              >
+                Admin
+              </Link>
+            ) : null}
             </nav>
             <SignOutButton />
           </div>
         </header>
 
         <ScoreGrid
-          items={TOPICS.map((topic) => ({
-            topic,
-            verScore: scoreMap.get(topic) ?? 0,
-          }))}
+          items={TOPICS.map((topic) => {
+            const cal = calibrationMap.get(topic);
+            return {
+              topic,
+              verScore: scoreMap.get(topic) ?? 0,
+              calibrated: cal?.calibrated ?? false,
+              calibrationAttempts: cal?.calibrationAttempts ?? 0,
+            };
+          })}
         />
       </div>
     </div>

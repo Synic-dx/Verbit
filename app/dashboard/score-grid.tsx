@@ -14,6 +14,8 @@ import {
 type ScoreItem = {
   topic: string;
   verScore: number;
+  calibrated: boolean;
+  calibrationAttempts: number;
 };
 
 type ViewMode = "verscore" | "percentile";
@@ -62,22 +64,34 @@ export default function ScoreGrid({ items }: { items: ScoreItem[] }) {
             <Card key={item.topic} className="animate-in topic-card">
               <CardHeader>
                 <CardTitle className="text-white">{item.topic}</CardTitle>
-                <p className="text-sm text-white/60">
-                  {viewMode === "percentile"
-                    ? `Percentile ${displayValue.toFixed(1)}%ile`
-                    : `VerScore ${displayValue.toFixed(1)}`} {" "}
-                  ~ {altLabel} {altValue.toFixed(1)}
-                  {viewMode === "percentile" ? "" : "%ile"}
-                </p>
+                {!item.calibrated ? (
+                  <p className="text-sm text-amber-300/80">
+                    {item.calibrationAttempts === 0
+                      ? "Not started — begin calibration"
+                      : `Calibrating ${item.calibrationAttempts}/10`}
+                  </p>
+                ) : (
+                  <p className="text-sm text-white/60">
+                    {viewMode === "percentile"
+                      ? `Percentile ${displayValue.toFixed(1)}%ile`
+                      : `VerScore ${displayValue.toFixed(1)}`} {" "}
+                    ~ {altLabel} {altValue.toFixed(1)}
+                    {viewMode === "percentile" ? "" : "%ile"}
+                  </p>
+                )}
               </CardHeader>
               <CardContent>
-                <Progress value={progressValue} />
+                {!item.calibrated ? (
+                  <Progress value={(item.calibrationAttempts / 10) * 100} />
+                ) : (
+                  <Progress value={progressValue} />
+                )}
                 <div className="flex items-center justify-between">
                   <span className="text-xs uppercase tracking-widest text-white/40">
-                    Adaptive range
+                    {!item.calibrated ? "Assessment phase" : "Adaptive range"}
                   </span>
                   <Link href={`/practice/${encodeURIComponent(item.topic)}`}>
-                    <Button size="sm">Practice</Button>
+                    <Button size="sm">{!item.calibrated ? "Calibrate" : "Practice"}</Button>
                   </Link>
                 </div>
               </CardContent>

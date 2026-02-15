@@ -4,6 +4,8 @@ const UserAptitudeSchema = new Schema({
   userId: { type: Types.ObjectId, required: true, index: true },
   topic: { type: String, required: true, index: true },
   verScore: { type: Number, default: 0 },
+  calibrated: { type: Boolean, default: false },
+  calibrationAttempts: { type: Number, default: 0 },
   lastUpdated: { type: Date, default: Date.now },
 });
 

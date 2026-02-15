@@ -71,3 +71,36 @@ export function updateVerScore({
     next,
   };
 }
+
+/* ── Calibration ────────────────────────────────────────────── */
+
+/** Ten predetermined difficulty levels spanning the full range. */
+export const CALIBRATION_DIFFICULTIES = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] as const;
+export const CALIBRATION_TOTAL = CALIBRATION_DIFFICULTIES.length;
+
+/**
+ * Compute an initial verScore from calibration results.
+ * Uses a blend of difficulty-weighted accuracy (60 %) and raw accuracy (40 %)
+ * so that getting hard questions right yields a higher score than easy ones.
+ */
+export function computeCalibrationScore(
+  attempts: { difficulty: number; actual: number }[]
+): number {
+  if (attempts.length === 0) return 0;
+
+  let weightedSum = 0;
+  let weightTotal = 0;
+  let rawSum = 0;
+
+  for (const { difficulty, actual } of attempts) {
+    weightedSum += actual * difficulty;
+    weightTotal += difficulty;
+    rawSum += actual;
+  }
+
+  const weightedAccuracy = weightedSum / weightTotal; // 0-1
+  const rawAccuracy = rawSum / attempts.length; // 0-1
+  const blended = 0.6 * weightedAccuracy + 0.4 * rawAccuracy;
+
+  return Math.round(clamp(blended * 100, 0, 100) * 10) / 10;
+}

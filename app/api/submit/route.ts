@@ -8,7 +8,7 @@ import { connectDb } from "@/lib/db";
 import { QuestionModel } from "@/models/Question";
 import { UserAptitudeModel } from "@/models/UserAptitude";
 import { AttemptModel } from "@/models/Attempt";
-import { IDEAL_TIME_SECONDS, updateVerScore, verScoreToPercentile } from "@/lib/scoring";
+import { IDEAL_TIME_SECONDS, updateVerScore, verScoreToPercentile, computeCalibrationScore, CALIBRATION_TOTAL } from "@/lib/scoring";
 import type { Topic } from "@/lib/topics";
 import { generateQuestion } from "@/lib/question-generator";
 
@@ -47,11 +47,16 @@ export async function POST(req: Request) {
 
   const aptitude = await UserAptitudeModel.findOneAndUpdate(
     { userId: new Types.ObjectId(session.user.id), topic },
-    { $setOnInsert: { verScore: 0, lastUpdated: new Date() } },
+    { $setOnInsert: { verScore: 0, calibrated: false, calibrationAttempts: 0, lastUpdated: new Date() } },
     { upsert: true, new: true }
   );
 
   const verScore = aptitude?.verScore ?? 0;
+  const isCalibrated =
+    (aptitude as any).calibrated === true ||
+    (aptitude as any).calibrated === undefined;
+  const calibrationStep: number = (aptitude as any).calibrationAttempts ?? 0;
+
   let actual = 0;
   let correct = false;
 
@@ -81,6 +86,122 @@ export async function POST(req: Request) {
     correct = actual === 1;
   }
 
+  /* ── Calibration branch ──────────────────────────────────── */
+  if (!isCalibrated && calibrationStep < CALIBRATION_TOTAL) {
+    const newStep = calibrationStep + 1;
+
+    // Record the attempt (verScore stays 0 during calibration)
+    await AttemptModel.create({
+      userId: new Types.ObjectId(session.user.id),
+      topic,
+      questionId: question._id,
+      correct,
+      actual,
+      timeTaken: body.timeTaken,
+      difficulty: question.difficulty,
+      verScoreBefore: 0,
+      verScoreAfter: 0,
+      percentileAfter: 50,
+      createdAt: new Date(),
+    });
+
+    if (newStep >= CALIBRATION_TOTAL) {
+      // ── Final calibration question: compute initial verScore ──
+      const allAttempts = await AttemptModel.find(
+        { userId: new Types.ObjectId(session.user.id), topic },
+        { difficulty: 1, actual: 1 }
+      )
+        .sort({ createdAt: 1 })
+        .limit(CALIBRATION_TOTAL)
+        .lean();
+
+      const calibrationData = allAttempts.map((a: any) => ({
+        difficulty: a.difficulty as number,
+        actual: a.actual as number,
+      }));
+
+      const initialVerScore = computeCalibrationScore(calibrationData);
+      const percentile = verScoreToPercentile(initialVerScore);
+
+      await UserAptitudeModel.updateOne(
+        { userId: new Types.ObjectId(session.user.id), topic },
+        {
+          $set: {
+            verScore: initialVerScore,
+            calibrated: true,
+            calibrationAttempts: newStep,
+            lastUpdated: new Date(),
+          },
+        }
+      );
+
+      // Fire-and-forget: pre-generate a question at the new level
+      void (async () => {
+        try {
+          const generated = await generateQuestion(topic, initialVerScore);
+          await QuestionModel.create({
+            topic,
+            question: (generated as any).question,
+            options: (generated as any).options,
+            correctIndex: (generated as any).correctIndex,
+            explanation: (generated as any).explanation,
+            passage: (generated as any).passage,
+            passageTitle: (generated as any).passageTitle,
+            questions: (generated as any).questions,
+            pjSentences: (generated as any).pjSentences,
+            pjCorrectOrder: (generated as any).pjCorrectOrder,
+            difficulty: generated.difficulty,
+          });
+        } catch { /* best-effort */ }
+      })();
+
+      const correctIndex = question.correctIndex ?? null;
+      const correctIndices = (question.questions ?? []).map(
+        (q: { correctIndex?: number }) => q.correctIndex ?? null
+      );
+      const pjCorrectOrder = question.pjCorrectOrder ?? null;
+
+      return NextResponse.json({
+        correct,
+        calibrating: false,
+        calibrationComplete: true,
+        calibrationStep: newStep,
+        calibrationTotal: CALIBRATION_TOTAL,
+        newVerScore: initialVerScore,
+        percentile,
+        correctIndex,
+        correctIndices,
+        pjCorrectOrder,
+      });
+    }
+
+    // Still calibrating — not the last question
+    await UserAptitudeModel.updateOne(
+      { userId: new Types.ObjectId(session.user.id), topic },
+      { $set: { calibrationAttempts: newStep, lastUpdated: new Date() } }
+    );
+
+    const correctIndex = question.correctIndex ?? null;
+    const correctIndices = (question.questions ?? []).map(
+      (q: { correctIndex?: number }) => q.correctIndex ?? null
+    );
+    const pjCorrectOrder = question.pjCorrectOrder ?? null;
+
+    return NextResponse.json({
+      correct,
+      calibrating: true,
+      calibrationComplete: false,
+      calibrationStep: newStep,
+      calibrationTotal: CALIBRATION_TOTAL,
+      newVerScore: 0,
+      percentile: 50,
+      correctIndex,
+      correctIndices,
+      pjCorrectOrder,
+    });
+  }
+
+  /* ── Normal (post-calibration) scoring ───────────────────── */
   const idealTime = IDEAL_TIME_SECONDS[topic] ?? 60;
   const updated = updateVerScore({
     verScore,
@@ -143,6 +264,10 @@ export async function POST(req: Request) {
 
   return NextResponse.json({
     correct,
+    calibrating: false,
+    calibrationComplete: false,
+    calibrationStep: CALIBRATION_TOTAL,
+    calibrationTotal: CALIBRATION_TOTAL,
     newVerScore,
     percentile,
     correctIndex,

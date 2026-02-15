@@ -51,11 +51,17 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user?.id) token.sub = user.id;
+      if (token.sub && !token.isAdmin) {
+        await connectDb();
+        const dbUser = await UserModel.findById(token.sub).lean() as any;
+        token.isAdmin = dbUser?.isAdmin === true;
+      }
       return token;
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
         session.user.id = token.sub;
+        session.user.isAdmin = token.isAdmin === true;
       }
       return session;
     },

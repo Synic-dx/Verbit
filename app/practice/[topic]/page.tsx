@@ -51,6 +51,10 @@ type SubmitResponse = {
   correctIndex: number | null;
   correctIndices: (number | null)[];
   pjCorrectOrder: string | null;
+  calibrating: boolean;
+  calibrationComplete: boolean;
+  calibrationStep: number;
+  calibrationTotal: number;
 };
 
 const isRC = (q: Question): q is RCQuestion =>
@@ -87,6 +91,9 @@ export default function PracticePage() {
   const [removing, setRemoving] = useState(false);
   const [reportFeedback, setReportFeedback] = useState<string | null>(null);
   const [reportValid, setReportValid] = useState(false);
+  const [calibrating, setCalibrating] = useState(false);
+  const [calibrationStep, setCalibrationStep] = useState(0);
+  const [calibrationTotal, setCalibrationTotal] = useState(10);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -112,6 +119,9 @@ export default function PracticePage() {
     setExplanations([]);
     setReportFeedback(null);
     setReportValid(false);
+    setCalibrating(data.calibrating ?? false);
+    setCalibrationStep(data.calibrationStep ?? 0);
+    setCalibrationTotal(data.calibrationTotal ?? 10);
     setStartTime(Date.now());
     setLoading(false);
   }, [topic]);
@@ -146,6 +156,8 @@ export default function PracticePage() {
 
     const data = (await res.json()) as SubmitResponse;
     setSubmitted(data);
+    setCalibrating(data.calibrating);
+    setCalibrationStep(data.calibrationStep);
 
     if (isRC(question)) {
       setExplanations(question.questions.map((q) => q.explanation));
@@ -195,6 +207,19 @@ export default function PracticePage() {
               Practice
             </p>
             <h1 className="text-2xl font-semibold text-white">{topic}</h1>
+            {calibrating ? (
+              <div className="mt-2 flex items-center gap-3">
+                <p className="text-sm font-medium text-amber-300">
+                  Calibration {calibrationStep}/{calibrationTotal}
+                </p>
+                <div className="h-1.5 w-32 overflow-hidden rounded-full bg-white/10">
+                  <div
+                    className="h-full rounded-full bg-amber-400 transition-all duration-500"
+                    style={{ width: `${(calibrationStep / calibrationTotal) * 100}%` }}
+                  />
+                </div>
+              </div>
+            ) : null}
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <Link href="/dashboard">
@@ -372,17 +397,33 @@ export default function PracticePage() {
         {submitted ? (
           <Card className="flex flex-wrap items-center justify-between gap-4 p-6">
             <div>
-              <p className="text-sm text-white/60">Question VerScore</p>
+              <p className="text-sm text-white/60">Question Difficulty</p>
               <p className="text-2xl font-semibold text-white">
                 {question?.difficulty.toFixed(1)}
               </p>
             </div>
-            <div>
-              <p className="text-sm text-white/60">Your VerScore</p>
-              <p className="text-2xl font-semibold text-white">
-                {submitted.newVerScore.toFixed(1)}
-              </p>
-            </div>
+            {submitted.calibrating ? (
+              <div>
+                <p className="text-sm text-amber-300/80">Calibrating…</p>
+                <p className="text-lg font-semibold text-amber-200">
+                  {submitted.calibrationStep}/{submitted.calibrationTotal}
+                </p>
+              </div>
+            ) : submitted.calibrationComplete ? (
+              <div>
+                <p className="text-sm text-emerald-300/80">Calibration Complete!</p>
+                <p className="text-2xl font-semibold text-emerald-200">
+                  VerScore {submitted.newVerScore.toFixed(1)}
+                </p>
+              </div>
+            ) : (
+              <div>
+                <p className="text-sm text-white/60">Your VerScore</p>
+                <p className="text-2xl font-semibold text-white">
+                  {submitted.newVerScore.toFixed(1)}
+                </p>
+              </div>
+            )}
           </Card>
         ) : null}
 
