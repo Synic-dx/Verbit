@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 import { TOPICS, Topic } from "@/lib/topics";
 import {
@@ -41,6 +42,7 @@ type AnalyticsResponse = {
 const DEFAULT_TOPIC = TOPICS[0];
 
 export default function AnalyticsClient() {
+  const { data: session } = useSession();
   const [topic, setTopic] = useState<Topic>(DEFAULT_TOPIC);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -143,6 +145,14 @@ export default function AnalyticsClient() {
               >
                 Analytics
               </Link>
+              {session?.user?.isAdmin ? (
+                <Link
+                  href="/admin"
+                  className="rounded-full px-4 py-2 text-xs font-medium text-amber-300/70 transition hover:bg-amber-500/10 hover:text-amber-200"
+                >
+                  Admin
+                </Link>
+              ) : null}
             </nav>
             <SignOutButton />
           </div>
