@@ -336,17 +336,13 @@ export default function AdminPage() {
               </p>
               <div className="mt-4 space-y-3">
                 <div>
-                  <p className="text-sm text-white/70">Nuclear reset — delete ALL questions + ALL reports + ALL served records:</p>
+                  <p className="text-sm text-white/70">Nuclear reset — wipe ALL questions, reports, attempts, scores, served records, and non-admin users. Your admin account is preserved.</p>
                   <Button
                     size="sm"
                     variant="secondary"
                     className="mt-2 border-rose-500/50 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20"
                     disabled={actionLoading}
-                    onClick={async () => {
-                      if (!confirm("NUCLEAR RESET: Delete every question, report, and served-question record? This cannot be undone.")) return;
-                      await runAction({ action: "resetQuestions", topic: "all" }, "Proceeding with nuclear reset step 1/2…");
-                      await runAction({ action: "clearReports", topic: "all" }, "Proceeding with nuclear reset step 2/2…");
-                    }}
+                    onClick={() => runAction({ action: "nuclearReset" }, "NUCLEAR RESET: This will delete ALL questions, reports, attempts, scores, and non-admin users. Only admin accounts survive. This CANNOT be undone. Proceed?")}
                   >
                     Nuclear Reset
                   </Button>

@@ -130,5 +130,39 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, deleted: del.deletedCount });
   }
 
+  /* ── Nuclear reset — wipe everything except admin accounts ─ */
+  if (action === "nuclearReset") {
+    const adminId = new Types.ObjectId(session?.user?.id as string);
+
+    // Delete all non-admin users
+    const nonAdminUsers = await UserModel.find(
+      { isAdmin: { $ne: true } },
+      { _id: 1 }
+    ).lean();
+    const nonAdminIds = nonAdminUsers.map((u: any) => u._id);
+
+    const [usersDel, questionsDel, reportsDel, servedDel, aptAllDel, attAllDel] =
+      await Promise.all([
+        UserModel.deleteMany({ isAdmin: { $ne: true } }),
+        QuestionModel.deleteMany({}),
+        BadReportModel.deleteMany({}),
+        ServedQuestionModel.deleteMany({}),
+        UserAptitudeModel.deleteMany({}),
+        AttemptModel.deleteMany({}),
+      ]);
+
+    return NextResponse.json({
+      ok: true,
+      deleted: {
+        users: usersDel.deletedCount,
+        questions: questionsDel.deletedCount,
+        reports: reportsDel.deletedCount,
+        served: servedDel.deletedCount,
+        aptitudes: aptAllDel.deletedCount,
+        attempts: attAllDel.deletedCount,
+      },
+    });
+  }
+
   return NextResponse.json({ error: "Unknown action" }, { status: 400 });
 }
