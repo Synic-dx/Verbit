@@ -9,6 +9,7 @@ import { UserAptitudeModel } from "@/models/UserAptitude";
 import { UserModel } from "@/models/User";
 import { Logo } from "@/components/logo";
 import ScoreGrid from "@/app/dashboard/score-grid";
+import SuggestionBox from "@/app/dashboard/suggestion-box";
 import SignOutButton from "@/components/sign-out-button";
 
 export default async function DashboardPage() {
@@ -72,6 +73,8 @@ export default async function DashboardPage() {
             <SignOutButton />
           </div>
         </header>
+
+        <SuggestionBox />
 
         <ScoreGrid
           items={TOPICS.map((topic) => {

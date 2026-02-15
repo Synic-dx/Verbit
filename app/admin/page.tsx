@@ -41,7 +41,15 @@ type ReportEntry = {
   createdAt: string;
 };
 
-type Tab = "overview" | "reports" | "tools";
+type Tab = "overview" | "reports" | "suggestions" | "tools";
+
+type SuggestionEntry = {
+  id: string;
+  userName: string;
+  userEmail: string;
+  message: string;
+  createdAt: string;
+};
 
 export default function AdminPage() {
   const { data: session, status } = useSession();
@@ -50,6 +58,7 @@ export default function AdminPage() {
   const [tab, setTab] = useState<Tab>("overview");
   const [stats, setStats] = useState<StatsData | null>(null);
   const [reports, setReports] = useState<ReportEntry[]>([]);
+  const [suggestions, setSuggestions] = useState<SuggestionEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedUser, setExpandedUser] = useState<string | null>(null);
@@ -66,9 +75,10 @@ export default function AdminPage() {
     if (!session?.user?.isAdmin) return;
     setLoading(true);
     try {
-      const [statsRes, reportsRes] = await Promise.all([
+      const [statsRes, reportsRes, suggestionsRes] = await Promise.all([
         fetch("/api/admin/stats"),
         fetch("/api/admin/reports"),
+        fetch("/api/admin/suggestions"),
       ]);
       if (!statsRes.ok || !reportsRes.ok) {
         setError("Failed to load admin data.");
@@ -78,6 +88,10 @@ export default function AdminPage() {
       const r = await reportsRes.json();
       setStats(s);
       setReports(r.reports ?? []);
+      if (suggestionsRes.ok) {
+        const sg = await suggestionsRes.json();
+        setSuggestions(sg.suggestions ?? []);
+      }
     } catch {
       setError("Network error.");
     } finally {
@@ -197,6 +211,13 @@ export default function AdminPage() {
           </Button>
           <Button
             size="sm"
+            variant={tab === "suggestions" ? "default" : "secondary"}
+            onClick={() => setTab("suggestions")}
+          >
+            Suggestions ({suggestions.length})
+          </Button>
+          <Button
+            size="sm"
             variant={tab === "tools" ? "default" : "secondary"}
             onClick={() => setTab("tools")}
           >
@@ -287,6 +308,31 @@ export default function AdminPage() {
                   onAction={runAction}
                   busy={actionLoading}
                 />
+              ))
+            )}
+          </div>
+        ) : null}
+
+        {tab === "suggestions" ? (
+          <div className="space-y-4">
+            {suggestions.length === 0 ? (
+              <Card className="p-6 text-white/50">No suggestions yet.</Card>
+            ) : (
+              suggestions.map((s) => (
+                <Card key={s.id} className="border-blue-500/20 p-5">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-white">{s.userName}</span>
+                        <span className="text-xs text-white/30">{s.userEmail}</span>
+                        <span className="text-xs text-white/20">
+                          {new Date(s.createdAt).toLocaleString()}
+                        </span>
+                      </div>
+                      <p className="text-sm text-white/70">{s.message}</p>
+                    </div>
+                  </div>
+                </Card>
               ))
             )}
           </div>
