@@ -139,13 +139,15 @@ function buildPrompt(topic: Topic, difficulty: number) {
         "Exactly ONE sentence uses the word incorrectly or inappropriately " +
         "(wrong meaning, wrong connotation, or confused with a paronym). " +
         "The other 3 must use it correctly in distinct real-world contexts. " +
-        "The question text should be: 'One of the statements below contains a word used incorrectly " +
-        "or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.' " +
+        "The question text MUST begin with: 'One of the statements below contains the word [WORD] used incorrectly " +
+        "or inappropriately. Choose the statement with the incorrect usage.' " +
         "Choose words with nuanced meanings commonly tested in IPMAT/CAT " +
         "(e.g. 'train', 'bank', 'novel', 'precipitate', 'qualify', 'check'). " +
         "The incorrect usage should be a plausible mistake.\n\n" +
         "FORMAT B — Meaning-based Fill:\n" +
         "Write a sentence with ONE blank (shown as '______'). " +
+        "The question text MUST begin with: 'Choose the word that best fills the blank.' " +
+        "followed by the sentence with the blank. " +
         "Provide 4 single-word options (a, b, c, d). " +
         "Only one word fits the context correctly in meaning, grammar, and collocational fit. " +
         "The sentence should be on a real-world topic (economics, science, current affairs, environment). " +
@@ -158,13 +160,14 @@ function buildPrompt(topic: Topic, difficulty: number) {
         "Write a short coherent paragraph of 3-5 sentences on an analytical or factual topic " +
         "(e.g. monsoon economy, urbanisation, scientific methodology, trade policy, cultural evolution). " +
         "The FINAL sentence is missing. " +
+        "The question text MUST begin with: 'Choose the sentence that best completes the paragraph below.' " +
+        "followed by the paragraph text ending with '______' where the missing sentence should be. " +
         "Provide 4 options (a, b, c, d). Each option is a full sentence that could conclude the paragraph. " +
         "The correct option should logically and stylistically complete the paragraph — " +
         "it should serve as a natural conclusion, summary, or implication of what came before. " +
         "Distractors should be topically relevant but subtly wrong: " +
         "(a) introduce a slight contradiction, (b) shift the tone or register, " +
-        "(c) repeat information already stated, or (d) introduce a tangential point. " +
-        "The question text should include the full paragraph with the missing final sentence indicated.",
+        "(c) repeat information already stated, or (d) introduce a tangential point.",
     },
     "Sentence Completions": {
       schemaName: "normal",
@@ -173,19 +176,24 @@ function buildPrompt(topic: Topic, difficulty: number) {
         "Randomly choose ONE of these three formats:\n\n" +
         "FORMAT A — Single Blank:\n" +
         "Write one sentence with one blank (shown as '______'). " +
+        "The question text MUST begin with: 'Fill in the blank with the most appropriate word.' " +
+        "followed by the sentence. " +
         "Provide 4 single-word options (a, b, c, d). " +
         "Only one word fits grammatically and contextually.\n\n" +
         "FORMAT B — Double Blank:\n" +
         "Write one sentence with two blanks. " +
+        "The question text MUST begin with: 'Fill in the blanks with the most appropriate pair of words.' " +
+        "followed by the sentence. " +
         "Provide 4 options, each containing a pair of words (comma-separated). " +
         "Only one pair fits both blanks logically and grammatically.\n\n" +
         "FORMAT C — Triple Blank:\n" +
         "Write one sentence with three blanks. " +
+        "The question text MUST begin with: 'Fill in the blanks with the most appropriate set of words.' " +
+        "followed by the sentence. " +
         "Provide 4 options, each containing a set of three words (comma-separated). " +
         "The correct set must fit grammatically, maintain logical meaning, and match tone or contrast. " +
         "Distractors should have words that individually seem plausible but fail as a complete set.\n\n" +
-        "The sentence should be on an academic or real-world topic (science, history, economics, current affairs). " +
-        "Options should be single words, word pairs, or word triples depending on the format chosen.",
+        "The sentence should be on an academic or real-world topic (science, history, economics, current affairs).",
     },
     "Sentence Correction": {
       schemaName: "normal",
@@ -195,11 +203,14 @@ function buildPrompt(topic: Topic, difficulty: number) {
         "FORMAT A — Error Spotting:\n" +
         "Write one sentence divided into four parts (labeled a, b, c, d). " +
         "Exactly one part contains a grammatical error. " +
-        "The question should ask: 'Identify the part of the sentence that contains an error.' " +
+        "The question text MUST begin with the instruction: 'Identify the part of the sentence that contains an error.' " +
+        "followed by the full sentence with parts labeled. " +
         "Each option represents one part of the sentence.\n\n" +
         "FORMAT B — Correct Version:\n" +
         "Write one sentence that contains a grammatical error or awkward phrasing. " +
-        "Provide 4 options (a, b, c, d), each offering a corrected version of the sentence or the problematic part. " +
+        "The question text MUST begin with the instruction: 'Choose the option that corrects the error in the sentence below.' " +
+        "followed by the full original sentence. " +
+        "Provide 4 options (a, b, c, d), each offering a corrected version of the problematic part. " +
         "Exactly one option is grammatically correct, idiomatic, and contextually appropriate.\n\n" +
         "Common error types to use: subject-verb agreement, tense errors, modifier placement, " +
         "word choice (e.g. 'regarded to be' → 'regarded as'), preposition errors, and parallelism. " +
@@ -214,11 +225,13 @@ function buildPrompt(topic: Topic, difficulty: number) {
         "Randomly choose ONE of these two formats:\n\n" +
         "FORMAT A — Meaning:\n" +
         "One idiom or phrase is given. " +
+        "The question text MUST begin with: 'What is the meaning of the idiom/phrase: [IDIOM]?' " +
         "Provide 4 options (a, b, c, d), each offering a short meaning or definition. " +
         "Only one meaning is correct. " +
         "Distractors should be plausible interpretations based on the component words.\n\n" +
         "FORMAT B — Correct Usage:\n" +
         "Give 4 sentences (a, b, c, d), each using the same idiom or phrase. " +
+        "The question text MUST begin with: 'In which sentence is the idiom/phrase used correctly?' " +
         "Exactly one sentence uses the idiom correctly. " +
         "The other 3 should misuse it: wrong context, literal misapplication, or garbled phrasing.\n\n" +
         "Choose idioms commonly tested in competitive exams — well-known but with meanings that are " +

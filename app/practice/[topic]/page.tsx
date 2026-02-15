@@ -58,6 +58,18 @@ const isRC = (q: Question): q is RCQuestion =>
 const isPJ = (q: Question): q is PJQuestion =>
   "pjSentences" in q && Array.isArray(q.pjSentences) && q.pjSentences.length > 0;
 
+/** Short instruction hint per topic so users know what to do. */
+const TOPIC_HINTS: Record<string, string> = {
+  "Reading Comprehension Sets": "Read the passage carefully, then answer the questions that follow.",
+  "Conversation Sets": "Read the conversation carefully, then answer the questions that follow.",
+  "Parajumbles": "Rearrange the sentences below into the correct logical order.",
+  "Vocabulary Usage": "", // instruction is embedded in the question text by GPT
+  "Paracompletions": "Choose the sentence that best completes the paragraph.",
+  "Sentence Completions": "Fill in the blank(s) with the most appropriate word(s).",
+  "Sentence Correction": "Identify the part of the sentence that contains an error, or choose the correct version.",
+  "Idioms & Phrases": "", // instruction varies by format, embedded in question text
+};
+
 export default function PracticePage() {
   const params = useParams();
   const router = useRouter();
@@ -280,6 +292,7 @@ export default function PracticePage() {
               <Badge>Parajumbles</Badge>
               <Badge>Difficulty {question.difficulty}</Badge>
             </div>
+            <p className="text-sm font-medium text-white/50">{TOPIC_HINTS["Parajumbles"]}</p>
             <div className="space-y-3 text-white/80">
               {question.pjSentences.map((sentence, index) => (
                 <p key={sentence}>
@@ -311,6 +324,9 @@ export default function PracticePage() {
               <Badge>Difficulty {question.difficulty}</Badge>
               <Progress value={question.difficulty} className="max-w-45" />
             </div>
+            {TOPIC_HINTS[topic] ? (
+              <p className="text-sm font-medium text-white/50">{TOPIC_HINTS[topic]}</p>
+            ) : null}
             <div className="space-y-4">
               <p className="text-lg text-white">{question.question}</p>
               <div className="grid gap-3">
