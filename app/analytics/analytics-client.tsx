@@ -145,6 +145,12 @@ export default function AnalyticsClient() {
               >
                 Analytics
               </Link>
+              <Link
+                href="/about"
+                className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
+              >
+                About
+              </Link>
               {session?.user?.isAdmin ? (
                 <Link
                   href="/admin"

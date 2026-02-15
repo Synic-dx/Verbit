@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TOPICS } from "@/lib/topics";
+import SignOutButton from "@/components/sign-out-button";
 
 type UserScore = { topic: string; verScore: number; calibrated: boolean };
 type UserAttempts = { "1d": number; "7d": number; "30d": number; all: number };
@@ -147,9 +148,35 @@ export default function AdminPage() {
             <p className="text-xs uppercase tracking-[0.3em] text-white/40">Admin</p>
             <h1 className="text-2xl font-semibold text-white">Platform Dashboard</h1>
           </div>
-          <Link href="/dashboard">
-            <Button size="sm" variant="secondary">Back to Dashboard</Button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <nav className="flex items-center gap-2 rounded-full border border-white/10 bg-black/30 p-1">
+              <Link
+                href="/dashboard"
+                className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/analytics"
+                className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
+              >
+                Analytics
+              </Link>
+              <Link
+                href="/about"
+                className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
+              >
+                About
+              </Link>
+              <Link
+                href="/admin"
+                className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-amber-200 shadow-sm transition hover:-translate-y-0.5"
+              >
+                Admin
+              </Link>
+            </nav>
+            <SignOutButton />
+          </div>
         </header>
 
         {/* Tabs */}

@@ -1,12 +1,16 @@
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { Logo } from "@/components/logo";
-import { Button } from "@/components/ui/button";
+import SignOutButton from "@/components/sign-out-button";
 
 export const metadata = {
   title: "About | Verbit",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const session = await getServerSession(authOptions);
+  const isAdmin = session?.user?.isAdmin === true;
   const dailyLimit = Number(process.env.DAILY_SET_LIMIT) || 5;
 
   return (
@@ -14,11 +18,37 @@ export default function AboutPage() {
       <div className="mx-auto max-w-3xl px-6 py-12">
         <header className="mb-12 flex items-center justify-between">
           <Logo />
-          <Link href="/dashboard">
-            <Button size="sm" variant="secondary">
-              Dashboard
-            </Button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <nav className="flex items-center gap-2 rounded-full border border-white/10 bg-black/30 p-1">
+              <Link
+                href="/dashboard"
+                className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/analytics"
+                className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
+              >
+                Analytics
+              </Link>
+              <Link
+                href="/about"
+                className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5"
+              >
+                About
+              </Link>
+              {isAdmin ? (
+                <Link
+                  href="/admin"
+                  className="rounded-full px-4 py-2 text-xs font-medium text-amber-300/70 transition hover:bg-amber-500/10 hover:text-amber-200"
+                >
+                  Admin
+                </Link>
+              ) : null}
+            </nav>
+            <SignOutButton />
+          </div>
         </header>
 
         <article className="prose-invert prose-sm space-y-8 text-white/80 leading-relaxed">
