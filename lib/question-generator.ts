@@ -88,10 +88,22 @@ function buildPrompt(topic: Topic, difficulty: number) {
         `Generate a ${levelTag} Reading Comprehension set. ` +
         `Write an original passage of ${rcWordCount} words. ` +
         "The passage may be argumentative, analytical, descriptive, or informational — " +
-        "on a topic typical of IPMAT/CAT exams (e.g. social media regulation, economic policy, climate science, " +
-        "technology ethics, political systems, urbanisation, public health, cultural commentary, globalisation). " +
+        "on a topic typical of IPMAT/CAT exams. Choose from a WIDE range of domains: " +
+        "social media regulation, economic policy, climate science, technology ethics, political systems, " +
+        "urbanisation, public health, cultural commentary, globalisation, behavioural economics, " +
+        "cognitive psychology, artificial intelligence ethics, space exploration, renewable energy, " +
+        "philosophy of science, ancient civilisations, modern art movements, linguistic diversity, " +
+        "constitutional law, gender studies, migration patterns, biodiversity conservation, " +
+        "digital privacy, education reform, media literacy, supply chain economics, " +
+        "neuroscience discoveries, historical revisionism, sports analytics, music theory, " +
+        "food security, water scarcity, intellectual property law, urban planning, " +
+        "decolonisation, literary criticism, quantum computing, gene editing ethics, " +
+        "democratic backsliding, gig economy, mental health policy, archaeology. " +
+        "Pick a UNIQUE and SPECIFIC topic within the chosen domain — do NOT write generic overviews. " +
         "It should read like an excerpt from a newspaper editorial, journal article, or policy analysis — " +
         "with a clear thesis, supporting evidence, and nuanced reasoning. " +
+        "FORMATTING: Structure the passage with clear paragraph breaks (use \\n\\n between paragraphs). " +
+        "The passage MUST have 3-5 distinct paragraphs — do NOT write it as a single block of text. " +
         "Create exactly 6 questions covering: (1) main idea or central argument, (2) author's tone or purpose, " +
         "(3) logical inference, (4) specific detail retrieval, (5) meaning of a word/phrase as used in the passage, " +
         "(6) conclusion or implication. " +
@@ -103,11 +115,21 @@ function buildPrompt(topic: Topic, difficulty: number) {
       schemaName: "rc",
       description:
         `Generate a ${levelTag} Conversation-based comprehension set. ` +
-        "Write a realistic dialogue (400-600 words) between two speakers discussing a substantive topic " +
-        "(e.g. business strategy, economics, ideas, technology, or abstract concepts) — " +
-        "in the style of a business podcast, editorial interview, or panel discussion. " +
+        "Write a realistic dialogue (400-600 words) between two speakers discussing a substantive topic. " +
+        "Choose from a WIDE range of domains: business strategy, economics, technology, philosophy, " +
+        "behavioral psychology, artificial intelligence, environmental policy, education systems, " +
+        "healthcare innovation, urban design, space science, literary analysis, political theory, " +
+        "cultural anthropology, media ethics, startup ecosystem, public policy, " +
+        "data privacy, renewable energy, neuroscience, global trade, sports management, " +
+        "music industry, food science, legal reform, architecture, linguistics, " +
+        "historical events, scientific methodology, ethical dilemmas, social entrepreneurship, " +
+        "digital transformation, financial markets, climate adaptation, art curation. " +
+        "Pick a UNIQUE and SPECIFIC angle within the chosen domain — do NOT write generic discussions. " +
+        "Style: business podcast, editorial interview, or panel discussion. " +
         "Use named speakers with roles (e.g. 'Interviewer', 'CEO', 'Economist'). " +
         "Each speaker should have a distinct position and reasoning style. " +
+        "FORMATTING: Use \\n\\n between speaker turns to create clear visual separation. " +
+        "Each speaker turn should start on a new line with the speaker's name followed by a colon. " +
         "Create exactly 6 questions testing: (1) meaning of a specific term in context, " +
         "(2) concept explanation, (3) logical inference, (4) main idea or summary of the conversation, " +
         "(5) a speaker's primary argument or intent, (6) a factual detail from the transcript. " +
@@ -259,7 +281,7 @@ function buildPrompt(topic: Topic, difficulty: number) {
   };
 }
 
-export async function generateQuestion(topic: Topic, difficulty: number, avoidWords?: string[]) {
+export async function generateQuestion(topic: Topic, difficulty: number, avoidWords?: string[], avoidPassageTitles?: string[]) {
   const { schemaName, prompt } = buildPrompt(topic, difficulty);
 
   // For Vocab/Idioms: inject a "do not reuse" list so the same word/idiom never repeats
@@ -275,13 +297,26 @@ export async function generateQuestion(topic: Topic, difficulty: number, avoidWo
       "\nPick a completely different word/idiom that has NOT been used before.";
   }
 
+  // For RC/Conversation: inject passage titles to avoid so the same passage topic never repeats
+  let avoidPassagesClause = "";
+  if (
+    avoidPassageTitles &&
+    avoidPassageTitles.length > 0 &&
+    (topic === "Reading Comprehension Sets" || topic === "Conversation Sets")
+  ) {
+    avoidPassagesClause =
+      "\n\nCRITICAL — Do NOT write a passage on any of these topics (they have already appeared for this user):\n" +
+      avoidPassageTitles.map((t) => `- ${t}`).join("\n") +
+      "\nWrite about a COMPLETELY DIFFERENT subject matter. Do NOT reuse similar themes or angles.";
+  }
+
   // RAG: retrieve similar PYQ examples + avoidance rules in parallel
   const [ragExamples, avoidanceRules] = await Promise.all([
     retrieveExamples(topic, difficulty, 3).catch(() => []),
     getAvoidanceRules(topic),
   ]);
   const ragContext = formatExamplesForPrompt(ragExamples);
-  const systemPrompt = BASE_SYSTEM_PROMPT + ragContext + avoidanceRules + avoidWordsClause;
+  const systemPrompt = BASE_SYSTEM_PROMPT + ragContext + avoidanceRules + avoidWordsClause + avoidPassagesClause;
 
   // Model selection: fine-tuned → gpt-4o (long-form) → gpt-4o-mini
   // Fine-tuned model is only used for short-form topics (not RC/Conversation)

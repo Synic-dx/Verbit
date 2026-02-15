@@ -46,6 +46,7 @@ type Question = NormalQuestion | RCQuestion | PJQuestion;
 
 type SubmitResponse = {
   correct: boolean;
+  skipped?: boolean;
   newVerScore: number;
   percentile: number;
   correctIndex: number | null;
@@ -169,6 +170,37 @@ export default function PracticePage() {
     }
   };
 
+  const handleSkip = async () => {
+    if (!question) return;
+
+    const timeTaken = Math.max(1, Math.round((Date.now() - startTime) / 1000));
+
+    const res = await fetch("/api/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        questionId: question.id,
+        topic,
+        answer: null,
+        timeTaken,
+        skip: true,
+      }),
+    });
+
+    if (!res.ok) return;
+
+    const data = (await res.json()) as SubmitResponse;
+    setSubmitted(data);
+    setCalibrating(data.calibrating);
+    setCalibrationStep(data.calibrationStep);
+
+    if (isRC(question)) {
+      setExplanations(question.questions.map((q) => q.explanation));
+    } else if (!isPJ(question)) {
+      setExplanations([question.explanation ?? ""]);
+    }
+  };
+
   const removeBadQuestion = async (reason: string) => {
     if (!question) return;
     setShowReportModal(false);
@@ -236,8 +268,8 @@ export default function PracticePage() {
               </Button>
             </Link>
             {submitted ? (
-              <Badge className={submitted.correct ? "bg-emerald-500/20 text-emerald-200" : "bg-rose-500/20 text-rose-200"}>
-                {submitted.correct ? "Correct" : "Incorrect"}
+              <Badge className={submitted.skipped ? "bg-zinc-500/20 text-zinc-200" : submitted.correct ? "bg-emerald-500/20 text-emerald-200" : "bg-rose-500/20 text-rose-200"}>
+                {submitted.skipped ? "Skipped" : submitted.correct ? "Correct" : "Incorrect"}
               </Badge>
             ) : null}
             {question && !loading ? (
@@ -262,7 +294,7 @@ export default function PracticePage() {
                   {question.passageTitle}
                 </h2>
               </div>
-              <div className="flex-1 overflow-y-auto scroll-smooth px-6 py-4 text-white/80">
+              <div className="flex-1 overflow-y-auto scroll-smooth px-6 py-4 text-white/80 whitespace-pre-line">
                 {question.passage}
               </div>
             </Card>
@@ -307,9 +339,14 @@ export default function PracticePage() {
                 ))}
                 <div className="flex items-center justify-end gap-3 pt-4">
                   {!submitted ? (
-                    <Button onClick={handleSubmit} disabled={rcAnswers.some((a) => a === -1)}>
-                      Submit
-                    </Button>
+                    <>
+                      <Button variant="secondary" onClick={handleSkip}>
+                        Skip
+                      </Button>
+                      <Button onClick={handleSubmit}>
+                        Submit
+                      </Button>
+                    </>
                   ) : (
                     <Button onClick={loadQuestion}>
                       Next →
@@ -361,9 +398,14 @@ export default function PracticePage() {
             )}
             <div className="flex items-center justify-end gap-3">
               {!submitted ? (
-                <Button onClick={handleSubmit} disabled={Boolean(submitted)}>
-                  Submit
-                </Button>
+                <>
+                  <Button variant="secondary" onClick={handleSkip}>
+                    Skip
+                  </Button>
+                  <Button onClick={handleSubmit} disabled={Boolean(submitted)}>
+                    Submit
+                  </Button>
+                </>
               ) : (
                 <Button onClick={loadQuestion}>
                   Next →
@@ -410,9 +452,14 @@ export default function PracticePage() {
             ) : null}
             <div className="flex items-center justify-end gap-3">
               {!submitted ? (
-                <Button onClick={handleSubmit} disabled={selected === null}>
-                  Submit
-                </Button>
+                <>
+                  <Button variant="secondary" onClick={handleSkip}>
+                    Skip
+                  </Button>
+                  <Button onClick={handleSubmit} disabled={selected === null}>
+                    Submit
+                  </Button>
+                </>
               ) : (
                 <Button onClick={loadQuestion}>
                   Next →

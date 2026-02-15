@@ -12,8 +12,7 @@ import { generateQuestion } from "@/lib/question-generator";
 import {
   percentileToVerScore,
   verScoreToPercentile,
-  CALIBRATION_DIFFICULTIES,
-  CALIBRATION_TOTAL,
+  getCalibrationConfig,
 } from "@/lib/scoring";
 import type { Topic } from "@/lib/topics";
 
@@ -109,13 +108,15 @@ export async function GET(req: Request) {
     (aptitude as any).calibrated === undefined;
   const calibrationStep: number = (aptitude as any).calibrationAttempts ?? 0;
 
+  const calConfig = getCalibrationConfig(topic);
+
   let targetDifficulty: number;
   let lower: number;
   let upper: number;
 
-  if (!isCalibrated && calibrationStep < CALIBRATION_TOTAL) {
+  if (!isCalibrated && calibrationStep < calConfig.total) {
     // Calibration: use the next predetermined difficulty
-    targetDifficulty = CALIBRATION_DIFFICULTIES[calibrationStep];
+    targetDifficulty = calConfig.difficulties[calibrationStep];
     const band = 5;
     lower = Math.max(0, targetDifficulty - band);
     upper = Math.min(100, targetDifficulty + band);
@@ -167,9 +168,36 @@ export async function GET(req: Request) {
     }
   }
 
+  // For RC/Conversation, collect past passage titles so we avoid repeating the same passage topic
+  let avoidPassageTitles: string[] = [];
+  if (topic === "Reading Comprehension Sets" || topic === "Conversation Sets") {
+    if (excludedIds.length > 0) {
+      const pastPassages = await QuestionModel.find(
+        { _id: { $in: excludedIds }, topic },
+        { passageTitle: 1 }
+      ).lean();
+      avoidPassageTitles = pastPassages
+        .map((q: any) => q.passageTitle as string)
+        .filter((t): t is string => !!t);
+    }
+  }
+
   let question: QuestionRecord | null = null;
 
-  if (avoidWords.length > 0) {
+  if (topic === "Reading Comprehension Sets" || topic === "Conversation Sets") {
+    // Passage-level dedup: sample candidates and pick one whose passage title hasn't been seen
+    const candidates = await QuestionModel.aggregate<QuestionRecord>([
+      { $match: matchFilter },
+      { $sample: { size: 10 } },
+    ]);
+    for (const c of candidates) {
+      const title = (c as any).passageTitle as string | undefined;
+      if (!title || !avoidPassageTitles.includes(title)) {
+        question = c;
+        break;
+      }
+    }
+  } else if (avoidWords.length > 0) {
     // Sample several candidates and pick the first whose word hasn't been used
     const candidates = await QuestionModel.aggregate<QuestionRecord>([
       { $match: matchFilter },
@@ -193,8 +221,8 @@ export async function GET(req: Request) {
   if (!question) {
     // Generate TWO fresh questions, save both, serve the first
     const [gen1, gen2] = await Promise.all([
-      generateQuestion(topic, targetDifficulty, avoidWords),
-      generateQuestion(topic, targetDifficulty, avoidWords),
+      generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles),
+      generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles),
     ]);
 
     const [saved1] = await Promise.all([
@@ -234,8 +262,8 @@ export async function GET(req: Request) {
     pjSentences: question.pjSentences,
     difficulty: question.difficulty,
     pjExplanation: question.pjExplanation,
-    calibrating: !isCalibrated && calibrationStep < CALIBRATION_TOTAL,
+    calibrating: !isCalibrated && calibrationStep < calConfig.total,
     calibrationStep: calibrationStep,
-    calibrationTotal: CALIBRATION_TOTAL,
+    calibrationTotal: calConfig.total,
   });
 }

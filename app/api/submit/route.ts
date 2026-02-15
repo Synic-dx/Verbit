@@ -8,7 +8,7 @@ import { connectDb } from "@/lib/db";
 import { QuestionModel } from "@/models/Question";
 import { UserAptitudeModel } from "@/models/UserAptitude";
 import { AttemptModel } from "@/models/Attempt";
-import { IDEAL_TIME_SECONDS, updateVerScore, verScoreToPercentile, computeCalibrationScore, CALIBRATION_TOTAL } from "@/lib/scoring";
+import { IDEAL_TIME_SECONDS, updateVerScore, verScoreToPercentile, computeCalibrationScore, getCalibrationConfig, updateQuestionDifficulty } from "@/lib/scoring";
 import type { Topic } from "@/lib/topics";
 import { generateQuestion } from "@/lib/question-generator";
 
@@ -20,6 +20,7 @@ type QuestionRecord = {
   pjCorrectOrder?: string;
   pjExplanation?: string;
   difficulty: number;
+  attemptCount?: number;
 };
 
 const bodySchema = z.object({
@@ -27,6 +28,7 @@ const bodySchema = z.object({
   topic: z.string(),
   answer: z.any(),
   timeTaken: z.number().min(1),
+  skip: z.boolean().optional(),
 });
 
 export async function POST(req: Request) {
@@ -39,6 +41,44 @@ export async function POST(req: Request) {
   const topic = body.topic as Topic;
 
   await connectDb();
+
+  /* ── Skip / unattempted: question is already in ServedQuestion, just return ── */
+  if (body.skip) {
+    const question = (await QuestionModel.findById(body.questionId).lean()) as
+      | QuestionRecord
+      | null;
+
+    const correctIndex = question?.correctIndex ?? null;
+    const correctIndices = (question?.questions ?? []).map(
+      (q: { correctIndex?: number }) => q.correctIndex ?? null
+    );
+    const pjCorrectOrder = question?.pjCorrectOrder ?? null;
+
+    const aptitude = await UserAptitudeModel.findOne(
+      { userId: new Types.ObjectId(session.user.id), topic }
+    ).lean();
+    const isCalibrated =
+      (aptitude as any)?.calibrated === true ||
+      (aptitude as any)?.calibrated === undefined;
+    const calConfig = getCalibrationConfig(topic);
+    const calibrationStep: number = (aptitude as any)?.calibrationAttempts ?? 0;
+
+    return NextResponse.json({
+      correct: false,
+      skipped: true,
+      calibrating: !isCalibrated && calibrationStep < calConfig.total,
+      calibrationComplete: false,
+      calibrationStep,
+      calibrationTotal: calConfig.total,
+      newVerScore: (aptitude as any)?.verScore ?? 0,
+      percentile: verScoreToPercentile((aptitude as any)?.verScore ?? 0),
+      correctIndex,
+      correctIndices,
+      pjCorrectOrder,
+      pjExplanation: question?.pjExplanation ?? null,
+    });
+  }
+
   const question = (await QuestionModel.findById(body.questionId).lean()) as
     | QuestionRecord
     | null;
@@ -57,6 +97,7 @@ export async function POST(req: Request) {
     (aptitude as any).calibrated === true ||
     (aptitude as any).calibrated === undefined;
   const calibrationStep: number = (aptitude as any).calibrationAttempts ?? 0;
+  const calConfig = getCalibrationConfig(topic);
 
   let actual = 0;
   let correct = false;
@@ -88,8 +129,9 @@ export async function POST(req: Request) {
   }
 
   /* ── Calibration branch ──────────────────────────────────── */
-  if (!isCalibrated && calibrationStep < CALIBRATION_TOTAL) {
+  if (!isCalibrated && calibrationStep < calConfig.total) {
     const newStep = calibrationStep + 1;
+    const idealTimeForDiff = IDEAL_TIME_SECONDS[topic] ?? 60;
 
     // Record the attempt (verScore stays 0 during calibration)
     await AttemptModel.create({
@@ -106,19 +148,36 @@ export async function POST(req: Request) {
       createdAt: new Date(),
     });
 
-    if (newStep >= CALIBRATION_TOTAL) {
+    // Dynamic question difficulty update (IRT)
+    const updatedDiff = updateQuestionDifficulty({
+      currentDifficulty: question.difficulty,
+      solverVerScore: verScore, // 0 during calibration — still informative
+      actual,
+      timeTaken: body.timeTaken,
+      idealTime: idealTimeForDiff,
+      attemptCount: question.attemptCount ?? 0,
+    });
+    void QuestionModel.updateOne(
+      { _id: question._id },
+      { $set: { difficulty: updatedDiff }, $inc: { attemptCount: 1 } }
+    );
+
+    if (newStep >= calConfig.total) {
       // ── Final calibration question: compute initial verScore ──
       const allAttempts = await AttemptModel.find(
         { userId: new Types.ObjectId(session.user.id), topic },
-        { difficulty: 1, actual: 1 }
+        { difficulty: 1, actual: 1, timeTaken: 1 }
       )
         .sort({ createdAt: 1 })
-        .limit(CALIBRATION_TOTAL)
+        .limit(calConfig.total)
         .lean();
 
+      const idealTime = IDEAL_TIME_SECONDS[topic] ?? 60;
       const calibrationData = allAttempts.map((a: any) => ({
         difficulty: a.difficulty as number,
         actual: a.actual as number,
+        timeTaken: a.timeTaken as number | undefined,
+        idealTime,
       }));
 
       const initialVerScore = computeCalibrationScore(calibrationData);
@@ -168,7 +227,7 @@ export async function POST(req: Request) {
         calibrating: false,
         calibrationComplete: true,
         calibrationStep: newStep,
-        calibrationTotal: CALIBRATION_TOTAL,
+        calibrationTotal: calConfig.total,
         newVerScore: initialVerScore,
         percentile,
         correctIndex,
@@ -195,7 +254,7 @@ export async function POST(req: Request) {
       calibrating: true,
       calibrationComplete: false,
       calibrationStep: newStep,
-      calibrationTotal: CALIBRATION_TOTAL,
+      calibrationTotal: calConfig.total,
       newVerScore: 0,
       percentile: 50,
       correctIndex,
@@ -238,6 +297,20 @@ export async function POST(req: Request) {
     createdAt: new Date(),
   });
 
+  // Dynamic question difficulty update (IRT)
+  const updatedDiffNormal = updateQuestionDifficulty({
+    currentDifficulty: question.difficulty,
+    solverVerScore: verScore,
+    actual,
+    timeTaken: body.timeTaken,
+    idealTime,
+    attemptCount: question.attemptCount ?? 0,
+  });
+  void QuestionModel.updateOne(
+    { _id: question._id },
+    { $set: { difficulty: updatedDiffNormal }, $inc: { attemptCount: 1 } }
+  );
+
   void (async () => {
     try {
       const generated = await generateQuestion(topic, newVerScore);
@@ -271,8 +344,8 @@ export async function POST(req: Request) {
     correct,
     calibrating: false,
     calibrationComplete: false,
-    calibrationStep: CALIBRATION_TOTAL,
-    calibrationTotal: CALIBRATION_TOTAL,
+    calibrationStep: calConfig.total,
+    calibrationTotal: calConfig.total,
     newVerScore,
     percentile,
     correctIndex,

@@ -20,6 +20,7 @@ const QuestionSchema = new Schema({
   pjCorrectOrder: { type: String },
   pjExplanation: { type: String },
   difficulty: { type: Number, required: true, min: 0, max: 100 },
+  attemptCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });
 
