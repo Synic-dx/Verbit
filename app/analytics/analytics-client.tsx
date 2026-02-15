@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
-import { TOPICS } from "@/lib/topics";
+import { TOPICS, Topic } from "@/lib/topics";
 import {
   percentileToVerScore,
   verScoreToPercentile,
@@ -41,7 +41,7 @@ type AnalyticsResponse = {
 const DEFAULT_TOPIC = TOPICS[0];
 
 export default function AnalyticsClient() {
-  const [topic, setTopic] = useState(DEFAULT_TOPIC);
+  const [topic, setTopic] = useState<Topic>(DEFAULT_TOPIC);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [viewMode, setViewMode] = useState<"verscore" | "percentile">(
@@ -156,7 +156,7 @@ export default function AnalyticsClient() {
               </span>
               <select
                 value={topic}
-                onChange={(event) => setTopic(event.target.value)}
+                onChange={(event) => setTopic(event.target.value as Topic)}
                 className="rounded-2xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white"
               >
                 {TOPICS.map((item) => (
