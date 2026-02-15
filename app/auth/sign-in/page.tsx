@@ -29,6 +29,14 @@ export default function SignInPage() {
     const name = String(formData.get("name") ?? "").trim();
     const confirmPassword = String(formData.get("confirmPassword") ?? "");
 
+    // client-side email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      setLoading(false);
+      return;
+    }
+
     /* ── sign-up ──────────────────────────────────────────────── */
     if (mode === "sign-up") {
       // client-side: passwords must match
