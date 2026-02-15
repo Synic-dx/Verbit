@@ -18,37 +18,39 @@ export default async function AboutPage() {
       <div className="mx-auto max-w-3xl px-6 py-12">
         <header className="mb-12 flex items-center justify-between">
           <Logo />
-          <div className="flex items-center gap-3">
-            <nav className="flex items-center gap-2 rounded-full border border-white/10 bg-black/30 p-1">
-              <Link
-                href="/dashboard"
-                className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
-              >
-                Dashboard
-              </Link>
-              <Link
-                href="/analytics"
-                className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
-              >
-                Analytics
-              </Link>
-              <Link
-                href="/about"
-                className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5"
-              >
-                About
-              </Link>
-              {isAdmin ? (
+          {session?.user ? (
+            <div className="flex items-center gap-3">
+              <nav className="flex items-center gap-2 rounded-full border border-white/10 bg-black/30 p-1">
                 <Link
-                  href="/admin"
-                  className="rounded-full px-4 py-2 text-xs font-medium text-amber-300/70 transition hover:bg-amber-500/10 hover:text-amber-200"
+                  href="/dashboard"
+                  className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
                 >
-                  Admin
+                  Dashboard
                 </Link>
-              ) : null}
-            </nav>
-            <SignOutButton />
-          </div>
+                <Link
+                  href="/analytics"
+                  className="rounded-full px-4 py-2 text-xs font-medium text-white/60 transition hover:bg-white/10 hover:text-white"
+                >
+                  Analytics
+                </Link>
+                <Link
+                  href="/about"
+                  className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5"
+                >
+                  About
+                </Link>
+                {isAdmin ? (
+                  <Link
+                    href="/admin"
+                    className="rounded-full px-4 py-2 text-xs font-medium text-amber-300/70 transition hover:bg-amber-500/10 hover:text-amber-200"
+                  >
+                    Admin
+                  </Link>
+                ) : null}
+              </nav>
+              <SignOutButton />
+            </div>
+          ) : null}
         </header>
 
         <article className="prose-invert prose-sm space-y-8 text-white/80 leading-relaxed">
