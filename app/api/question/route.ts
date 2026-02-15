@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import { Types } from "mongoose";
 
 import { authOptions } from "@/lib/auth";
 import { connectDb } from "@/lib/db";
 import { QuestionModel } from "@/models/Question";
 import { UserAptitudeModel } from "@/models/UserAptitude";
+import { AttemptModel } from "@/models/Attempt";
+import { ServedQuestionModel } from "@/models/ServedQuestion";
 import { generateQuestion } from "@/lib/question-generator";
 import { percentileToVerScore, verScoreToPercentile } from "@/lib/scoring";
 import type { Topic } from "@/lib/topics";
@@ -29,6 +32,23 @@ type QuestionRecord = {
   difficulty: number;
 };
 
+/** Helper to persist a generated question to the DB. */
+async function saveGenerated(generated: Awaited<ReturnType<typeof generateQuestion>>) {
+  return QuestionModel.create({
+    topic: (generated as any).topic,
+    question: (generated as any).question,
+    options: (generated as any).options,
+    correctIndex: (generated as any).correctIndex,
+    explanation: (generated as any).explanation,
+    passage: (generated as any).passage,
+    passageTitle: (generated as any).passageTitle,
+    questions: (generated as any).questions,
+    pjSentences: (generated as any).pjSentences,
+    pjCorrectOrder: (generated as any).pjCorrectOrder,
+    difficulty: generated.difficulty,
+  });
+}
+
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
@@ -43,8 +63,10 @@ export async function GET(req: Request) {
 
   await connectDb();
 
+  const userId = new Types.ObjectId(session.user.id);
+
   const aptitude = await UserAptitudeModel.findOneAndUpdate(
-    { userId: session.user.id, topic },
+    { userId, topic },
     { $setOnInsert: { verScore: 0, lastUpdated: new Date() } },
     { upsert: true, new: true }
   ).lean();
@@ -55,27 +77,62 @@ export async function GET(req: Request) {
   const lower = percentileToVerScore(userPercentile - band);
   const upper = percentileToVerScore(userPercentile + band);
 
-  let question = (await QuestionModel.findOne({
+  // ── Strict exclusion: collect ALL question IDs ever served OR attempted ──
+  const [servedDocs, attemptedDocs] = await Promise.all([
+    ServedQuestionModel.find({ userId, topic }, { questionId: 1 }).lean(),
+    AttemptModel.find({ userId, topic }, { questionId: 1 }).lean(),
+  ]);
+
+  const seenSet = new Set<string>();
+  for (const doc of servedDocs) {
+    seenSet.add(String((doc as any).questionId));
+  }
+  for (const doc of attemptedDocs) {
+    seenSet.add(String((doc as any).questionId));
+  }
+  const excludedIds = [...seenSet].map((id) => new Types.ObjectId(id));
+
+  // Pick a random unseen question in the difficulty band
+  const matchFilter: Record<string, unknown> = {
     topic,
     difficulty: { $gte: lower, $lte: upper },
-  }).lean()) as QuestionRecord | null;
+  };
+  if (excludedIds.length > 0) {
+    matchFilter._id = { $nin: excludedIds };
+  }
+
+  const candidates = await QuestionModel.aggregate<QuestionRecord>([
+    { $match: matchFilter },
+    { $sample: { size: 1 } },
+  ]);
+
+  let question: QuestionRecord | null = candidates[0] ?? null;
 
   if (!question) {
-    const generated = await generateQuestion(topic, verScore);
-    question = (await QuestionModel.create({
-      topic,
-      question: (generated as any).question,
-      options: (generated as any).options,
-      correctIndex: (generated as any).correctIndex,
-      explanation: (generated as any).explanation,
-      passage: (generated as any).passage,
-      passageTitle: (generated as any).passageTitle,
-      questions: (generated as any).questions,
-      pjSentences: (generated as any).pjSentences,
-      pjCorrectOrder: (generated as any).pjCorrectOrder,
-      difficulty: generated.difficulty,
-    })) as QuestionRecord;
+    // Generate TWO fresh questions, save both, serve the first
+    const [gen1, gen2] = await Promise.all([
+      generateQuestion(topic, verScore),
+      generateQuestion(topic, verScore),
+    ]);
+
+    const [saved1] = await Promise.all([
+      saveGenerated(gen1),
+      saveGenerated(gen2),
+    ]);
+
+    question = saved1 as unknown as QuestionRecord;
   }
+
+  // ── Record that this question has been served (prevents re-serving) ──
+  const questionId = question._id instanceof Types.ObjectId
+    ? question._id
+    : new Types.ObjectId(String(question._id));
+
+  await ServedQuestionModel.updateOne(
+    { userId, topic, questionId },
+    { $setOnInsert: { createdAt: new Date() } },
+    { upsert: true }
+  );
 
   const safeQuestions = (question?.questions ?? []).map((item) => ({
     text: item.text,

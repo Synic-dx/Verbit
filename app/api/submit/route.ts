@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import { Types } from "mongoose";
 import { z } from "zod";
 
 import { authOptions } from "@/lib/auth";
@@ -45,7 +46,7 @@ export async function POST(req: Request) {
   }
 
   const aptitude = await UserAptitudeModel.findOneAndUpdate(
-    { userId: session.user.id, topic },
+    { userId: new Types.ObjectId(session.user.id), topic },
     { $setOnInsert: { verScore: 0, lastUpdated: new Date() } },
     { upsert: true, new: true }
   );
@@ -93,13 +94,13 @@ export async function POST(req: Request) {
   const percentile = verScoreToPercentile(newVerScore);
 
   await UserAptitudeModel.updateOne(
-    { userId: session.user.id, topic },
+    { userId: new Types.ObjectId(session.user.id), topic },
     { $set: { verScore: newVerScore, lastUpdated: new Date() } },
     { upsert: true }
   );
 
   await AttemptModel.create({
-    userId: session.user.id,
+    userId: new Types.ObjectId(session.user.id),
     topic,
     questionId: question._id,
     correct,
@@ -133,9 +134,19 @@ export async function POST(req: Request) {
     }
   })();
 
+  // Return correct-answer data so the client can highlight answers
+  const correctIndex = question.correctIndex ?? null;
+  const correctIndices = (question.questions ?? []).map(
+    (q: { correctIndex?: number }) => q.correctIndex ?? null
+  );
+  const pjCorrectOrder = question.pjCorrectOrder ?? null;
+
   return NextResponse.json({
     correct,
     newVerScore,
     percentile,
+    correctIndex,
+    correctIndices,
+    pjCorrectOrder,
   });
 }

@@ -48,10 +48,15 @@ type SubmitResponse = {
   correct: boolean;
   newVerScore: number;
   percentile: number;
+  correctIndex: number | null;
+  correctIndices: (number | null)[];
+  pjCorrectOrder: string | null;
 };
 
-const isRC = (q: Question): q is RCQuestion => "passage" in q;
-const isPJ = (q: Question): q is PJQuestion => "pjSentences" in q;
+const isRC = (q: Question): q is RCQuestion =>
+  "passage" in q && typeof q.passage === "string" && q.passage.length > 0;
+const isPJ = (q: Question): q is PJQuestion =>
+  "pjSentences" in q && Array.isArray(q.pjSentences) && q.pjSentences.length > 0;
 
 export default function PracticePage() {
   const params = useParams();
@@ -67,6 +72,8 @@ export default function PracticePage() {
   const [submitted, setSubmitted] = useState<SubmitResponse | null>(null);
   const [explanations, setExplanations] = useState<string[]>([]);
   const [startTime, setStartTime] = useState<number>(0);
+  const [removing, setRemoving] = useState(false);
+  const [reportFeedback, setReportFeedback] = useState<string | null>(null);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -90,6 +97,7 @@ export default function PracticePage() {
     setPjInput("");
     setSubmitted(null);
     setExplanations([]);
+    setReportFeedback(null);
     setStartTime(Date.now());
     setLoading(false);
   }, [topic]);
@@ -132,6 +140,20 @@ export default function PracticePage() {
     }
   };
 
+  const removeBadQuestion = async () => {
+    if (!question) return;
+    setRemoving(true);
+    const res = await fetch(`/api/question/${question.id}`, { method: "DELETE" });
+    if (res.ok) {
+      const data = await res.json();
+      setReportFeedback(data.analysis ?? "Question removed.");
+      setTimeout(() => loadQuestion(), 2500);
+    } else {
+      loadQuestion();
+    }
+    setRemoving(false);
+  };
+
   if (!session?.user) {
     return <div className="min-h-screen bg-grid" />;
   }
@@ -167,6 +189,15 @@ export default function PracticePage() {
                 {submitted.correct ? "Correct" : "Incorrect"}
               </Badge>
             ) : null}
+            {question && !loading ? (
+              <button
+                className="text-xs text-white/20 underline decoration-white/10 transition hover:text-white/40"
+                onClick={removeBadQuestion}
+                disabled={removing}
+              >
+                {removing ? "Removing…" : "Report bad question"}
+              </button>
+            ) : null}
           </div>
         </header>
 
@@ -197,9 +228,15 @@ export default function PracticePage() {
                         <button
                           key={opt}
                           className={`rounded-2xl border px-4 py-3 text-left text-sm transition ${
-                            rcAnswers[index] === optIndex
-                              ? "border-white bg-white/10"
-                              : "border-white/10 hover:border-white/30"
+                            submitted
+                              ? submitted.correctIndices[index] === optIndex
+                                ? "border-emerald-500 bg-emerald-500/15 text-emerald-200"
+                                : rcAnswers[index] === optIndex
+                                  ? "border-rose-500 bg-rose-500/15 text-rose-200"
+                                  : "border-white/10 text-white/40"
+                              : rcAnswers[index] === optIndex
+                                ? "border-white bg-white/10"
+                                : "border-white/10 hover:border-white/30"
                           }`}
                           onClick={() => {
                             const next = [...rcAnswers];
@@ -217,6 +254,17 @@ export default function PracticePage() {
                     ) : null}
                   </div>
                 ))}
+                <div className="flex items-center justify-end gap-3 pt-4">
+                  {!submitted ? (
+                    <Button onClick={handleSubmit} disabled={rcAnswers.some((a) => a === -1)}>
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button onClick={loadQuestion}>
+                      Next →
+                    </Button>
+                  )}
+                </div>
               </div>
             </Card>
           </div>
@@ -239,17 +287,16 @@ export default function PracticePage() {
               onChange={(event) => setPjInput(event.target.value)}
               disabled={Boolean(submitted)}
             />
-            <div className="flex items-center gap-3">
-              <Button onClick={handleSubmit} disabled={Boolean(submitted)}>
-                Submit
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={loadQuestion}
-                disabled={!submitted}
-              >
-                Next
-              </Button>
+            <div className="flex items-center justify-end gap-3">
+              {!submitted ? (
+                <Button onClick={handleSubmit} disabled={Boolean(submitted)}>
+                  Submit
+                </Button>
+              ) : (
+                <Button onClick={loadQuestion}>
+                  Next →
+                </Button>
+              )}
             </div>
           </Card>
         ) : (
@@ -265,9 +312,15 @@ export default function PracticePage() {
                   <button
                     key={option}
                     className={`rounded-2xl border px-4 py-3 text-left text-sm transition ${
-                      selected === index
-                        ? "border-white bg-white/10"
-                        : "border-white/10 hover:border-white/30"
+                      submitted
+                        ? submitted.correctIndex === index
+                          ? "border-emerald-500 bg-emerald-500/15 text-emerald-200"
+                          : selected === index
+                            ? "border-rose-500 bg-rose-500/15 text-rose-200"
+                            : "border-white/10 text-white/40"
+                        : selected === index
+                          ? "border-white bg-white/10"
+                          : "border-white/10 hover:border-white/30"
                     }`}
                     onClick={() => setSelected(index)}
                     disabled={Boolean(submitted)}
@@ -280,17 +333,16 @@ export default function PracticePage() {
             {submitted ? (
               <p className="text-sm text-white/60">{explanations[0]}</p>
             ) : null}
-            <div className="flex items-center gap-3">
-              <Button onClick={handleSubmit} disabled={selected === null || Boolean(submitted)}>
-                Submit
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={loadQuestion}
-                disabled={!submitted}
-              >
-                Next
-              </Button>
+            <div className="flex items-center justify-end gap-3">
+              {!submitted ? (
+                <Button onClick={handleSubmit} disabled={selected === null}>
+                  Submit
+                </Button>
+              ) : (
+                <Button onClick={loadQuestion}>
+                  Next →
+                </Button>
+              )}
             </div>
           </Card>
         )}
@@ -309,6 +361,14 @@ export default function PracticePage() {
                 {submitted.newVerScore.toFixed(1)}
               </p>
             </div>
+          </Card>
+        ) : null}
+
+        {reportFeedback ? (
+          <Card className="border-rose-500/30 bg-rose-500/5 p-6">
+            <p className="text-xs uppercase tracking-widest text-rose-400">Bad Question Report</p>
+            <p className="mt-2 text-sm text-white/70">{reportFeedback}</p>
+            <p className="mt-1 text-xs text-white/40">This feedback has been saved — future questions will avoid this mistake.</p>
           </Card>
         ) : null}
       </div>
