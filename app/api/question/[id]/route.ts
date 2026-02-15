@@ -21,14 +21,47 @@ export async function DELETE(
 
   const { id } = await params;
 
+  // Parse optional reason from request body
+  let reason = "";
+  try {
+    const body = await _req.json();
+    reason = typeof body?.reason === "string" ? body.reason.trim() : "";
+  } catch { /* no body is fine */ }
+
   await connectDb();
   const question = await QuestionModel.findById(id).lean();
   if (!question) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  // Ask the LLM to judge whether the question is actually bad
+  // ── Fast path: if user says it's a repeated question, delete immediately ──
+  const isRepeated = /repeat|duplicate|same q|already (seen|done|answered)/i.test(reason);
+  if (isRepeated) {
+    await BadReportModel.create({
+      userId: new Types.ObjectId(session.user.id),
+      userEmail: session.user.email ?? "",
+      userName: session.user.name ?? "",
+      topic: (question as any).topic,
+      questionSnapshot: question,
+      analysis: "User reported this as a repeated/duplicate question.",
+      rule: "Do not regenerate questions that are too similar to previously served ones.",
+      createdAt: new Date(),
+    });
+    await QuestionModel.findByIdAndDelete(id);
+    return NextResponse.json({
+      ok: true,
+      valid: false,
+      analysis: "Removed — reported as a repeated question.",
+      rule: "Do not regenerate questions that are too similar to previously served ones.",
+    });
+  }
+
+  // ── AI evaluation with user's reason as a hint ──
   const snapshot = JSON.stringify(question, null, 2);
+  const userHint = reason
+    ? `\n\nThe user's stated reason for reporting: "${reason}". Consider this hint carefully when evaluating.`
+    : "";
+
   const analysisResponse = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.3,
@@ -45,7 +78,7 @@ export async function DELETE(
           '"analysis" (2-3 sentence explanation — if valid, explain why the question is correct; if invalid, explain what is wrong), and ' +
           '"rule" (only if isValid is false: a single concise sentence starting with "Do not..." for future generation to avoid this mistake; if isValid is true, set to empty string).',
       },
-      { role: "user", content: snapshot },
+      { role: "user", content: snapshot + userHint },
     ],
     response_format: { type: "json_object" },
   });

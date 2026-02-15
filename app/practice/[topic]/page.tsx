@@ -92,6 +92,8 @@ export default function PracticePage() {
   const [removing, setRemoving] = useState(false);
   const [reportFeedback, setReportFeedback] = useState<string | null>(null);
   const [reportValid, setReportValid] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportReason, setReportReason] = useState("");
   const [calibrating, setCalibrating] = useState(false);
   const [calibrationStep, setCalibrationStep] = useState(0);
   const [calibrationTotal, setCalibrationTotal] = useState(10);
@@ -167,10 +169,15 @@ export default function PracticePage() {
     }
   };
 
-  const removeBadQuestion = async () => {
+  const removeBadQuestion = async (reason: string) => {
     if (!question) return;
+    setShowReportModal(false);
     setRemoving(true);
-    const res = await fetch(`/api/question/${question.id}`, { method: "DELETE" });
+    const res = await fetch(`/api/question/${question.id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reason }),
+    });
     if (res.ok) {
       const data = await res.json();
       setReportFeedback(data.analysis ?? "Question removed.");
@@ -236,10 +243,10 @@ export default function PracticePage() {
             {question && !loading ? (
               <button
                 className="text-xs text-white/20 underline decoration-white/10 transition hover:text-white/40"
-                onClick={removeBadQuestion}
+                onClick={() => { setReportReason(""); setShowReportModal(true); }}
                 disabled={removing}
               >
-                {removing ? "Removing…" : "Report bad question"}
+                {removing ? "Reporting…" : "Report bad question"}
               </button>
             ) : null}
           </div>
@@ -462,6 +469,38 @@ export default function PracticePage() {
           </Card>
         ) : null}
       </div>
+
+      {/* Report modal */}
+      {showReportModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <Card className="mx-4 w-full max-w-md border-white/10 bg-zinc-900 p-6">
+            <h3 className="text-lg font-semibold text-white">What&apos;s wrong?</h3>
+            <textarea
+              className="mt-3 w-full rounded-md border border-white/10 bg-white/5 p-3 text-sm text-white placeholder-white/30 outline-none focus:border-white/30"
+              rows={3}
+              placeholder="Eg repeated qs, no correct option, multiple correct option..."
+              value={reportReason}
+              onChange={(e) => setReportReason(e.target.value)}
+              autoFocus
+            />
+            <div className="mt-4 flex justify-end gap-3">
+              <button
+                className="rounded-md px-4 py-2 text-sm text-white/50 transition hover:text-white/80"
+                onClick={() => setShowReportModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-rose-500 disabled:opacity-40"
+                disabled={!reportReason.trim()}
+                onClick={() => removeBadQuestion(reportReason.trim())}
+              >
+                Submit Report
+              </button>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
