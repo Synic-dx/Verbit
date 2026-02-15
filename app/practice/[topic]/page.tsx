@@ -227,10 +227,6 @@ export default function PracticePage() {
       const data = await res.json();
       setReportFeedback(data.analysis ?? "Question removed.");
       setReportValid(data.valid === true);
-      if (!data.valid) {
-        // Only auto-advance for genuinely bad questions
-        setTimeout(() => loadQuestion(), 6000);
-      }
     } else {
       loadQuestion();
     }
@@ -474,7 +470,7 @@ export default function PracticePage() {
                   <Button variant="secondary" onClick={handleSkip}>
                     Skip
                   </Button>
-                  <Button onClick={handleSubmit} disabled={selected === null}>
+                  <Button onClick={handleSubmit}>
                     Submit
                   </Button>
                 </>
@@ -531,6 +527,11 @@ export default function PracticePage() {
                 ? "Our AI reviewed this question and found it to be correct. No action was taken."
                 : "This feedback has been saved — future questions will avoid this mistake."}
             </p>
+            <div className="mt-4 flex justify-end">
+              <Button size="sm" onClick={loadQuestion}>
+                Next →
+              </Button>
+            </div>
           </Card>
         ) : null}
       </div>

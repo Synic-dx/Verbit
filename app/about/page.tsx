@@ -33,9 +33,11 @@ export default function AboutPage() {
               prompt every time, copy-pasting outputs, manually tracking what
               you&apos;ve already done. A lot of time gets wasted on logistics instead
               of actual practice. So I decided to automate the entire workflow into
-              a single platform — one that generates fresh questions, adapts to you
-              in real time, and costs you nothing. That&apos;s Verbit. Two weeks of
-              building, and here we are.
+              a single platform — one that generates{" "}
+              <strong className="text-white">unlimited</strong> fresh questions,{" "}
+              <strong className="text-white">adapts</strong> to your skill level{" "}
+              <strong className="text-white">in real time</strong>, and costs you{" "}
+              <strong className="text-white">absolutely nothing</strong>. That&apos;s Verbit.
             </p>
           </section>
 
