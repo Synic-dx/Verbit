@@ -10,6 +10,7 @@ export const IDEAL_TIME_SECONDS: Record<Topic, number> = {
   "Vocabulary Usage": 50,
   Paracompletions: 75,
   "Sentence Completions": 60,
+  "Sentence Correction": 60,
   "Idioms & Phrases": 50,
 };
 

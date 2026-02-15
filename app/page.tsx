@@ -20,7 +20,7 @@ export default function Home() {
       { label: "Conversation Sets", score: 62 },
       { label: "Vocabulary Usage", score: 71 },
       { label: "Paracompletions", score: 64 },
-      { label: "Reading Comprehension Sets", score: 60 },
+      { label: "Sentence Correction", score: 60 },
     ],
     [
       { label: "Sentence Completions", score: 73 },

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -13,19 +14,58 @@ import { Logo } from "@/components/logo";
 export default function SignInPage() {
   const [mode, setMode] = useState<"sign-in" | "sign-up">("sign-in");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
+
+  const switchMode = (target: "sign-in" | "sign-up") => {
+    setMode(target);
+  };
 
   const handleCredentials = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
-    setMessage(null);
 
     const formData = new FormData(event.currentTarget);
-    const email = String(formData.get("email") ?? "");
+    const email = String(formData.get("email") ?? "").trim();
     const password = String(formData.get("password") ?? "");
-    const name = String(formData.get("name") ?? "");
+    const name = String(formData.get("name") ?? "").trim();
+    const confirmPassword = String(formData.get("confirmPassword") ?? "");
 
+    /* ── sign-up ──────────────────────────────────────────────── */
     if (mode === "sign-up") {
+      // client-side: passwords must match
+      if (password !== confirmPassword) {
+        toast.error("Passwords do not match.");
+        setLoading(false);
+        return;
+      }
+
+      if (password.length < 6) {
+        toast.error("Password must be at least 6 characters.");
+        setLoading(false);
+        return;
+      }
+
+      // check if account already exists
+      try {
+        const check = await fetch("/api/auth/check-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+        const { exists } = await check.json();
+        if (exists) {
+          toast.error("An account with this email already exists. Please sign in instead.", {
+            action: {
+              label: "Sign in",
+              onClick: () => switchMode("sign-in"),
+            },
+          });
+          setLoading(false);
+          return;
+        }
+      } catch {
+        // network error — fall through and let register endpoint handle it
+      }
+
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -34,19 +74,53 @@ export default function SignInPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        setMessage(data.error ?? "Unable to register.");
+        toast.error(data.error ?? "Unable to register.");
         setLoading(false);
         return;
       }
+
+      toast.success("Account created! Signing you in...");
     }
 
-    await signIn("credentials", {
+    /* ── sign-in ──────────────────────────────────────────────── */
+    if (mode === "sign-in") {
+      // check if account exists before attempting login
+      try {
+        const check = await fetch("/api/auth/check-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+        const { exists } = await check.json();
+        if (!exists) {
+          toast.error("No account found with this email. Please sign up first.", {
+            action: {
+              label: "Sign up",
+              onClick: () => switchMode("sign-up"),
+            },
+          });
+          setLoading(false);
+          return;
+        }
+      } catch {
+        // network error — let signIn handle it
+      }
+    }
+
+    const result = await signIn("credentials", {
       email,
       password,
-      callbackUrl: "/dashboard",
+      redirect: false,
     });
 
-    setLoading(false);
+    if (result?.error) {
+      toast.error("Invalid email or password.");
+      setLoading(false);
+      return;
+    }
+
+    // Successful sign-in — redirect
+    window.location.href = "/dashboard";
   };
 
   return (
@@ -90,10 +164,25 @@ export default function SignInPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" name="password" type="password" required />
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  minLength={6}
+                />
               </div>
-              {message ? (
-                <p className="text-sm text-rose-300">{message}</p>
+              {mode === "sign-up" ? (
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    required
+                    minLength={6}
+                  />
+                </div>
               ) : null}
               <Button type="submit" disabled={loading} className="w-full">
                 {loading
@@ -105,7 +194,7 @@ export default function SignInPage() {
               <button
                 type="button"
                 className="text-sm text-white/60"
-                onClick={() => setMode(mode === "sign-in" ? "sign-up" : "sign-in")}
+                onClick={() => switchMode(mode === "sign-in" ? "sign-up" : "sign-in")}
               >
                 {mode === "sign-in"
                   ? "Need an account? Create one"

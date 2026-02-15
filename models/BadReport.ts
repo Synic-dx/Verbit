@@ -2,6 +2,8 @@ import { Schema, model, models, Types } from "mongoose";
 
 const BadReportSchema = new Schema({
   userId: { type: Types.ObjectId, required: true, index: true },
+  userEmail: { type: String, default: "" },
+  userName: { type: String, default: "" },
   topic: { type: String, required: true, index: true },
   questionSnapshot: { type: Schema.Types.Mixed, required: true },
   analysis: { type: String, required: true },

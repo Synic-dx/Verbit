@@ -4,6 +4,7 @@ import { SessionProvider, useSession } from "next-auth/react";
 import type { Session } from "next-auth";
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { Toaster } from "sonner";
 
 function AuthRedirect() {
   const { status } = useSession();
@@ -41,6 +42,7 @@ export default function Providers({
 }) {
   return (
     <SessionProvider session={session}>
+      <Toaster theme="dark" position="top-center" richColors closeButton />
       <AuthRedirect />
       {children}
     </SessionProvider>

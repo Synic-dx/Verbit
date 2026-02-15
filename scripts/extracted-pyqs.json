@@ -1,0 +1,3146 @@
+[
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 60,
+    "content": {
+      "passageTitle": "PASSAGE 1",
+      "passage": "Meta is recalibrating content on its social media platforms as the political tide has turned in Washington, with Mark Zuckerberg announcing last week that his company plans to fire its US fact-checkers. Fact-checking evolved in response to allegations of misinformation and is being watered down in response to accusations of censorship. Social media does not have solutions to either. Community review - introduced by Elon Musk at X and planned by Zuckerberg for Facebook and Instagram - is not a significant improvement over fact-checking. Having Washington lean on foreign governments over content moderation does not benefit free speech. Yet, that is the nature of the social media beast, designed to amplify bias. Information and misinformation continue to jostle on social media at the mercy of user discretion. Social media now has enough control over all other forms of media to broaden its reach. It is the connective tissue for mass consumption of entertainment, and alternative platforms are reworking their engagement with social media. Technologies are shaping up to drive this advantage further through synthetic content targeted precisely at its intended audience. Meta's algorithm will now play up politics because it is the flavour of the season. The Achilles' Heel of social media is informed choice which could turn against misinformation. Its move away from content moderation is driven by the need to be more inclusive, yet unfiltered content can push users away from social media towards legacy forms that have better moderation systems in place. Lawmakers across the world are unlikely to give social media a free run, even if Donald Trump is working on their case. Protections have already been put in place across jurisdictions over misinformation. These may be difficult to dismantle, even if the Republicans pull US-owned social media companies further to the right. Media consumption is, in essence, evidence-based judgement that mediums must adapt to. Content moderation, not free speech, is the adaptation mechanism. Musk and Zuckerberg are not exempt.",
+      "questions": [
+        {
+          "text": "The writer implies that",
+          "options": [
+            "a. uncensored content will always have more appeal than controlled content.",
+            "b. social media's innate strength is the user's inability to fact check.",
+            "c. social media can never be discarded by its users.",
+            "d. older forms of media will regain users because of its controls."
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage suggests that uncontrolled content has a greater appeal, as it is more engaging than moderated content."
+        },
+        {
+          "text": "The writer argues that social media",
+          "options": [
+            "a. is essential for modern communication.",
+            "b. has no solutions for misinformation.",
+            "c. will eventually be replaced by traditional media.",
+            "d. is fully regulated by governments."
+          ],
+          "correctIndex": 1,
+          "explanation": "The passage indicates that social media lacks effective solutions for misinformation."
+        }
+      ]
+    },
+    "summary": "The passage discusses the challenges of misinformation on social media and the implications of content moderation.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 60,
+    "content": {
+      "passageTitle": "Social Media and Its Implications",
+      "passage": "The writer discusses the implications of social media on information dissemination and its relationship with free speech and regulation.",
+      "questions": [
+        {
+          "text": "The writer's conclusion is that information available on social media is linked to",
+          "options": [
+            "a. the need for deregulation.",
+            "b. the individual's right to free speech.",
+            "c. the global legal systems' support of free speech.",
+            "d. the policies of the governments in power."
+          ],
+          "correctIndex": 0,
+          "explanation": "The conclusion emphasizes the need for deregulation in the context of social media."
+        },
+        {
+          "text": "Social media has succeeded in",
+          "options": [
+            "a. ignoring technology and artificial content.",
+            "b. finding alternative means for fact-checking.",
+            "c. becoming independent of other media.",
+            "d. controlling other media that depend on it."
+          ],
+          "correctIndex": 1,
+          "explanation": "The passage indicates that social media has found alternative means for fact-checking."
+        },
+        {
+          "text": "Technologies are enabling social media to",
+          "options": [
+            "a. enlarge its sphere of influence and persuasion.",
+            "b. understand that algorithms cannot control its content.",
+            "c. accept the current trends as emphasised by algorithms.",
+            "d. readjust its interaction with competitors."
+          ],
+          "correctIndex": 0,
+          "explanation": "Technologies are allowing social media to expand its influence."
+        },
+        {
+          "text": "The inherent downside associated with social media is that it",
+          "options": [
+            "a. does not address the problem of the digital divide.",
+            "b. results in unremitting expansion of freedom of expression.",
+            "c. creates and spreads much innate and acquired prejudice.",
+            "d. reinforces existing objectivity among the users."
+          ],
+          "correctIndex": 2,
+          "explanation": "The passage highlights that social media can create and spread prejudice."
+        }
+      ]
+    },
+    "summary": "Questions focus on the implications of social media regarding free speech and its societal effects.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 70,
+    "content": {
+      "passageTitle": "Consumption and Happiness",
+      "passage": "The passage discusses Jean Baudrillard's views on consumption and its relationship with happiness, using the cargo myth of the Melanesian people as an analogy.",
+      "questions": [
+        {
+          "text": "According to Baudrillard, modern consumers believe that they will get happiness if they buy the latest version of a mobile phone or automobile.",
+          "options": [
+            "a. True",
+            "b. False"
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage states that consumers believe happiness comes from purchasing the latest items."
+        },
+        {
+          "text": "Baudrillard argues that consumers have replaced 'real' happiness with 'signs' of happiness.",
+          "options": [
+            "a. True",
+            "b. False"
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage indicates that consumers equate signs of happiness with actual happiness."
+        }
+      ]
+    },
+    "summary": "Questions explore Baudrillard's perspective on consumption and its disconnect from genuine happiness.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "How can consumption be made more satisfying?",
+      "options": [
+        "By banning television commercials that promise real happiness.",
+        "By understanding the connection between production and consumption.",
+        "By recognising that commodities produce miraculous change.",
+        "By rejecting colonialism and all other forms of economic oppression."
+      ],
+      "correctIndex": 1,
+      "explanation": "Understanding the connection between production and consumption can lead to more satisfying consumption."
+    },
+    "summary": "Question about making consumption more satisfying.",
+    "source": "IPM Careers PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Which of the following is an argument made by Baudrillard?",
+      "options": [
+        "Consumers value signs more than the real.",
+        "Television commercials are at the heart of unhappiness experienced by consumers.",
+        "Production and consumption are magical processes.",
+        "Melanesian people coped with the inequality of colonialism by creating myths."
+      ],
+      "correctIndex": 0,
+      "explanation": "Baudrillard argues that consumers value signs more than the actual reality."
+    },
+    "summary": "Question regarding Baudrillard's argument about consumer values.",
+    "source": "IPM Careers PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "How does Baudrillard engage with the cargo myth?",
+      "options": [
+        "He uses it to show that consumption is a blessing.",
+        "He uses it as a metaphor to critique modern consumption.",
+        "He uses it to describe the suffering of Indigenous people.",
+        "He uses it to show that consumers should consume more serious objects."
+      ],
+      "correctIndex": 1,
+      "explanation": "Baudrillard critiques modern consumption using the cargo myth as a metaphor."
+    },
+    "summary": "Question about Baudrillard's engagement with the cargo myth.",
+    "source": "IPM Careers PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Why are consumers unhappy with commodities that they have just bought?",
+      "options": [
+        "Because they have exaggerated expectations of commodities.",
+        "Because television commercials do not create enough hype about commodities.",
+        "Because the Law of Diminishing Marginal Commodities comes into play.",
+        "Because they focus on improved functionality of commodities."
+      ],
+      "correctIndex": 0,
+      "explanation": "Consumers often have exaggerated expectations which leads to unhappiness."
+    },
+    "summary": "Question about consumer dissatisfaction with recently purchased commodities.",
+    "source": "IPM Careers PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "What is Baudrillard's position on total happiness?",
+      "options": [
+        "It is perpetually delayed.",
+        "It comes with patience and waiting.",
+        "It prioritises production over consumption.",
+        "It results from ethical consumption."
+      ],
+      "correctIndex": 0,
+      "explanation": "Baudrillard suggests that total happiness is perpetually delayed."
+    },
+    "summary": "Question about Baudrillard's view on total happiness.",
+    "source": "IPM Careers PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "What is Baudrillard's position on consumption?",
+      "options": [
+        "It is a utilitarian process.",
+        "It is a positive process.",
+        "It is an egalitarian process.",
+        "It is an irrational process."
+      ],
+      "correctIndex": 3,
+      "explanation": "Baudrillard views consumption as an irrational process."
+    },
+    "summary": "Question regarding Baudrillard's stance on consumption.",
+    "source": "IPM Careers PYQ"
+  },
+  {
+    "topic": "Conversation Sets",
+    "percentile": 70,
+    "content": {
+      "passageTitle": "Conversation Analysis",
+      "passage": "Lucia Rahilly (Global Editorial Director, The McKinsey Podcast): Today we're talking about the next big arenas of competition, about the industries that will matter most in the global business landscape, which you describe as arenas of competition. What do we mean when we use this term? Chris Bradley (Director, McKinsey Global Institute): If I go back and look at the top ten companies in 2005, they were in traditional industries such as oil and gas, retail, industrials, and pharmaceuticals. The average company was worth about $250 billion. If I advance the clock forward to 2020, nine in ten of those companies have been replaced, and by companies that are different that have a nickname for them. If you're a fan of Harry Potter, it's wizards versus muggles. Arena industries are wizard-ish; we found that there's a set of industries that play by very different set of economic rules and get very different results, while the rest, the muggles (even though they run the world, finance the world, and energize the world), play by a more traditional set of economic rules. Lucia Rahilly: Could we put a finer point on what is novel or different about the lens that you applied to determine what's a wizard and what's a muggle? Chris Bradley: Wizards are defined by growth and dynamism. We looked at where value is flowing and the places where value is moving. What we see is that this set of wizards, which represent about ten percent of industries, hog 45 percent of the growth in market cap. But there's another dimension or axis too, which is dynamism. That is measured by a new metric we've come up with called the 'shuffle rate.' How much does the bottom move to the top? It turns out that in this set of wizard-ish industries, or arenas, the shuffle rate is much higher than it is in the traditional industry. Lucia Rahilly: So, where are we seeing the most profit? Chris Bradley: The economic profit, which is the profit you make minus the cost for the capital you employ is in the wizard industries. It's where R&D happens; they're two times more R&D intensive. They're big stars, the nebulae, where new business is born.",
+      "questions": [
+        {
+          "text": "In the context of the conversation, 'dynamism' most closely refers to",
+          "options": [
+            "the slow, gradual growth and morphing of established companies.",
+            "the rapid decline of traditional industries.",
+            "the unpredictable nature of market trends.",
+            "the constant innovation in wizard industries."
+          ],
+          "correctIndex": 0,
+          "explanation": "'Dynamism' refers to the growth and morphing of established companies."
+        }
+      ]
+    },
+    "summary": "Question about the meaning of 'dynamism' in the context of a conversation.",
+    "source": "IPM Careers PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "In the context of the conversation, the term \"arenas of competition\" refers to",
+      "options": [
+        "specific companies that are considered to be powerful competitors.",
+        "government regulations that control business competition.",
+        "physical locations where businesses compete.",
+        "broad categories of industries where companies engage in competitive activities."
+      ],
+      "correctIndex": 3,
+      "explanation": "The term refers to broad categories of industries where companies engage in competitive activities."
+    },
+    "summary": "Identifies the meaning of 'arenas of competition' in a business context.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "\"Muggles\" refers to industries that",
+      "options": [
+        "are characterized by rapid and frequent changes.",
+        "exhibit high levels of market capitalization growth.",
+        "operate under traditional economic principles.",
+        "are primarily focused on technological innovation."
+      ],
+      "correctIndex": 0,
+      "explanation": "Muggles refer to industries characterized by rapid and frequent changes."
+    },
+    "summary": "Defines the term 'Muggles' in relation to industries.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 70,
+    "content": {
+      "question": "Which one of the following does \"shuffle rate\" not measure?",
+      "options": [
+        "Volatility of market leadership.",
+        "Churn within the arena of competition.",
+        "Overall profitability of traditional industries.",
+        "Relative change within an industry."
+      ],
+      "correctIndex": 2,
+      "explanation": "Shuffle rate does not measure the overall profitability of traditional industries."
+    },
+    "summary": "Asks about what 'shuffle rate' does not measure in business contexts.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 70,
+    "content": {
+      "question": "\"Wizard\" industries are characterized by",
+      "options": [
+        "a slower rate of market capitalization growth.",
+        "a higher concentration of economic profit and research and development.",
+        "a reliance on traditional economic rules and practices.",
+        "lower research and development spending."
+      ],
+      "correctIndex": 1,
+      "explanation": "Wizard industries are characterized by a higher concentration of economic profit and research and development."
+    },
+    "summary": "Defines characteristics of 'Wizard' industries.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 80,
+    "content": {
+      "passageTitle": "Air Quality in India",
+      "passage": "Recently, India was in the news again as a world leader - but this time for the wrong reason. According to the Swiss firm IQAir's assessment of the air quality of world cities 2023, New Delhi is back to being the world's most polluted capital. New Delhi's annual air quality rating is 19 times the World Health Organization's annual limit recommended in 2021 for its pollutant level. The picture is no better as far as the larger Union Territory of Delhi is considered - its annual record of pollutant levels makes it the third most polluted region globally.\n\nDelhi may have hogged the headlines on air pollution, but the problem is far from unique to metropolises. IQAir's findings reveal that even lower-tier cities and towns in India are choking because of very poor air quality. Indeed, Begusarai in Bihar is the world's most polluted city. Partly industrialized, housing among others an oil refinery, Begusarai is primarily agrarian. And Begusarai is not an outlier: Mullanpur in Punjab, which is transitioning to an urban settlement, and Siwan in Bihar are among the 50 most polluted globally.\n\nMany judicial pronouncements have upheld \"the right to clean air\" as a corollary to the fundamental right to life and pushed governments to act. But Delhi's bad air is despite the introduction of CNG in public transport and the building of a metro network in the early years of this decade, and in spite of the presence of a Graded Response Action Plan (GRAP) that kicks in when the air quality turns bad and becomes more stringent as the air quality worsens.\n\nImproving air quality across Indian cities requires three fundamental changes. One, governments must turn to science to understand, measure, and monitor the problem. Two, they have to understand that the response will have to include behavioural changes and use a combination of incentives and penalties to achieve this. And three, clean air has to be seen as a common public good. To be sure, it is not just the responsibility of the Centre or a battle for courts to wage, but a fight that states and municipal governments have to be a part of. This is the battle for our future.",
+      "questions": [
+        {
+          "text": "The first sentence in the passage mentions that India was in the news again as a world leader. What is the writer's intention in pointing this out?",
+          "options": [
+            "To be negative.",
+            "To be critical.",
+            "To create confusion.",
+            "To be judgmental."
+          ],
+          "correctIndex": 1,
+          "explanation": "The writer's intention is to be critical of India's situation regarding air quality."
+        },
+        {
+          "text": "Based on the information in the passage, who has endorsed the right to clean air?",
+          "options": [
+            "The media.",
+            "The government.",
+            "The courts.",
+            "Parliament."
+          ],
+          "correctIndex": 2,
+          "explanation": "The courts have endorsed the right to clean air as part of judicial pronouncements."
+        }
+      ]
+    },
+    "summary": "Discusses air quality issues in India and the right to clean air.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 60,
+    "content": {
+      "passageTitle": "Passage on Air Pollution",
+      "passage": "Based on the information in the passage, which one of the following statements is correct?",
+      "questions": [
+        {
+          "text": "In the last sentence of the passage, 'This is the battle for our future', the writer is",
+          "options": [
+            "a. being ambivalent.",
+            "b. being melodramatic.",
+            "c. emphasizing the need to fight for clean air.",
+            "d. projecting a bleak future for India."
+          ],
+          "correctIndex": 2,
+          "explanation": "The writer emphasizes the need to fight for clean air."
+        },
+        {
+          "text": "The phrase 'that kicks in' (para 3) means",
+          "options": [
+            "a. comes into force.",
+            "b. causes violence.",
+            "c. gains importance.",
+            "d. gets rejected."
+          ],
+          "correctIndex": 0,
+          "explanation": "The phrase means to come into force."
+        },
+        {
+          "text": "Which of the following points is not made by the writer?",
+          "options": [
+            "a. Governments at all levels should be involved in tackling the problem of air pollution.",
+            "b. Scientific methods are needed to address the problem of air pollution.",
+            "c. Polluting behaviour should be punished.",
+            "d. Clean air is the right of every consumer."
+          ],
+          "correctIndex": 2,
+          "explanation": "The writer does not mention punishing polluting behaviour."
+        },
+        {
+          "text": "Based on the information in the passage, which one of the following statements is correct?",
+          "options": [
+            "a. Delhi's air quality is the poorest in the entire world.",
+            "b. The problem of air pollution is limited to the major cities in India.",
+            "c. The 50 most polluted cities in the world are in India.",
+            "d. Industrialization makes Begusarai the most polluted city in the world."
+          ],
+          "correctIndex": 2,
+          "explanation": "The passage indicates that the 50 most polluted cities are indeed in India."
+        }
+      ]
+    },
+    "summary": "Questions related to a passage on air pollution and its implications.",
+    "source": "IPM Careers PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 70,
+    "content": {
+      "passageTitle": "Anxiety and Its Implications",
+      "passage": "Anxiety is a normal but highly subjective human emotion. While normal anxiety serves a beneficial and adaptive purpose, it can also become the cause of tremendous suffering for millions of people. It is important that people recognize excessive anxiety in themselves at the earliest, as treatment can be very successful. Leaving it untreated can be a misery.",
+      "questions": [
+        {
+          "text": "Based on the information in the passage, which of the following statements best describes the potential danger associated with anxiety disorder?",
+          "options": [
+            "a. It primarily arises from genetic factors rather than environmental influences.",
+            "b. It is always indicative of an imagined danger rather than a real one.",
+            "c. It occurs when the perceived danger is proportionate to the real danger.",
+            "d. It is characterized by a persistent and exaggerated perception of danger."
+          ],
+          "correctIndex": 3,
+          "explanation": "The passage indicates that anxiety can lead to a persistent and exaggerated perception of danger."
+        },
+        {
+          "text": "The passage is chiefly concerned with",
+          "options": [
+            "a. evaluating the effectiveness of psychotherapy and medication in treating anxiety.",
+            "b. investigating the physiological benefits of exercise on anxiety management.",
+            "c. understanding the complex interplay between genetic and environmental factors in anxiety disorders.",
+            "d. exploring the multifaceted nature of anxiety and its adaptive functions."
+          ],
+          "correctIndex": 3,
+          "explanation": "The passage discusses the multifaceted nature of anxiety and its implications."
+        },
+        {
+          "text": "In what way might the relationship between exercise or physical activity and anxiety relief suggest a potential solution for individuals with anxiety disorders?",
+          "options": [
+            "a. Exercise-induced endorphins facilitate cognitive behavioural therapy's effectiveness.",
+            "b. Physical activity serves as a temporary distraction from anxiety, but its long-term effects remain unclear.",
+            "c. Physical activity could enhance sleep quality, indirectly lessening anxiety symptoms.",
+            "d. Exercise may directly target the amygdala to reduce anxiety symptoms."
+          ],
+          "correctIndex": 3,
+          "explanation": "Exercise is noted for its potential to directly affect the amygdala, which is involved in anxiety."
+        },
+        {
+          "text": "Which of the following best indicates the relationship between anxiety and survival?",
+          "options": [
+            "a. Anxiety is part of our evolutionary past, yet has limited relevance now as it does not significantly impact our chances of survival.",
+            "b. Anxiety, an intrinsic part of human nature, often disrupts our ability to thrive by acting as an impediment to survival.",
+            "c. Despite being inherited from our evolutionary past, anxiety frequently undermines survival as it is not an integral part of human nature.",
+            "d. Anxiety is ingrained within us due to our evolutionary heritage and generally serves to promote survival."
+          ],
+          "correctIndex": 3,
+          "explanation": "The passage suggests that anxiety is ingrained in our evolutionary heritage and serves a purpose."
+        },
+        {
+          "text": "In the passage, the information about anxiety treatments is organized in which of the following ways?",
+          "options": [
+            "a. By discussing various treatment options and their effectiveness.",
+            "b. By comparing different types of anxiety disorders.",
+            "c. By outlining the historical development of anxiety treatments.",
+            "d. By presenting contrasting viewpoints on the subject."
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage discusses various treatment options and their effectiveness."
+        },
+        {
+          "text": "Based on the information in the passage, which one of the following statements is correct?",
+          "options": [
+            "a. Exposure therapy encourages individuals to face their feared situations gradually.",
+            "b. Regular exercise does little to alleviate anxiety symptoms and improve sleep quality.",
+            "c. Medication is the first-line therapy and primary cure for anxiety disorders.",
+            "d. Cognitive behaviour therapy is the most preferred treatment for anxiety disorders."
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage supports the effectiveness of exposure therapy in treating anxiety."
+        }
+      ]
+    },
+    "summary": "Questions focus on anxiety disorders, their implications, and treatment options based on the provided passage.",
+    "source": "IPM 2024"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 70,
+    "content": {
+      "passageTitle": "Passage 6",
+      "passage": "The general idea of being fit is usually assumed to be exercising regularly and having a healthy diet. It's true to some extent. But this is not always the case. People don't realise that sleep also plays a crucial part when it comes to physical and mental well-being. It's a restorative process, which shouldn't be negotiable.\n\nHectic working hours, increasing stress levels, and an unhealthy lifestyle can cause irregular sleep patterns. These not only disturb one's daily routine, but can also hamper one's health, leading to lifestyle conditions like deranged cholesterol and diabetes. It's a preconceived notion that cholesterol and diabetes are usually genetic diseases, and unhealthy eating patterns and lifestyle exacerbate them. It is not generally known that sleep deprivation can put a person at risk of both deranged cholesterol and diabetes.\n\nSleep helps your body and mind repair and recharge themselves. But things can go awry if one is sleep-deprived. Insomnia can generally make the body work abnormally. It affects the mental and physical abilities to prepare the body for the next day. It leaves the brain exhausted, affecting the natural functioning of the body.\n\nLack of sleep can lead to higher cholesterol and blood pressure. Sleep deprivation can lower levels of leptin, a hormone that stabilises metabolism and appetite. This can also lead to obesity, if left unchecked. Sleep deprivation has been found to raise levels of ghrelin, the hunger hormone, and decrease levels of leptin, the satiety hormone. That's why people seek relief in foods that raise blood sugar. The American Academy of Sleep Medicine recommends that adults should get a minimum of seven to eight hours of sleep each night. Staying up late can lead to consuming unhealthy snacks and junk food high in carbs and sugar. All this increases the risk of Type 2 diabetes and is equally connected to obesity.\n\nJust like any other routine, having a definite sleeping pattern can help a person maintain a cycle of rest and activity. Sleeping at the same time every day and waking up on time will encourage quality sleep. Proper relaxation of body and mind before sleeping means that one should keep the mobile phone aside for at least half an hour before bed. It helps if the room is dark and quiet. Plus, one can always read a good book or listen to soothing music which can lull one into deep sleep.",
+      "questions": [
+        {
+          "text": "As per the passage, which of these sentences is not correct?",
+          "options": [
+            "One's body and mind should be properly relaxed to ensure good sleep.",
+            "Regular exercising and eating healthy food alone ensure fitness.",
+            "Irregular sleep patterns can result in health problems.",
+            "Insufficient sleep can lead to obesity."
+          ],
+          "correctIndex": 1,
+          "explanation": "The passage emphasizes the importance of sleep alongside exercise and diet for overall health."
+        },
+        {
+          "text": "In order to remain physically fit one must",
+          "options": [
+            "maintain a set sleep pattern.",
+            "snack frequently.",
+            "read a good book every night.",
+            "raise levels of ghrelin."
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage suggests maintaining a set sleep pattern as essential for physical fitness."
+        },
+        {
+          "text": "The objective of the passage is to",
+          "options": [
+            "present psychological insights to the reader.",
+            "provide medical input to the reader.",
+            "expose the reader to disinformation.",
+            "advise the reader."
+          ],
+          "correctIndex": 3,
+          "explanation": "The passage advises on the importance of sleep for health."
+        },
+        {
+          "text": "Being deprived of sleep can result in",
+          "options": [
+            "hunger satiation.",
+            "terminal illness.",
+            "mental exhaustion.",
+            "metabolism loss."
+          ],
+          "correctIndex": 2,
+          "explanation": "The passage states that sleep deprivation can lead to mental exhaustion."
+        },
+        {
+          "text": "In what way does sleep contribute to a person's well-being?",
+          "options": [
+            "By helping the body replenish its resources.",
+            "By increasing a person's appetite.",
+            "By adding power and strength to the muscles.",
+            "By regularising a person's daily routine."
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage indicates that sleep helps the body replenish its resources."
+        },
+        {
+          "text": "The main focus of the passage is on the",
+          "options": [
+            "stability of leptin and ghrelin in the human body.",
+            "dangers of high levels of cholesterol and diabetes.",
+            "perils of insomnia and irregular sleep patterns.",
+            "ill effects of junk food high in carbs and sugars."
+          ],
+          "correctIndex": 2,
+          "explanation": "The passage primarily discusses the effects of insomnia and irregular sleep patterns."
+        }
+      ]
+    },
+    "summary": "The passage discusses the importance of sleep for health and its impact on various bodily functions.",
+    "source": "IPM Careers PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 60,
+    "content": {
+      "passageTitle": "Apple's Operations in India",
+      "passage": "Two Apple stores in Delhi and in Mumbai - opened in April 2023. Until now, Indians could buy Apple products in the country either online or through a vast network of what the company calls 'premium resellers'. Will the new-found ability to sell products directly to customers in India - the world's second largest smartphone market - impact its fortunes here? Apple has long tried to open physical retail stores in India. In 2019, the Indian government relaxed some investment rules, exempting companies selling 'cutting-edge' items, such as Apple's iPhones and iPads, from restrictions. Apple first launched an online store in India through a website which allows users to request for customised products. Apple's decision to open physical stores in India could be the next step in its branding strategy. It is not as if this will change Apple's sales in any dramatic way, but it is still a key milestone, one that will allow Apple to deliver to Indian customers the full Apple experience. The iPhone is still an aspirational product in the price-sensitive Indian market. When you launch an Apple store, you are basically giving a premium experience to your premium consumers. It might not pull up sales, but it pulls more people into the Apple ecosystem. Setting up an Apple store in India is also a statement that the country is now big enough for Apple to be actually interested in expanding operations here, and comes at a time when India is rising fast as a manufacturing base for the iPhone. Apple first began making a lower-end model of the iPhone in India in 2017. Last year, it began producing its latest model of iPhone 14 in the country, which now accounts for 5 percent of total iPhone production. For years, Apple had relied on China's sophisticated manufacturing network to produce the bulk of its products. But analysts predict that by 2025, a quarter of all iPhones the company makes could be produced in India. Apple was already making between 5-7 percent of its products in India, and they are targeting to go up to 25 percent of their manufacturing capacity. In 2022, Apple had a 60 percent market share in the Indian 'premium smartphone' market - which refers to mobiles that cost INR 40,000 or more, ahead of Samsung's 21 percent share. Apple is doing well across categories. The real issue will be to pull consumers to these flagship centres without alienating the partner sellers. Apple has finally understood that India's premium market is growing, so why not be serious about it.",
+      "questions": [
+        {
+          "text": "India is now the focus of Apple operations because",
+          "options": [
+            "a. it offers the benefit of a manufacturing base in addition to a market.",
+            "b. no other country has the same ease of doing business.",
+            "c. it has the world's second largest population.",
+            "d. American technology companies want to reduce their reliance on China."
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage states that India offers a manufacturing base and a market, making it a focus for Apple."
+        },
+        {
+          "text": "Apple's challenge while opening physical stores is to",
+          "options": [
+            "a. provide stimulation that draws customers away from other sellers.",
+            "b. retain links with their partner sellers while drawing customers to their stores.",
+            "c. subtly alienate customers away from competitors.",
+            "d. offer parallel products packaged more attractively."
+          ],
+          "correctIndex": 1,
+          "explanation": "The passage indicates that Apple needs to attract customers while maintaining relationships with partner sellers."
+        },
+        {
+          "text": "The main point the passage makes is that Apple",
+          "options": [
+            "a. needs physical stores to expand sales to more buyers of premium products.",
+            "b. iPhone was already popular in India.",
+            "c. has realised the strategic importance of the Indian market.",
+            "d. needs new branding and marketing strategies to compete with Samsung."
+          ],
+          "correctIndex": 2,
+          "explanation": "The passage emphasizes Apple's recognition of the importance of the Indian market."
+        },
+        {
+          "text": "Apple's aim is not only to increase sales of its iPhones, but to draw people into Apple's ecosystem. In the context of the passage, this statement means that Apple seeks to",
+          "options": [
+            "a. bring customers into a network of related products which it offers.",
+            "b. attract customers to buy its phones through innovative means.",
+            "c. attract customers by displaying a wide range of aesthetically designed products.",
+            "d. be the market leader in the world of premium smartphones."
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage suggests that Apple aims to integrate customers into its broader ecosystem."
+        },
+        {
+          "text": "The Apple retail stores in India will",
+          "options": [
+            "a. not have any impact on Apple's image.",
+            "b. bring in more customers and increase sales.",
+            "c. not materially impact sales of iPhones.",
+            "d. drive healthy competition in the smartphone market."
+          ],
+          "correctIndex": 1,
+          "explanation": "The passage implies that the stores will enhance customer engagement and sales."
+        },
+        {
+          "text": "Based on the passage which one of the following is not true?",
+          "options": [
+            "a. Regulatory restrictions were eased in 2023.",
+            "b. iPhone 14 is being manufactured in India.",
+            "c. Currently 5 to 7 percent of all iPhones are manufactured in India.",
+            "d. Manufacturing of iPhones in India commenced in 2017."
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage does not mention that regulatory restrictions were eased in 2023."
+        }
+      ]
+    },
+    "summary": "Questions based on a passage discussing Apple's operations and market strategy in India.",
+    "source": "IPM Careers 2023"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 70,
+    "content": {
+      "passageTitle": "PASSAGE 8",
+      "passage": "Bananas, apples, and avocados continue to ripen after they are picked. Cherries, blackberries, and grapes do not. The difference between climacteric fruits (the former) and non-climacteric fruits (the latter) matters to fruit growers and greengrocers, who must make sure their wares are in tip-top condition when they arrive at the marketplace. But how those differences originally came about remains unclear.\n\nTwo biologists of the University of Tokyo offer a suggestion. Fruits, they observe, exist to solve a problem faced by all plants-how best to spread their progeny around. Wrapping their seeds in a sugary pulp to provide a tasty meal serves as a way to get animals to do this for them. They do, however, need to make sure that their fruits favour the animals most likely to do the distributing. The biologists propose that climacterism, or its absence, is a way to achieve this. If ground-dwelling animals are the main distributors, then the continuing ripening of fallen fruit (i.e., climacterism) is beneficial. If, by contrast, those distributors are arboreal or aerial, and so can feed on unfallen fruit, then non-climacteric fruits will do well.\n\nTo test their idea, the two researchers studied 80 varieties of fruits, and noted which animals each depended on for its propagation. 35 of these fruits, eaten by both ground-dwelling animals and arboreal or aerial animals, were non-climacteric. Further, 15 of the 19 varieties eaten principally by ground-dwellers were climacteric, while 21 of the 26 fed on by arboreal or aerial animals were non-climacteric.\n\nThat is a suggestively strong correlation. And the authors' hypothesis is fortified by other evidence. They point out that non-climacteric fruits tend to have vivid colours, especially reds and purples. This may help them to stand out amid the foliage of their parent plants, advertising their presence. Climacteric fruits are generally better camouflaged. That makes them harder to spot until they have fallen to the ground. The main limitation of their work is that they looked at fruits eaten by people. This has probably contaminated the sample, for thousands of years of selective breeding for traits that human beings find appealing may have blurred any signal optimised by natural selection. The next step, therefore, should be the analysis of wild fruits.",
+      "questions": [
+        {
+          "text": "43. The main point the writer makes is that fruit-bearing plants",
+          "options": [
+            "a. of all kinds need to be studied, not just those consumed by humans.",
+            "b. and other plant species' propagation cannot be studied accurately.",
+            "c. are better protected than other plant species and can propagate easily.",
+            "d. have the same problems in propagation as other plants."
+          ],
+          "correctIndex": 0,
+          "explanation": "The main point emphasizes the need to study all fruit-bearing plants, not just those consumed by humans."
+        },
+        {
+          "text": "44. The study has been based on",
+          "options": [
+            "a. fruits that are consumed by humans.",
+            "b. fruits available at the University of Tokyo.",
+            "c. wild fruits consumed by animals.",
+            "d. fruits sourced by greengrocers."
+          ],
+          "correctIndex": 0,
+          "explanation": "The study primarily focused on fruits that are consumed by humans."
+        },
+        {
+          "text": "45. Which one of the following options means 'arboreal' and 'camouflage'?",
+          "options": [
+            "a. tree-dwelling and disguised",
+            "b. ground-dwelling and hidden",
+            "c. protected and fortified",
+            "d. covered and variegated"
+          ],
+          "correctIndex": 0,
+          "explanation": "'Arboreal' refers to tree-dwelling, while 'camouflage' relates to disguise."
+        },
+        {
+          "text": "46. The origins of the distinguishing characteristics between the two types of fruits, climacteric and non-climacteric are",
+          "options": [
+            "a. nebulous in spite of research.",
+            "b. clear now as a result of this research.",
+            "c. trivial at this stage.",
+            "d. dependent on researcher observation."
+          ],
+          "correctIndex": 0,
+          "explanation": "The origins remain unclear despite research efforts."
+        },
+        {
+          "text": "47. According to the passage, the interest in the difference between climacteric and non-climacteric fruits is in the",
+          "options": [
+            "a. commercial context.",
+            "b. environmental context.",
+            "c. gastronomical context.",
+            "d. public health context."
+          ],
+          "correctIndex": 0,
+          "explanation": "The passage suggests a commercial interest in the differences between the two types of fruits."
+        },
+        {
+          "text": "48. Consider the following two Findings: (i) Non-climacteric fruits tend to have vivid colours. (ii) Thirty-six varieties of climacteric and non-climacteric fruits were eaten predominantly either by ground-dwellers, or by arboreal or aerial animals respectively. According to the passage,",
+          "options": [
+            "a. Finding (i) provides main evidence and Finding (ii) provides supplementary evidence confirming the hypothesis of the biologists.",
+            "b. Both Findings (i) and (ii) provide supplementary evidence confirming the hypothesis of the biologists.",
+            "c. Both Findings (i) and (ii) provide main evidence confirming the hypothesis of the biologists.",
+            "d. Finding (i) provides supplementary evidence and Finding (ii) provides main evidence confirming the hypothesis of the biologists."
+          ],
+          "correctIndex": 0,
+          "explanation": "Finding (i) supports the hypothesis, while Finding (ii) provides additional context."
+        }
+      ]
+    },
+    "summary": "Questions based on a passage discussing climacteric and non-climacteric fruits and their propagation.",
+    "source": "IPM 2023"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 70,
+    "content": {
+      "passageTitle": "Passage 9",
+      "passage": "On the 14th of May 1796, vaccine matter was taken from the hand of a dairy maid, Sarah Nelmes, and inserted by two superficial incisions in the arms of James Phipps, a healthy boy of about eight years of age. The boy went through an attack of cowpox as expected. After this, however, it was necessary to determine whether he was protected from smallpox. After waiting two months Jenner inoculated him with material from a smallpox patient. He was delighted to note that the boy was not affected by smallpox.\n\nBy 1798, Jenner had succeeded in demonstrating the protective quality of the cowpox virus against smallpox, by putting on record details of 23 cases, contracted either casually or by direct inoculation. Sixteen of these had occurred accidentally among dairy workers in the course of occupations connected with cows and horses; the rest were done under Jenner's direction. Among the persons inoculated was Jenner's own little second son, Robert Harding Jenner, an infant eleven months old. Jenner demonstrated conclusively that the cowpox protects the human constitution from the infection of smallpox. After Dr. Jenner had made his tests, he prepared a pamphlet for publication. He also went to London, so that he might have the opportunity to introduce the subject personally to friends and demonstrate the truth of his assertion to them. He remained in London for nearly three months without being able to find anyone who would submit to vaccination. Jenner went back to Gloucestershire, disappointed. It happened, however, that soon after his return home, a distinguished London surgeon named Cline resolved to make a trial of the vaccine material which Jenner had left with his friends.\n\nThe patient was a child suffering from a form of chronic hip-joint disease. The vaccine material was inoculated, and the vaccine vehicle ran rather a normal course and healed fully. The little patient was afterward inoculated with smallpox virus and found to be incapable of acquiring that disease. This case attracted considerable attention. The child was in a run-down condition, and the vaccine material might very well have provoked a rather serious local reaction. In a way, the fate of vaccination hung in the balance and good luck was in its favour. Mr. Cline, however, after this, became a strong advocate of vaccination, and brought it very decidedly before the London physicians.\n\nIt was not long before the opposition to the practice of vaccination took definite form. One of the best-known London physicians of the time, Dr. Ingenhouz, became the leader of a strong faction of the medical profession of London, who not only would have nothing to do with vaccination, but proclaimed openly that it was a dangerous innovation, absolutely unjustifiable, and communicated a disease without protecting against any other. Dr. Watt from Glasgow blamed the vaccine for the increase in severe cases of measles and measles-related deaths among children. Fortunately, only a few colleagues were so illogical, and an excellent idea of how much Jenner's discovery was appreciated by his contemporaries may be obtained from the number of honours, diplomas, addresses and communications from public bodies and distinguished individuals which he received. Most of the prominent medical and scientific societies of Europe elected him a member or sent him some special token of recognition.",
+      "questions": [
+        {
+          "text": "49. 'Local reaction' refers to",
+          "options": [
+            "a. adverse reaction caused by injections.",
+            "b. adverse comments and protests by people from that location.",
+            "c. encouraging reaction from local doctors.",
+            "d. encouraging reaction from the people of the locality."
+          ],
+          "correctIndex": 0,
+          "explanation": "The term 'local reaction' typically refers to adverse reactions caused by injections."
+        },
+        {
+          "text": "50. Jenner received a lot of recognition from medical bodies because",
+          "options": [
+            "a. fortunately, only a few colleagues were illogical enough to reject him.",
+            "b. most of his colleagues realised the effectiveness of his work.",
+            "c. Dr. Watt could not prove that vaccination caused measles.",
+            "d. medical societies across Europe regularly engaged in tokenism."
+          ],
+          "correctIndex": 1,
+          "explanation": "Jenner received recognition because most of his colleagues recognized the effectiveness of his work."
+        },
+        {
+          "text": "51. According to the author, the main idea in the passage is",
+          "options": [
+            "a. scientific breakthroughs are more likely to happen in major urban centres.",
+            "b. documentation is key for disseminating science.",
+            "c. to explore the causes for vaccine hesitancy.",
+            "d. chance and risk play a part in the success of scientific experiments."
+          ],
+          "correctIndex": 3,
+          "explanation": "The passage discusses the role of chance and risk in the success of Jenner's vaccination efforts."
+        },
+        {
+          "text": "52. On returning from London, Dr. Jenner was disappointed because",
+          "options": [
+            "a. his friends responded negatively to the vaccine.",
+            "b. he was unsuccessful in replicating the experiment due to lack of volunteers.",
+            "c. his friends would not agree with his findings on the vaccine.",
+            "d. the vaccine did not receive any recognition, rewards, or a patent."
+          ],
+          "correctIndex": 1,
+          "explanation": "Jenner was disappointed because he could not find anyone willing to submit to vaccination."
+        },
+        {
+          "text": "53. Twenty-three cases were put on record with the objective to explain very clearly that",
+          "options": [
+            "a. the cowpox vaccine protected the patients from another deadly disease."
+          ],
+          "correctIndex": 0,
+          "explanation": "The cases were documented to demonstrate the protective effect of the cowpox vaccine."
+        }
+      ]
+    },
+    "summary": "Questions based on a passage about Edward Jenner's vaccination work and its reception.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "By calling the vaccine unjustifiable, Dr. Ingenhouz meant that vaccination",
+      "options": [
+        "made people sick and failed to provide general immunity.",
+        "was an injustice against those on whom it was tested.",
+        "was being carried out without any legal basis.",
+        "actually spread the disease to a large population hiding documents very craftily."
+      ],
+      "correctIndex": 1,
+      "explanation": "Dr. Ingenhouz criticized the ethical implications of vaccination, suggesting it was unjust to test it on certain individuals."
+    },
+    "summary": "Question about Dr. Ingenhouz's view on vaccination ethics.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 70,
+    "content": {
+      "passageTitle": "PASSAGE 10",
+      "passage": "From ancient Rome up to the Victorian era, a training in logic and rhetoric was meant to help privileged young men recognise spurious arguments and facts. Times have changed, but contemporary Italy is determined that its youth are prepared, as their ancient counterparts were, to engage meaningfully with the present-day version of the Forum - social media. At the end of October, 8,000 Italian schools will teach their students how to spot fake news through a programme developed with the help of journalists as well as tech giants Google and Facebook. In Israel, the University of Haifa is launching a course titled 'Fake News'. The purpose of these courses is to ensure that public debate, particularly during election campaigns, is not hijacked by vested interests. Since the US presidential election in 2016, the spectre of Russia and its use of online propaganda has loomed large over public discourse in the West. In other parts of the world too, doctored images and blatant lies have been published by 'news' websites. Given the speed with which information is shared online, the damage is already done by the time a fake story is exposed. The voters of tomorrow certainly need to be armed with the ability to sift bare facts from motivated fiction. The effects of social media on the formation of opinion, however, go far beyond fake news. Traditional or legacy media is ordered by a need for balance. A newspaper, for example, has sections that deal with politics, crime, sports, the arts et al. There is, at least in principle, an attempt to tell both sides of a story in each report. On social media, the only editor is the user herself. Algorithms ensure that people see more of what they 'like', that biases are reinforced rather than countered. Fake news is certainly a crucial aspect of online propaganda. But for young citizens to form opinions based on multiple viewpoints, they need to consciously seek out more than they are comfortable with.",
+      "questions": [
+        {
+          "text": "The writer of the passage suggests that",
+          "options": [
+            "the purpose of education in early times was very different from what it is now.",
+            "there are similarities in the aims of education in early times and those of today.",
+            "the purpose of education in early times was to help students attain a position of privilege.",
+            "as times have changed the basis of education has expanded."
+          ],
+          "correctIndex": 3,
+          "explanation": "The passage indicates that education has evolved to address contemporary challenges."
+        },
+        {
+          "text": "The passage points out that an important difference between traditional media and social media is that",
+          "options": [
+            "social media reaches more people.",
+            "traditional media tries to present different points of view.",
+            "social media is more balanced in its reports."
+          ],
+          "correctIndex": 1,
+          "explanation": "The passage highlights that traditional media aims for balance, while social media often reinforces biases."
+        }
+      ]
+    },
+    "summary": "Questions about the implications of education and differences between media types.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "57. Social media is dangerous in its ability to influence opinion in readers through",
+      "options": [
+        "a. its choice of news items which are presented.",
+        "b. its balanced reporting of wide-ranging stories.",
+        "c. its ability to guide the reader to motivated conclusions.",
+        "d. the creation of interest by using dubious facts."
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d, as it highlights the negative aspect of social media's influence."
+    },
+    "summary": "Question about the influence of social media on readers' opinions.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 50,
+    "content": {
+      "question": "58. Vested interests' (Para 2) means",
+      "options": [
+        "a. hidden purposes.",
+        "b. popular interests.",
+        "c. self-serving intentions.",
+        "d. profitable motives."
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is c, as 'vested interests' typically refer to self-serving intentions."
+    },
+    "summary": "Question about the meaning of 'vested interests'.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 50,
+    "content": {
+      "question": "59. The antonym for 'spurious' (Para 1) is",
+      "options": [
+        "a. inferior.",
+        "b. incisive.",
+        "c. dubious.",
+        "d. Genuine."
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d, as 'genuine' is the opposite of 'spurious'."
+    },
+    "summary": "Question about the antonym of 'spurious'.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 70,
+    "content": {
+      "passageTitle": "PASSAGE 11",
+      "passage": "John Muir, Earth-planet, Universe. - These words are written on the inside cover of the notebook from which the contents of this volume have been taken. They reflect the mood in which the late author and explorer undertook his thousand-mile walk to the Gulf of Mexico a half-century ago. Nor less does this refreshingly cosmopolitan address, which might have startled any finder of the book, reveal the temper and the comprehensiveness of Mr. Muir's mind. Even at the early age of twenty-nine his eager interest in every aspect of the natural world had made him a citizen of the universe. On these expeditions he had disciplined himself to endure hardship, for his notebooks disclose the fact that he often went hungry and slept in the woods, or on the open prairies, with no cover except the clothes he wore. 'Oftentimes,' Mr. Muir writes in some unpublished biographical notes, 'I had to sleep out without blankets, and also without supper or breakfast. But usually I had no great difficulty in finding a loaf of bread in the widely scattered clearings of the farmers. With one of these big backwoods loaves I was able to wander many a long, wild mile, free as the winds in the glorious forests and bogs, gathering plants and feeding on God's abounding, inexhaustible spiritual beauty bread. Only once in my long Canada wanderings was the deep peace of the wilderness savagely broken. It happened in the maple woods about midnight, when I was cold and my fire was low. I was awakened by the awfully dismal howling of the wolves, and got up in haste to replenish the fire.' Had it not been for the accidental injury to his right eye in the month of March, 1867, he probably would have started somewhat earlier than he did. In a letter written to Indianapolis friends on the day after the accident, he refers mournfully to the interruption of a long-cherished plan. 'For weeks,' he writes, 'I have daily consulted maps in locating a route through the Southern States, the West Indies, South America, and Europe - a botanical journey studied for years. But, alas, I am half blind. My right eye, trained to minute analysis, is lost and I have scarce heart to open the other.' The injury to his eye proved to be less serious than he had at first supposed. In June he was writing to a friend: 'I have been reading and botanizing for some weeks, and find that for such work I am not very much disabled.' In an account written after the excursion he says: 'I was eager to see Illinois prairies on my way home, so we went to Decatur, near the center of the State, thence. I botanized one week on the prairie about seven miles southwest of Pecatonica ... To me all plants are more precious than before. My poor eye is not better, nor worse. A cloud is over it, but in gazing over the widest landscapes, I am not always sensible of its presence.",
+      "questions": [
+        {
+          "text": "61. \"John Muir, Earth-planet, Universe.\" Muir wrote this in his notebook because",
+          "options": [
+            "a. He did not have a permanent address.",
+            "b. He wanted to be a traveller all his life.",
+            "c. His love for botany went beyond borders.",
+            "d. He wanted to live in the open all his life."
+          ],
+          "correctIndex": 0,
+          "explanation": "The correct answer is a, as it reflects his transient lifestyle."
+        }
+      ]
+    },
+    "summary": "Question about why John Muir wrote a specific phrase in his notebook.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 60,
+    "content": {
+      "passageTitle": "John Muir's Experiences",
+      "passage": "John Muir's experiences with nature and his explorations.",
+      "questions": [
+        {
+          "text": "Which of these did John Muir have no great difficulty in doing?",
+          "options": [
+            "Finding food among the farmers.",
+            "Eating regularly every day.",
+            "Sleeping without blankets on certain nights.",
+            "Chasing wolves that howled through the nights."
+          ],
+          "correctIndex": 1,
+          "explanation": "John Muir found it easy to eat regularly every day."
+        },
+        {
+          "text": "How did the experience with nature affect John Muir?",
+          "options": [
+            "He felt spiritually fulfilled.",
+            "He became a better botanist.",
+            "He felt successful after collecting rare plants.",
+            "He enjoyed the breeze in the glorious forests."
+          ],
+          "correctIndex": 0,
+          "explanation": "Muir felt spiritually fulfilled through his experiences in nature."
+        },
+        {
+          "text": "According to the passage, in what way was Muir affected by his injury?",
+          "options": [
+            "His injured eye healed very slowly.",
+            "He could not open his left eye during his exploration.",
+            "His eyesight was affected, but he was able to carry on.",
+            "He took a long time to consult maps and study them."
+          ],
+          "correctIndex": 2,
+          "explanation": "Muir's eyesight was affected, but he managed to continue his work."
+        },
+        {
+          "text": "When Muir said that he 'botanized', he meant that he",
+          "options": [
+            "studied plants and made notes on them.",
+            "studied plants in their natural habitat.",
+            "studied plants during his exploration.",
+            "studied plants and classified them."
+          ],
+          "correctIndex": 1,
+          "explanation": "Muir botanized by studying plants in their natural habitat."
+        },
+        {
+          "text": "Which of these sentences is not true?",
+          "options": [
+            "John Muir explored several new places even on his way home.",
+            "There was a cloud over the landscape he travelled.",
+            "He was committed to being a botanist more than ever.",
+            "He recorded his adventures in the notebook."
+          ],
+          "correctIndex": 1,
+          "explanation": "The statement about the cloud over the landscape is not true."
+        }
+      ]
+    },
+    "summary": "Questions about John Muir's experiences and interpretations from a passage.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 70,
+    "content": {
+      "passageTitle": "Imaginary Island",
+      "passage": "A scenario involving shipwrecked men on an uninhabited island.",
+      "questions": [
+        {
+          "text": "When a dozen men are cast away on an imaginary island, the best educated would look for metals in rocks because",
+          "options": [
+            "metals can be used to make weapons.",
+            "such an island probably has unexploited resources.",
+            "he may find it beneath him to dig or cut or make shoes.",
+            "he is suited for such work."
+          ],
+          "correctIndex": 1,
+          "explanation": "The best educated would look for metals due to the potential unexploited resources."
+        }
+      ]
+    },
+    "summary": "Question regarding the actions of educated individuals on an imaginary island.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Art can be __________ because it encourages individuals to express their emotions through a creative outlet, allowing them to process complex feelings, reduce stress, and __________ self-awareness.",
+      "options": [
+        "a. pleasing; decrease",
+        "b. acceptable; disturb",
+        "c. avoidable; mitigate",
+        "d. therapeutic; enhance"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d. 'therapeutic; enhance' as it fits the context of art's benefits."
+    },
+    "summary": "This question assesses the understanding of vocabulary in context related to art's benefits.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Astronauts who stayed for an ________ period of time at the International Space Station displayed a remarkable level of ________ endurance and mental ________.",
+      "options": [
+        "a. extensive; dysfunctional; agility",
+        "b. explicit; stoic; integrity",
+        "c. expanded; stern; acuity",
+        "d. extended; physical; resilience"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d. 'extended; physical; resilience' as it accurately describes the context."
+    },
+    "summary": "This question evaluates vocabulary related to astronauts' experiences in space.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "While Curcumin, which is an ________ found in turmeric helps to reduce ________, extremely high doses of it can ________ headache and nausea.",
+      "options": [
+        "a. enzyme; abrasion; infuse",
+        "b. alkali; infection; promote",
+        "c. alchemy; injury; cause",
+        "d. ingredient; inflammation; induce"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d. 'ingredient; inflammation; induce' as it fits the context of Curcumin."
+    },
+    "summary": "This question tests knowledge of vocabulary related to health and nutrition.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The notion of personhood is __________ on something more than a particular type of genetic material within human beings: it arises only with the larger-scale structural ________ of that material, which permits capacities like ________, thought and moral agency.",
+      "options": [
+        "a. dependent; disorganisation; deconstruction",
+        "b. interdependent; division; differentiation",
+        "c. built; distribution; calibration",
+        "d. premised; organisation; consciousness"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d. 'premised; organisation; consciousness' as it accurately reflects the philosophical context."
+    },
+    "summary": "This question assesses understanding of vocabulary related to philosophical concepts.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Since chronic stress can __________ the immune system, making individuals more susceptible to illness and __________ their overall well-being, healthcare practitioners often recommend mindfulness practices and proper sleep to __________ these negative effects.",
+      "options": [
+        "a. undermine; elevate; impede",
+        "b. compromise; impair; counter",
+        "c. paralyse; improve; diminish",
+        "d. endanger; preserve; decrease"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b. 'compromise; impair; counter' as it fits the context of stress effects."
+    },
+    "summary": "This question evaluates vocabulary related to health and stress management.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Reading Comprehension Sets",
+    "percentile": 60,
+    "content": {
+      "passageTitle": "Gender Differences in Abilities",
+      "passage": "One of the dangers in adopting a binary view of the human brain is that it can promote the notion of feminine and masculine traits, determine as well as limit academic choices, lead to the distortion and misinterpretation of scientific data, and be used to encourage male dominance and superiority.",
+      "questions": [
+        {
+          "text": "The writer of this passage wants to emphasise the need to",
+          "options": [
+            "a. use new insights provided by scientific research for a better understanding of human abilities.",
+            "b. continuously debate issues of gender differences to achieve human progress.",
+            "c. question the findings of scientific inquiry into the functioning of the human brain.",
+            "d. accept gender differences as essential to the survival of the human species."
+          ],
+          "correctIndex": 0,
+          "explanation": "The correct answer is a. as it aligns with the passage's emphasis on understanding human abilities."
+        },
+        {
+          "text": "The synonym for 'stranglehold' (Para 1) is",
+          "options": [
+            "a. asphyxiation",
+            "b. containment",
+            "c. prohibiting entry",
+            "d. overwhelming control"
+          ],
+          "correctIndex": 3,
+          "explanation": "The correct answer is d. 'overwhelming control' as it captures the essence of 'stranglehold'."
+        },
+        {
+          "text": "The antonym for 'unbounded' (Para 2) is",
+          "options": [
+            "a. imprisoned",
+            "b. aggressive",
+            "c. restricted",
+            "d. fearful"
+          ],
+          "correctIndex": 2,
+          "explanation": "The correct answer is c. 'restricted' as it is the opposite of 'unbounded'."
+        }
+      ]
+    },
+    "summary": "This set includes questions on gender differences and vocabulary from a passage.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Psychologists urge users to remember that social media rarely reflects the full complexity of real life. Influencers often ______ a carefully curated online persona, which can ______ unrealistic standards and occasionally ______ negative self-comparisons amongst their followers.",
+      "options": [
+        "a. endorse; foster; provoke",
+        "b. maintain; generate; trigger",
+        "c. advocate; perpetuate; stimulate",
+        "d. profess; inspire; release"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is a. endorse; foster; provoke, as it fits the context of social media influence."
+    },
+    "summary": "Fill in the blanks about social media's impact on self-perception.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Conspiracy theorists suggest that if climate change is slowly turning the planet into an oven, then this must have been the outcome of our enemies' intentional ______. If there are no coincidences in the world, then everything, including ______ events, can be controlled.",
+      "options": [
+        "a. errors; indescribable; information",
+        "b. machinations; outstanding; determination",
+        "c. plotting; catastrophic; prowess",
+        "d. inaction; advantageous; performance"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is c. plotting; catastrophic; prowess, as it aligns with the context of conspiracy theories."
+    },
+    "summary": "Choose the correct words related to climate change conspiracies.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 70,
+    "content": {
+      "question": "In today's fast-paced world, individuals are inundated with information, necessitating the cultivation of critical thinking skills in order to navigate the influx of data ______. Additionally, the prevalence of fake news and misinformation presents a ______ challenge.",
+      "options": [
+        "a. discerningly; pervasive; fostering",
+        "b. thoughtfully; holistic; furthering",
+        "c. discreetly; global; serving",
+        "d. judiciously; systematic; inhibiting"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is a. discerningly; pervasive; fostering, as it fits the context of information overload."
+    },
+    "summary": "Identify the correct terms regarding information overload and challenges.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 70,
+    "content": {
+      "question": "The outbreak of COVID-19 resulted in a health crisis and a drop in economic activity that were without ______ in history. While containing and ______ the spread of the virus was the first priority of public authorities.",
+      "options": [
+        "a. similarity; combating; prevalence",
+        "b. precedent; mitigating; incidence",
+        "c. equivalent; eradicating; toll",
+        "d. parallel; controlling; outbreak"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b. precedent; mitigating; incidence, as it accurately describes the situation."
+    },
+    "summary": "Fill in the blanks regarding the COVID-19 outbreak's impact.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "It is widely argued that social media can benefit aspiring ______. Populists in particular latch on to social media today as a way to connect directly with people, ______ restraints on their behaviour that political parties would have provided in the pre-internet age.",
+      "options": [
+        "a. entrepreneurs; enforcing; presumably",
+        "b. democrats; avoiding; surprisingly",
+        "c. autocrats; bypassing; uniformly",
+        "d. anarchists; unscrupulous; unanimously"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is a. entrepreneurs; enforcing; presumably, as it fits the context of social media's influence."
+    },
+    "summary": "Choose the correct terms related to social media and populism.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 70,
+    "content": {
+      "question": "An ______ found that one of the marathon runners had ______ slowed down in the last two kilometres and after ______ to the one behind him had let him cross the finish line just one second before he did.",
+      "options": [
+        "a. analysis; systematically; waving",
+        "b. appraisal; particularly; speaking",
+        "c. overview; purposely; beckoning",
+        "d. investigation; deliberately; signalling"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d. investigation; deliberately; signalling, as it fits the context of the scenario."
+    },
+    "summary": "Identify the correct terms regarding a marathon runner's performance.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 70,
+    "content": {
+      "question": "In an era of globalization, cultural diversity is celebrated and valued across societies. However, the rise of xenophobia and intolerance poses a ______ challenge to social cohesion and harmony.",
+      "options": [
+        "a. multi-faceted; stimulating; archetypes",
+        "b. pressing; nurturing; stereotypes",
+        "c. sophisticated; expediting; propositions",
+        "d. complicated; advancing; truisms"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is a. multi-faceted; stimulating; archetypes, as it fits the context of cultural diversity."
+    },
+    "summary": "Choose the correct terms related to cultural diversity challenges.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 70,
+    "content": {
+      "question": "The culture of the 21st century - on an increasingly ______ scale - is oriented around the practical principles of utility, effectiveness, and impact.",
+      "options": [
+        "a. nominal; dinner; meaningfully",
+        "b. global; relationship; pragmatically",
+        "c. conspicuous; dialogue; diligently",
+        "d. ordinal; conversation; imaginatively"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b. global; relationship; pragmatically, as it fits the context of modern culture."
+    },
+    "summary": "Identify the correct terms regarding the culture of the 21st century.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Working from home requires that you may have to put your ______ life on ______. Some people find this very ______ as they like to keep their work and home lives separate.",
+      "options": [
+        "a. entire; camera; complicated",
+        "b. private; screen; disconcerting",
+        "c. actual; video; uncomfortable",
+        "d. family; microscope; disturbing"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is c. actual; video; uncomfortable, as it fits the context of working from home."
+    },
+    "summary": "Fill in the blanks about the challenges of working from home.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "______ have to label their ______ posts in order to bring about transparency and ______ the interests of the customers.",
+      "options": [
+        "a. Promoters; social media; incite",
+        "b. Influencers; promotional; safeguard",
+        "c. Entrepreneurs; advertising; protect",
+        "d. Marketers; online; enhance"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b. Influencers; promotional; safeguard, as it fits the context of social media ethics."
+    },
+    "summary": "Choose the correct terms regarding social media transparency.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The human resource chief said that the company will not ________ on investing in people and has ________ spending on employee needs in order to ________ them and provide them with a sense of stability and certainty.",
+      "options": [
+        "a. prioritise; compromised; include",
+        "b. compromise; prioritised; reassure",
+        "c. delay; assured; empower",
+        "d. debate; assured; confront"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b. 'compromise' fits the context of not reducing investment, and 'prioritised' aligns with spending on employee needs."
+    },
+    "summary": "Question about company investment and employee needs.",
+    "source": "IPM Careers 2023"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "In its early stages, dementia is often _____ from normal ageing, in which the older brain may naturally begin to show signs of cognitive impairment. Neither dementia nor cognitive ageing is currently, _____ though they may be slowed through diet, exercise, and keeping the mind agile with social and intellectual activity.",
+      "options": [
+        "a. distinguishable; permanent",
+        "b. irreversible; manageable",
+        "c. indistinguishable; reversible",
+        "d. differentiated; visible"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is c. 'indistinguishable' and 'reversible' fit the context of dementia and cognitive ageing."
+    },
+    "summary": "Question about dementia and cognitive ageing.",
+    "source": "IPM Careers 2023"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "In the alleyways of old Cairo, in its cafes, warehouses and barbershops, framed portraits of Egyptian icons are ______ on fading walls. Kings, presidents, religious and political figures are all ______ as symbols of a glorious past.",
+      "options": [
+        "a. fashionable; confounded",
+        "b. ubiquitous; immortalised",
+        "c. rare; abundant",
+        "d. substantial; dispersed"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b. 'ubiquitous' and 'immortalised' fit the context of portraits on walls."
+    },
+    "summary": "Question about portraits in old Cairo.",
+    "source": "IPM Careers 2023"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The beauty of ________ is that it poses thought-provoking questions and inspires us to think deeply about ________ and life in general. Further, ________ about the ideas and perspectives outlined by different thinkers can help us gain a better ________ of the world we live in.",
+      "options": [
+        "a. philosophy; ourselves; pondering; understanding",
+        "b. orthography; writing; speaking; perspective",
+        "c. linguistics; language; cogitating; picture",
+        "d. history; animals; mulling; acquaintance"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is a. 'philosophy' fits the context of thought-provoking questions."
+    },
+    "summary": "Question about the nature of philosophy.",
+    "source": "IPM Careers 2022"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Everyday more than 1 billion promotional messages are sent that are commercial and ________. Although ________ have used more technology to stop this, ________ find ways around it.",
+      "options": [
+        "a. unsolicited; regulators; spammers",
+        "b. inescapable; governments; advertisers",
+        "c. informative; authorities; promoters",
+        "d. educational; firewalls; hackers"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is a. 'unsolicited' fits the context of promotional messages."
+    },
+    "summary": "Question about promotional messages and technology.",
+    "source": "IPM Careers 2022"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Visually strong, ________ films of the 1920s are ________ preserved and suffer from censorship cuts, leading to the ________ that they were primitive and barely watchable.",
+      "options": [
+        "a. classic; dispassionately; conclusion",
+        "b. action-packed; badly; accusation",
+        "c. monochrome; barely; observation",
+        "d. silent; poorly; misconception"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d. 'silent' and 'poorly' fit the context of film preservation."
+    },
+    "summary": "Question about films of the 1920s and preservation.",
+    "source": "IPM Careers 2022"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Achieving spaceflight enabled humans to begin to explore the solar system and the rest of the ________, to understand the many objects and ________ that are better observed from a space perspective.",
+      "options": [
+        "a. configuration; elements",
+        "b. galaxy; ideologies",
+        "c. cosmos; materials",
+        "d. universe; phenomena"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d. 'universe' and 'phenomena' fit the context of space exploration."
+    },
+    "summary": "Question about space exploration and understanding.",
+    "source": "IPM Careers 2022"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The investigators have ________ that he had leaked confidential ________ information about the acquisition, thereby allowing associates to profit ________ from the deal.",
+      "options": [
+        "a. discovered; internal; enormously",
+        "b. alleged; insider; illicitly",
+        "c. accused; important; dramatically",
+        "d. announced; financial; treacherously"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b. 'alleged' and 'insider' fit the context of leaking information."
+    },
+    "summary": "Question about leaking confidential information.",
+    "source": "IPM Careers 2022"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "In an anthropocentric __________, animals are no more than property to human beings. Therefore, the concepts of 'humane' treatment and 'necessary' ________ are economic in nature.",
+      "options": [
+        "a. belief; well-being; partially",
+        "b. construct; comfort; somewhat",
+        "c. universe; gain; entirely",
+        "d. worldview; suffering; explicitly"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d. 'worldview' fits the context of animal treatment."
+    },
+    "summary": "Question about anthropocentrism and animal rights.",
+    "source": "IPM Careers 2022"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "When we think about listening, we tend to assume that it is basically the same as hearing; this is a ________ because it leads us to believe that effective listening is ________.",
+      "options": [
+        "a. blunder; spontaneous; forget",
+        "b. fallacy; impulsive; ignore",
+        "c. mistake; natural; reject",
+        "d. misconception; instinctive; neglect"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d. 'misconception' fits the context of listening."
+    },
+    "summary": "Question about misconceptions of listening.",
+    "source": "IPM Careers 2021"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "As vaccination rates rise and governments relax their pandemic ______, the recovery of the event ecosystem is happening faster than expected. Event management ______ see the number of events and event attendance reaching and potentially ______ pre-pandemic levels in 2019.",
+      "options": [
+        "a. regulations, professionals, surpassing",
+        "b. monitoring, experts, confounding",
+        "c. resolutions, practitioners, reducing",
+        "d. systems, masters, exceeding"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is a, as it fits the context of the sentence."
+    },
+    "summary": "Fill in the blanks related to pandemic recovery and event management.",
+    "source": "IPM 2021"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "This ______ man was actually the ______ manager the company ever had.",
+      "options": [
+        "a. assiduous, ludicrous, most able",
+        "b. assiduous, analytical, best",
+        "c. well-groomed, assertive, compassionate",
+        "d. kind-hearted, thoughtful, friendly"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b, as it describes a competent manager."
+    },
+    "summary": "Choose the correct descriptors for a remarkable manager.",
+    "source": "IPM 2021"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The Aravalli range is the oldest ______ geological feature anywhere in the world. These were once tall mountains, possibly as high as the Himalayas. Over hundreds of millions of years these tall mountains have been ______ to low hills and ridges. Yet, these diminutive hills have been ______ to many important events in Indian history.",
+      "options": [
+        "a. existing, reduced, sentinel",
+        "b. prevailing, destroyed, testament",
+        "c. surviving, eroded, witness",
+        "d. continuing, broken down, observers"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is c, as it accurately describes the geological changes."
+    },
+    "summary": "Identify the correct terms describing the Aravalli range's geological history.",
+    "source": "IPM 2021"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Coral reefs are one of the most ______ biologically complex, and diverse marine ecosystems on Earth. This ecosystem is one of the ______ paradoxes of the biosphere: how do clear, and thus nutrient-poor, waters support such ______ and productive communities?",
+      "options": [
+        "a. common, sensitive, fruitful",
+        "b. fragile, fascinating, prolific",
+        "c. deep, strange, exuberant",
+        "d. frail, unrecognized, wealthy"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b, as it describes the complexity and productivity of coral reefs."
+    },
+    "summary": "Select the appropriate adjectives for coral reefs and their ecosystems.",
+    "source": "IPM 2020"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "It is a ______ to live in a land without ______. Even with all the technological advancement and economic growth, there are still millions who live in war zones where life every day is filled with ______.",
+      "options": [
+        "a. coincidence, prejudice, adventures",
+        "b. privilege, bigotry, terror",
+        "c. lovely, pride, episodes",
+        "d. punishment, hate, agony"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b, as it highlights the contrast between privilege and hardship."
+    },
+    "summary": "Fill in the blanks regarding living conditions in war zones.",
+    "source": "IPM 2020"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The ability to ______ and ______ a cohesive team is particularly critical in hi-tech firms where the ______ landscape can shift dramatically in the face of disruptive technologies.",
+      "options": [
+        "a. mentor, keep, sustainable",
+        "b. shape, guide, competitive",
+        "c. drive, maintain, tectonic",
+        "d. involve, manage, green"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b, as it emphasizes the importance of guidance in a competitive environment."
+    },
+    "summary": "Choose the correct verbs related to team cohesion in tech firms.",
+    "source": "IPM 2020"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Cool-headed and rational, Jo Eun-cha is a talented and driven anchorman who commands as well as demands respect. After ______ to get elected as a news director, he aims to ______ to his job as the top news anchor to increase his ______ of being elected next year.",
+      "options": [
+        "a. happening, quit, hopes",
+        "b. failing, return, chances",
+        "c. hoping, upgrade, certainty",
+        "d. going, give up, luck"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is c, as it logically follows the context of his ambitions."
+    },
+    "summary": "Select the appropriate actions related to Jo Eun-cha's career.",
+    "source": "IPM 2020"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "A collective investment fund (CIF), also known as a collective investment trust (CIT), is a group of ______ accounts held by a bank or trust company. The financial institution ______ assets from individuals and organizations to ______ a single larger, diversified portfolio.",
+      "options": [
+        "a. diverse, discounts, conceive",
+        "b. different, collected, simulate",
+        "c. financial, covered, synthesize",
+        "d. pooled, groups, develop"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is d, as it accurately describes the function of a CIF."
+    },
+    "summary": "Identify the correct terms related to collective investment funds.",
+    "source": "IPM 2020"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One who is ______ gets on with his job in spite of obstacles, while the one who is ______ hardly shows any ______ progress. The latter spends all his time ______ about his troubles.",
+      "options": [
+        "a. artful, doubtful, speaking",
+        "b. assiduous, querulous, whining",
+        "c. hardworking, dishonest, gossiping",
+        "d. hotheaded, scared, crying"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b, as it contrasts the two types of workers."
+    },
+    "summary": "Choose the correct adjectives describing work attitudes.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The ______ of multiculturalism, in times of war or economic ______, tribalism is what causes those in power to confine groups of people with different ______ into ghettos or in communes on the margins of their cities.",
+      "options": [
+        "a. rise, doldrums, ideologies",
+        "b. tyranny, growth, habits",
+        "c. antithesis, prosperity, persuasions",
+        "d. opposite, distress, ethnicities"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is a, as it reflects the dynamics of multiculturalism."
+    },
+    "summary": "Select the correct terms related to multiculturalism and tribalism.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "That the artiste went about systematically to get traditional ______ back into the mainstream, and to ______ a textile culture for dance is to be celebrated.",
+      "options": [
+        "a. practices, processed",
+        "b. motifs, create",
+        "c. totems, evolved",
+        "d. stories, described"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct answer is b, as it emphasizes the revival of cultural motifs."
+    },
+    "summary": "Identify the correct terms related to cultural revival in dance.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "In response to my friend's request, I decided to write her a letter, which I hoped would be honest and practical, while also serving as a _______ of sorts for my own feminist thinking. This book is a _______ of that letter, with some details changed.",
+      "options": [
+        "a. map, version",
+        "b. chart, form",
+        "c. base, fallout",
+        "d. guide, precis"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is 'map, version' as it fits the context of the sentence."
+    },
+    "summary": "Fill in the blanks in a sentence about writing a letter.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Quantum Physics really begins to point to this discovery. It says that you can't have a Universe without mind _______ into it, and that the mind is actually _______ the very thing that is being _______.",
+      "options": [
+        "a. getting, creating, acknowledged",
+        "b. intruding, making, construed",
+        "c. entering, shaping, perceived",
+        "d. penetrating, forming, seen"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct answer is 'entering, shaping, perceived' as it logically completes the sentence."
+    },
+    "summary": "Complete the sentences about Quantum Physics and the mind.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Incorrect Words",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The sound of laughter and loud music from the neighbour's house disturbed his train of thought as he was writing his farewell speech.",
+        "b. My friend has picked up a stray dog from the street and is now looking for somebody to train and domesticate the animal.",
+        "c. If you really want to see the landscape and the scenic countryside, it is better to take a train or go by road, rather than by plane.",
+        "d. By following the train of blood on the platform the police located the body of a young woman who had been brutally stabbed."
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct answer is option d, as 'train of blood' is an inappropriate phrase."
+    },
+    "summary": "Identify the statement with incorrect word usage.",
+    "source": "2024"
+  },
+  {
+    "topic": "Incorrect Words",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. She said, 'I always stay awake late into the night till my daughters come home, as I worry a lot about their safety.'",
+        "b. Due to the ban on slaughter of cattle, the neglected ones often stay away, wandering into fields and eating the crops.",
+        "c. The ownership of the property went to the eldest son of the family, but the other siblings went to court and asked for a stay order.",
+        "d. During her summer holidays she usually went to the village to stay with her grandparents and her large extended family."
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is option a, as 'stay awake late into the night' is awkwardly phrased."
+    },
+    "summary": "Identify the statement with incorrect word usage.",
+    "source": "2024"
+  },
+  {
+    "topic": "Incorrect Words",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The rules of the organization proscribes members from engaging in conflicts of interest.",
+        "b. The coach proscribes late night parties before an important game.",
+        "c. The software manual proscribes step-by-step instructions for installing and configuring the program.",
+        "d. The company's policy proscribes employees from disclosing confidential information to unauthorized individuals."
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is option a, as 'proscribes' is incorrectly used; it should be 'prescribes'."
+    },
+    "summary": "Identify the statement with incorrect word usage.",
+    "source": "2024"
+  },
+  {
+    "topic": "Incorrect Words",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The rules of the organization proscribes members from engaging in conflicts of interest.",
+        "b. The coach proscribes late night parties before an important game.",
+        "c. The software manual proscribes step-by-step instructions for installing and configuring the program.",
+        "d. The company's policy proscribes employees from disclosing confidential information to unauthorized individuals."
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct answer is option a, as 'proscribes' is incorrectly used; it should be 'prescribes'."
+    },
+    "summary": "Identify the statement with incorrect word usage.",
+    "source": "2024"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. A build-up of the callus is one of the most common causes of discomfort.",
+        "b. The doctor examined the callus but neglected to treat it.",
+        "c. When it is not too thick, the callus protects the foot from damage.",
+        "d. He received fifty hares on his feet delivered with callus indifference."
+      ],
+      "correctIndex": 3,
+      "explanation": "The term 'callus indifference' is incorrectly used; it should be 'callous indifference'."
+    },
+    "summary": "Identify the incorrect usage of the word 'callus'.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The Child Marriage Restraint Act bans the marriage of those who are below 18 years of age.",
+        "b. The government bans anyone with irregularities in their passports from travelling abroad.",
+        "c. Bans provide the community a chance to raise objections and ensure transparency.",
+        "d. Organic farming bans the usage of all pesticides and involves manual weeding."
+      ],
+      "correctIndex": 3,
+      "explanation": "The term 'bans the usage' is awkward; it should be 'bans the use of'."
+    },
+    "summary": "Identify the incorrect usage of the word in the context of bans.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. They were all soaking wet and their mother told them to ring their clothes first and then put them out to dry.",
+        "b. She had left home for the first time, so her parents made her promise that she would ring them up every day.",
+        "c. To catch the terrorist the security forces formed a ring around the house where he was hiding.",
+        "d. The witch waved her wand, recited a magical verse, pressed the blue stone on her ring and vanished into thin air."
+      ],
+      "correctIndex": 1,
+      "explanation": "'Ring them up' is incorrectly used; it should be 'call them up'."
+    },
+    "summary": "Identify the incorrect usage of the word 'ring'.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. After many years of knowing one another, they eventually tied the knot.",
+        "b. It was a full moon night and the tied was high, but he went boating and, unfortunately, he drowned.",
+        "c. The bags placed on the carrier were not securely tied, which led to an unfortunate accident.",
+        "d. I have a good chance of a promotion since my firm has recently tied up with a global conglomerate."
+      ],
+      "correctIndex": 1,
+      "explanation": "'The tied was high' is incorrect; it should be 'the tide was high'."
+    },
+    "summary": "Identify the incorrect usage of the word 'tied'.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. Our products have to function in extreme weather conditions, which is why we put them through climatic testing.",
+        "b. The climatic moment of the match was when the captain got caught behind the wicket.",
+        "c. Under certain climatic conditions, hailstorms are formed in the atmosphere, resulting in unexpected accidents.",
+        "d. The passengers in the bus were sweating profusely because of the hot climatic conditions."
+      ],
+      "correctIndex": 1,
+      "explanation": "'Climatic moment' is incorrectly used; it should be 'climactic moment'."
+    },
+    "summary": "Identify the incorrect usage of the word 'climatic'.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. To keep the key safe, she wore it on a cord around her neck.",
+        "b. He purchased a cord of wood from the market.",
+        "c. Teenagers may feel a need to cut the umbilical cord tying them to their homes.",
+        "d. The musician would hear a cord in his head and play each note individually."
+      ],
+      "correctIndex": 3,
+      "explanation": "'Cord' is incorrectly used; it should be 'chord' in a musical context."
+    },
+    "summary": "Identify the incorrect usage of the word 'cord'.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly or inappropriately. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. If you need to farther your career, you should avoid all kinds of distractions.",
+        "b. He decided to further his studies by enrolling in a master's program.",
+        "c. The company aims to further its reach in the international market.",
+        "d. She worked hard to further her ambitions in the field of art."
+      ],
+      "correctIndex": 0,
+      "explanation": "'Farther' is incorrectly used; it should be 'further' in this context."
+    },
+    "summary": "Identify the incorrect usage of the word 'farther'.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "There was a scenic spot not very far from our cottage where we used to go for picnics.",
+        "Such a spot on his career was difficult to ignore when deciding promotions.",
+        "He was unsure if he could respond to the question asked; fortunately, his answer was spot on.",
+        "She wanted to make a good impression but, at the last moment, discovered a spot of ink on her collar."
+      ],
+      "correctIndex": 1,
+      "explanation": "The phrase 'spot on' is used correctly, but 'spot on his career' is awkward."
+    },
+    "summary": "Identify the incorrect usage of a word in given statements.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "When the women were asked to join the protest, they refused to collaborate.",
+        "Some treacherous relatives of Indian rulers collaborated with the British Empire.",
+        "She interviewed many teens to collaborate her thesis on their mental health issues.",
+        "The policeman collaborated with the film makers who were shooting a crime thriller."
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct phrase should be 'collaborate on' instead of 'collaborate her thesis'."
+    },
+    "summary": "Identify the incorrect usage of a word in given statements.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "It was a long journey by road, and they had yet to find a boat that would help them cross the river.",
+        "We were told that she had lived through tough times which made her cross and cranky as she grew older.",
+        "The mistakes of his youth are the cross that he has to bear for the rest of his life.",
+        "Although he thinks he is the life of the party, his remarks are insensitive, and his jokes are vulgar, cross, and crude."
+      ],
+      "correctIndex": 2,
+      "explanation": "'Cross' in the context of 'the cross he has to bear' is incorrect; it should be 'cross to bear'."
+    },
+    "summary": "Identify the incorrect usage of a word in given statements.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "The orchestra decided to flout tradition and played their instruments wearing ordinary clothes.",
+        "The problems caused by flouting rules are many, but some people do not care."
+      ],
+      "correctIndex": 1,
+      "explanation": "'Flouting' is the correct term, but the context is awkward."
+    },
+    "summary": "Identify the incorrect usage of a word in given statements.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "The cricket match was heading for a draw, when the batsman hit a sixer and our team won.",
+        "He was lucky enough to win the draw in the lottery, where the prize was a rare painting.",
+        "He used to keep all his important documents in the draw of his cupboard.",
+        "As he was very old, he didn't have the strength to draw water from the well near his house."
+      ],
+      "correctIndex": 2,
+      "explanation": "'Draw' should be 'drawer' in the context of a cupboard."
+    },
+    "summary": "Identify the incorrect usage of a word in given statements.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "Her admirers considered her demeanor to be of great state and refinement, and most impressive.",
+        "Uttar Pradesh, being the most densely populated state in India, has the highest number of representatives in Parliament.",
+        "The judicial magistrate asked the prosecuting lawyer to state the grounds on which the defendant had been arrested.",
+        "The state of his grandfather's health was critical, but it was difficult for him to get in touch with all the members of the family."
+      ],
+      "correctIndex": 0,
+      "explanation": "'State' should be 'stature' in this context."
+    },
+    "summary": "Identify the incorrect usage of a word in given statements.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "Naturally, the fauna of the region varies with climatic changes.",
+        "Some plants adapt themselves to a variety of climatic conditions.",
+        "When the last tree dies in the climactic scene, the message in the movie becomes clear.",
+        "The climatic changes from summer to winter affected the moods of the hero of the film."
+      ],
+      "correctIndex": 2,
+      "explanation": "'Climactic' refers to a climax, while 'climatic' refers to climate."
+    },
+    "summary": "Identify the incorrect usage of a word in given statements.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "The lives of the little princes in the large castle in the rich city were luxurious.",
+        "The rooms were adorned with luxuriant trimmings of gold, silk, and velvet.",
+        "They were handsome men who were distinguished by their luxuriant, golden tresses."
+      ],
+      "correctIndex": 1,
+      "explanation": "'Luxuriant' refers to growth, while 'luxurious' refers to comfort and elegance."
+    },
+    "summary": "Identify the incorrect usage of a word in given statements.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The king was under intensive pressure to protect the borders of his vast empire",
+        "b. The subject's loathing of the cruel emperor was intense",
+        "c. Without intensive study, it is difficult for most students to get admitted into any course",
+        "d. The intense debate between states led to the resolution of issues across the border."
+      ],
+      "correctIndex": 1,
+      "explanation": "The word 'emperor' is used correctly, but the context suggests a different word could fit better."
+    },
+    "summary": "Identify the incorrect usage of a word in a statement.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. We called a mechanic to appraise the car before we bought it.",
+        "b. The principal called a meeting to appraise the school's governing board of the progress made by all the students in the past year.",
+        "c. At the end of each practice session, the teacher trainees are expected to appraise their own performance.",
+        "d. The soldiers returned to the camp to appraise the commanding officer of the enemy's location."
+      ],
+      "correctIndex": 0,
+      "explanation": "The word 'appraise' is used incorrectly in this context."
+    },
+    "summary": "Identify the incorrect usage of a word in a statement.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The young girl said, 'I now request our chief guest to come forward for the lighting of the lamp.'",
+        "b. I just read that two men who took shelter under a tall tree during a thunderstorm were struck by lightning.",
+        "c. I believe that skin lightning products have a lot of undesirable side effects.",
+        "d. The young girl helped her mother carry some of the groceries home, thereby lightening her heavy load."
+      ],
+      "correctIndex": 2,
+      "explanation": "The term 'skin lightning' is inappropriate in this context."
+    },
+    "summary": "Identify the incorrect usage of a word in a statement.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The President of the City Chamber of Commerce is an urbane, kind and generous man.",
+        "b. The writer's next book deals with the life of an urbane intellectual as seen through the eyes of a lawyer.",
+        "c. My uncle who lives in New York turned out to be the exact opposite of the urbane, wealthy gentleman that I was expecting to meet.",
+        "d. Over 70% of the people living in urbane areas said that they wanted better roads and more schools."
+      ],
+      "correctIndex": 0,
+      "explanation": "The word 'urbane' is used correctly, but the context suggests a different word could fit better."
+    },
+    "summary": "Identify the incorrect usage of a word in a statement.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The young scientist built a small, low-cost machine to recycle waste water. It was a simple but ingenious solution to the problem of water shortage in the city.",
+        "b. My friend is an ingenious cook - she can make very delicious dishes from the most ordinary ingredients.",
+        "c. The young man lost all his savings because he was rather ingenious to believe the agent's promises of a well-paid job and a comfortable life in a foreign country.",
+        "d. Teachers say that some children are very ingenious when it comes to finding excuses for not completing their work."
+      ],
+      "correctIndex": 2,
+      "explanation": "The word 'ingenious' is misused in this context."
+    },
+    "summary": "Identify the incorrect usage of a word in a statement.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. After several rounds of meetings, the city council passed an ordinance to limit the number of cafes near the seaside.",
+        "b. As per a royal ordinance, all men under 18 had to join the army and fight the war.",
+        "c. Military aircraft can be used to carry a wide variety of ordinance.",
+        "d. The people protested a city ordinance that all parks must be closed by 9 pm."
+      ],
+      "correctIndex": 2,
+      "explanation": "The word 'ordinance' is misused in this context."
+    },
+    "summary": "Identify the incorrect usage of a word in a statement.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. It is a pleasure when we are all together for a meal at home.",
+        "b. Her son is not interested in watching movies, which is not altogether a bad thing.",
+        "c. The three hundred guests sat all together in the large dining hall of the hotel.",
+        "d. The facilitator asked the participants to stand up, all together."
+      ],
+      "correctIndex": 1,
+      "explanation": "The phrase 'not altogether' is used incorrectly in this context."
+    },
+    "summary": "Identify the incorrect usage of a word in a statement.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The sickness of a family member can affect the lives of everyone at home.",
+        "b. The family member's sickness can affect the lives of everyone at home.",
+        "c. A family member's illness can affect the lives of everyone at home.",
+        "d. The illness of a family member can affect the lives of everyone at home."
+      ],
+      "correctIndex": 0,
+      "explanation": "The term 'sickness' is used correctly, but the context suggests a different word could fit better."
+    },
+    "summary": "Identify the incorrect usage of a word in a statement.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The emperor ordered the arrest of his most vocal critic.",
+        "b. There are very few film critics left in our city.",
+        "c. Mahatma Gandhi's critic of the West remains relevant to this day.",
+        "d. His classmates warned him, 'It is not a good idea to critique our Principal.'"
+      ],
+      "correctIndex": 2,
+      "explanation": "The term 'critic' is incorrectly used in the context of Gandhi's relationship with the West."
+    },
+    "summary": "Identify the incorrect usage of the word in the given statements.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The river teemed with salmon and trout.",
+        "b. The wedding was teamed in Bhojpuri style.",
+        "c. Which team will win this year's IPL tournament?",
+        "d. The film star wore a purple suit teamed with a crimson tie."
+      ],
+      "correctIndex": 1,
+      "explanation": "The word 'teamed' is incorrectly used; it should be 'themed' in the context of the wedding."
+    },
+    "summary": "Identify the incorrect usage of the word in the given statements.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. Last week we learnt about the right way to greet our customers.",
+        "b. 'Get it write the first time' is an often-heard management slogan.",
+        "c. In India, driving on the Right side of the road is wrong.",
+        "d. The rite of afternoon tea is described in many Enid Blyton's books."
+      ],
+      "correctIndex": 1,
+      "explanation": "'Write' should be 'right' in the context of the slogan."
+    },
+    "summary": "Identify the incorrect usage of the word in the given statements.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. The attackers decided to raise the castle to the ground.",
+        "b. They raised their children to be freethinking boys and girls.",
+        "c. To raise a toast to a newly-wed couple is a common practice.",
+        "d. The rays of the sun rose above the mountain."
+      ],
+      "correctIndex": 0,
+      "explanation": "'Raise' should be 'razed' in the context of destroying the castle."
+    },
+    "summary": "Identify the incorrect usage of the word in the given statements.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "One of the statements below contains a word used incorrectly. Choose the option which has the incorrect or inappropriate usage of the word.",
+      "options": [
+        "a. Shakespeare is sometimes referred to as a bard.",
+        "b. He barred his soul to the preacher.",
+        "c. Because of his age, he was barred from entering the theatre.",
+        "d. The Bar barred all bards."
+      ],
+      "correctIndex": 1,
+      "explanation": "'Barred' should be 'bared' in the context of revealing his soul."
+    },
+    "summary": "Identify the incorrect usage of the word in the given statements.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 70,
+    "content": {
+      "pjSentences": [
+        "a. Among its major urban centres, Harappa and Mohenjo-Daro stand out as prime examples of this architectural prowess, revealing large public structures, residential areas, and sophisticated water management systems indicative of a complex societal structure.",
+        "b. Showing remarkable sophistication for its time, this ancient culture developed meticulously planned cities, complete with advanced sanitation systems and intricate grid layouts that underscore its profound understanding of urban design and engineering.",
+        "c. Economically, the civilization thrived on a foundation of extensive trade networks, connecting them with distant lands, alongside a robust agricultural system that sustained its large populations and facilitated surplus production.",
+        "d. Despite its impressive achievements and longevity, the reasons behind the eventual decline of this remarkable civilization remain largely enigmatic, prompting ongoing research and speculation among historians and archaeologists.",
+        "e. The Indus Valley Civilization, flourishing in the Bronze Age, represents one of humanity's earliest urban societies, evidenced by archaeological discoveries dating back thousands of years."
+      ],
+      "pjCorrectOrder": "BDAEC"
+    },
+    "summary": "Arrange the sentences to form a coherent paragraph about the Indus Valley Civilization.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 70,
+    "content": {
+      "pjSentences": [
+        "a. Using the wonders of Artificial Intelligence (AI), they quickly improved upon those skills to become far more dexterous.",
+        "b. Inside a robotics laboratory of the Toyota Research Institute, a group of robots is busy cooking. There is nothing special about that; robotic chefs have been around for a while.",
+        "c. Despite their extraordinary culinary capabilities, these robots are not destined for a career in catering.",
+        "d. But these robots are more proficient than most: flipping pancakes, slicing vegetables, and making pizzas with ease.",
+        "e. The difference is that instead of being laboriously programmed to carry out their tasks, the Toyota robots have been taught only a basic set of skills."
+      ],
+      "pjCorrectOrder": "BACDE"
+    },
+    "summary": "Sequence the sentences to describe the capabilities of robots in a cooking context.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 70,
+    "content": {
+      "pjSentences": [
+        "a. Seven of the ten worst affected countries (including India) are low- and middle-income countries.",
+        "b. Between 1993 and 2022, India was the sixth worst-affected country in terms of fatalities and damage sustained from extreme weather events wrought by the climate crisis.",
+        "c. High income nations, whose economies are founded in industrial era use of fossil fuels, meanwhile, insist that growing economies, especially India and China, shoulder greater responsibility.",
+        "d. This reinforces the developing world's contention that it has had to bear a disproportionate burden of climate afflictions despite having contributed little to the crisis."
+      ],
+      "pjCorrectOrder": "ABCD"
+    },
+    "summary": "Organize the sentences discussing the impact of climate change on countries.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. When we take time to notice these moments, we discover hidden beauty that sparks our creative thoughts because creativity isn't just about rare, amazing events—it's also about finding the special in the ordinary.",
+        "b. Creativity is often seen as the ability to look at the world in a new way—to turn everyday sights, sounds, and experiences into art or ideas.",
+        "c. In fact, inspiration can come from small details of daily life: the gentle warmth of morning sunlight on a kitchen counter, the steady sound of traffic outside, or the brief smile of a stranger on a busy street.",
+        "d. Many people wrongly think that true creativity comes only from big ideas or exciting adventures."
+      ],
+      "pjCorrectOrder": "ABCD"
+    },
+    "summary": "Arrange the sentences to discuss the nature of creativity and inspiration.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. In drought conditions, water often depletes in the topsoil and remains accessible only in the deeper subsoil layers.",
+        "b. A new study gives new insights into how the acid changes root growth angles to enable plants to reach out deeper subsoils in search of water."
+      ],
+      "pjCorrectOrder": "AB"
+    },
+    "summary": "Sequence the sentences discussing water depletion in drought conditions.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "Farmers, however, especially during the peak farming season, ignore the warnings of the weather forecast.",
+        "People from some states of India have demanded that families of those who have been killed by lightning strikes should receive compensation.",
+        "The Minister for Disaster Management announced that over 2800 people have died after being struck by a lightning last year.",
+        "The Minister responded that pamphlets on the dangers of lightning and precautions to be taken are being distributed in villages."
+      ],
+      "pjCorrectOrder": "BCAD"
+    },
+    "summary": "Arrange the sentences to form a coherent paragraph about lightning strikes and compensation.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "Meanwhile, people are posting less. The share of Americans who say they enjoy documenting their life online has fallen from 40 per cent to 28 per cent since 2020.",
+        "The striking feature of the new social media is that they are no longer very social.",
+        "Some of the consequences of this are welcome. Political campaigners say they have to tone down their message to win over private groups.",
+        "Debate is moving to closed platforms such as WhatsApp and Telegram.",
+        "Inspired by TikTok, apps like Facebook increasingly serve a diet of clips selected by artificial intelligence according to a user's viewing behaviour, not their social connections."
+      ],
+      "pjCorrectOrder": "ABDE"
+    },
+    "summary": "Arrange the sentences to form a coherent paragraph about social media trends.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "In this microgravity environment, your blood also tends to move towards the heart and head.",
+        "Both effects are only short-lived and, after a brief period of readjustment on arriving back home, the heart and spine return to normal.",
+        "The heart interprets this as an increase in the amount of blood in the body and that it needs to pump less, so it shrinks.",
+        "In space with less gravitational force than on Earth, there's less pressure on your spine and so it'll get a bit longer, effectively making you as much as two inches taller."
+      ],
+      "pjCorrectOrder": "DACB"
+    },
+    "summary": "Arrange the sentences to explain the effects of microgravity on the body.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "The muddy concoction - made by grinding the kava plant's roots and mixing it with water to create a dark, earthy liquid - holds a deep cultural significance throughout the region, and the drink is often shared between friends, guests, and colleagues.",
+        "Regular kava drinkers often describe this blissful state as a sort of peace, a way for the body and mind to uncoil from itself.",
+        "Called yaqona in Fiji, 'ava in Samoa and sakau in Micronesia, kava has occupied a sacred role in Pacific countries for centuries.",
+        "A swig (or two) taken from a bowl or shell - sometimes quite literally a coconut shell cut in half - can lead to profound relaxation, a sort of numbness that trickles down from your mouth through your shoulders and spine."
+      ],
+      "pjCorrectOrder": "BCAD"
+    },
+    "summary": "Arrange the sentences to describe the cultural significance of kava.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "By contrast, in America, it is estimated that even after post-COVID decline, total giving came to almost USD 500 billion in 2022."
+      ],
+      "pjCorrectOrder": ""
+    },
+    "summary": "Identify the statement regarding total giving in America post-COVID.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "b. There are no comparable data on different countries. But one report by Dasra, a Mumbai-based NGO, estimates total private giving in India came to about USD 13 billion in 2022.",
+        "c. A strategic sort of giving, involving philanthropy professionals, a long-term lens, and big ambitions of transforming society is gradually emerging. It differs, of course, between countries.",
+        "d. Researchers at the Chinese Academy of Social Sciences, put total giving in China at USD 21 billion in 2020.",
+        "e. By any measure, however, organised philanthropy across Asia is on a much smaller scale than in the West."
+      ],
+      "pjCorrectOrder": "bcde"
+    },
+    "summary": "Rearrange sentences about philanthropy in Asia and its comparison to the West.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. This instance highlights how young people from different backgrounds can make important contributions to climate change.",
+        "b. Participation in environmental education programs can motivate children to act responsibly towards the environment.",
+        "c. They were motivated to act in ways that would help the environment, like using a reusable water bottle or refusing to use plastic straws.",
+        "d. Six hundred elementary school children from varied social and linguistic groups participated in an ocean pollution education program."
+      ],
+      "pjCorrectOrder": "adbc"
+    },
+    "summary": "Rearrange sentences about children's involvement in environmental education.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. Once they reach a high altitude, they manage to travel all over the world.",
+        "b. An expert from the team explained that the bacteria usually lived on the surface of vegetation, such as leaves.",
+        "c. The wind carries them off the surface and into the atmosphere.",
+        "d. A group of researchers were surprised to find that clouds had carried drug-resistant bacteria over a long distance."
+      ],
+      "pjCorrectOrder": "bdca"
+    },
+    "summary": "Rearrange sentences about bacteria and their travel through the atmosphere.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. Yet, even as TikTok delights consumers and advertisers, others believe the sunny app has a dark side.",
+        "b. Since launching just five years ago, the app has brought a warm glow to its 1 billion plus users, as well as an icy dash of competition to the social media incumbents of Silicon Valley.",
+        "c. ByteDance, its owner, has its headquarters in China, whose government is addicted to surveillance and propaganda- making it a worrying place for a media app to be placed.",
+        "d. With its wholesome dancing and lip-syncing videos, TikTok once billed itself as the 'last sunny corner on the Internet.'"
+      ],
+      "pjCorrectOrder": "badc"
+    },
+    "summary": "Rearrange sentences discussing TikTok's popularity and concerns.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. But the mutiny of Visakhapatnam predates this.",
+        "b. Instead of going against their heroic leader, the sepoys attacked the British soldiers and managed to escape from the town.",
+        "c. The Sepoy Mutiny of 1857 in the garrison town of Meerut is regarded as the First War of Independence.",
+        "d. It happened in 1780 when the British officers asked the local sepoys to join the fight against Hyder Ali."
+      ],
+      "pjCorrectOrder": "cabd"
+    },
+    "summary": "Rearrange sentences about the Sepoy Mutiny and its historical context.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. What is more shocking to observe is how often such strokes lead to death.",
+        "b. When the body temperature rises, our vital organs swell, and this causes death.",
+        "c. One main reason for this is that people underestimate how badly heat can affect the body.",
+        "d. Heat strokes have become more common in our country than ever before."
+      ],
+      "pjCorrectOrder": "dcab"
+    },
+    "summary": "Rearrange sentences discussing the impact of heat strokes.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Paracompletions",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. A sub-par monsoon cuts farm yields, output, and farm incomes, increasing the country's dependence on food imports.",
+        "b. A robust monsoon will help put a lid on food inflation by increasing domestic output of a variety of goods and commodities.",
+        "c. This is because half the Indian population depends upon farm-derived income.",
+        "d. The June-to-September rain-bearing system is often called the lifeblood of the country's economy.",
+        "e. Unfortunately, however, nearly 40% of India's net sown area does not have access to irrigation."
+      ],
+      "pjCorrectOrder": "abcde"
+    },
+    "summary": "Rearrange sentences about the impact of monsoon on agriculture.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. The popularity of these creations grew along with that of the tea ceremony in the 16th century.",
+        "b. However, savvy tourists find the best bargains for ceramics in Tokyo's Kitchen Town.",
+        "c. Modern shops in touristy spots display thousands of them, both hand crafted and factory made.",
+        "d. Japanese artisans have been making ceramics, known as Yakimono since prehistoric times."
+      ],
+      "pjCorrectOrder": "ABCD"
+    },
+    "summary": "Arrange sentences to form a coherent paragraph about ceramics.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. This means the brain receives less input over the course of a day.",
+        "b. Youthful eyes jiggle regularly to take in new or unfamiliar stimuli.",
+        "c. As the person attached to those eyes ages, the eye muscles grow slower.",
+        "d. Our eyes quickly scan the surroundings and send the data to the brain.",
+        "e. Human eyes perform jiggling, formally called saccades, in response to a change in vision."
+      ],
+      "pjCorrectOrder": "BDEAC"
+    },
+    "summary": "Arrange sentences to explain how eyes function and age.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. Located in the foothills of the Sion Fort, the lake is a Grade II-A heritage structure.",
+        "b. Once home to several marine creatures, the lake is now surrounded by high-rise buildings.",
+        "c. The Municipal Corporation is set to rejuvenate the city's Sion Talao (Lake).",
+        "d. Over the years, the lake has lost its prominence.",
+        "e. Earlier, the talao was a natural water tank with an enclosing wall."
+      ],
+      "pjCorrectOrder": "ABCDE"
+    },
+    "summary": "Arrange sentences about the history and current state of Sion Talao.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. The Central African Republic has approved Bitcoin as an official currency.",
+        "b. Experts foresee that this will damage the environment and the economy.",
+        "c. Others claim this may make money laundering easy and use up a lot of electricity.",
+        "d. Economists criticized this move as a potential risk to the financial stability of the nation."
+      ],
+      "pjCorrectOrder": "ABCD"
+    },
+    "summary": "Arrange sentences discussing the implications of Bitcoin approval.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. In the past, companies with international aspirations familiarized themselves with legal differences.",
+        "b. Modern trade demands more from companies.",
+        "c. Today, companies seeking international success must understand local cultures.",
+        "d. To succeed in the global market, it's essential to learn about overseas conditions."
+      ],
+      "pjCorrectOrder": "ABCD"
+    },
+    "summary": "Arrange sentences about the evolution of international business practices.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. It mentions a TikTok video questioning an influencer's views on the Israel-Palestine crisis.",
+        "b. Social media has created expectations for every video and tweet to be irreproachable.",
+        "c. Should celebrities always have a take, asks a magazine article.",
+        "d. 'Do you care about the issue or influencers caring about it?'"
+      ],
+      "pjCorrectOrder": "ABCD"
+    },
+    "summary": "Arrange sentences discussing social media expectations and influencer opinions.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. In a recent incident, villagers in a tea estate were shocked to find a leopard cub.",
+        "b. The cub was then taken to the area where she was discovered and reunited with her mother."
+      ],
+      "pjCorrectOrder": "AB"
+    },
+    "summary": "Arrange sentences about the discovery and reunion of a leopard cub.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Parajumbles",
+    "percentile": 60,
+    "content": {
+      "pjSentences": [
+        "a. The study, published in the Lancet recently, revealed that people living in democratic countries live longer than those who don’t; they also have less of a chance of dying from heart disease, strokes, and even road accidents.",
+        "b. Incredible as it may sound, we are now told that democracy is not just good for the soul, it is good for the body too.",
+        "c. Without pressure from voters or foreign-aid agencies, dictators have less incentive to finance more expensive prevention and treatment of heart disease, cancers, and other chronic illnesses.",
+        "d. The study suggests that elections and the health of the people are increasingly inseparable.",
+        "e. A study spanning 170 countries found a strong correlation between health and the most form of government."
+      ],
+      "pjCorrectOrder": "ABCDE"
+    },
+    "summary": "Arrange the sentences to form a coherent paragraph about the relationship between democracy and health.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Sentence Completions",
+    "percentile": 60,
+    "content": {
+      "question": "Among scientists, the discovery of the double helix structure of DNA and the genetic code it incorporates is widely regarded to be one of the most significant scientific discovery of the twentieth century.",
+      "options": [
+        "a. regarded for being one of the most significant scientific discoveries",
+        "b. regarded as one of the most significant scientific discoveries",
+        "c. regarded like one of the most significant scientific discovery",
+        "d. regarded being one of the most significant scientific discoveries"
+      ],
+      "correctIndex": 1,
+      "explanation": "Option b is the correct form, using 'regarded as' to indicate recognition."
+    },
+    "summary": "Choose the correct completion for a sentence about the significance of DNA discovery.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Sentence Completions",
+    "percentile": 50,
+    "content": {
+      "question": "Thank goodness, the damage to the car was neglectful.",
+      "options": [
+        "a. was negligible",
+        "b. was neglecting",
+        "c. was neglectable",
+        "d. was negligent"
+      ],
+      "correctIndex": 3,
+      "explanation": "Option d is correct as 'negligent' describes the failure to take proper care."
+    },
+    "summary": "Identify the correct form of the adjective to describe the car damage.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Sentence Completions",
+    "percentile": 60,
+    "content": {
+      "question": "Although the new policy aims to increase efficiency, reducing costs, and enhancing employee satisfaction, some employees feel that the changes are too abrupt and poorly communicated.",
+      "options": [
+        "a. increase efficiency, reducing the costs and enhanced employee satisfaction",
+        "b. increasing efficiency, reducing of costs, and enhancing of employee satisfaction",
+        "c. increase the efficiency, reduce the costs and enhancing employee satisfaction",
+        "d. increase efficiency, reduce costs, and enhance employee satisfaction"
+      ],
+      "correctIndex": 3,
+      "explanation": "Option d maintains parallel structure and is grammatically correct."
+    },
+    "summary": "Select the correct completion for a sentence about a new policy's aims.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Sentence Completions",
+    "percentile": 60,
+    "content": {
+      "question": "If the President knew that his allies would let him down so suddenly, he would have handled them with the greatest care.",
+      "options": [
+        "a. Had the President knowledge that his allies would let him down",
+        "b. Had the President known that his allies would let him down",
+        "c. If the President could know beforehand that his allies would let him down",
+        "d. If the President knew that his allies can let him down"
+      ],
+      "correctIndex": 1,
+      "explanation": "Option b is the correct past perfect form for a hypothetical situation."
+    },
+    "summary": "Choose the correct form for a conditional sentence regarding the President's knowledge.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Sentence Completions",
+    "percentile": 50,
+    "content": {
+      "question": "When I had to leave town due to office work, I had my brother to give food to my dog twice a day.",
+      "options": [
+        "a. had my brother feed my dog",
+        "b. had my brother giving food to my dog",
+        "c. had my brother who fed my dog",
+        "d. had my brother to feed my dog"
+      ],
+      "correctIndex": 0,
+      "explanation": "Option a is the correct infinitive form for the action."
+    },
+    "summary": "Identify the correct form for a sentence about feeding a dog.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The negotiations are unsuccessful, and the Boards' hopes to continuing talks on a future deal seems to be increasingly improbable.",
+      "options": [
+        "a. Board's hopes to continue talks on a future deal seem",
+        "b. Board's hopes to continuing talks on a future deal seems",
+        "c. Boards' hopes on continued talks on a future deal seem",
+        "d. Boards' hopes to continued talks on a future deal seems"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct form is 'Board's hopes to continue talks on a future deal seem' to maintain subject-verb agreement."
+    },
+    "summary": "Identify the correct grammatical structure regarding hopes for future negotiations.",
+    "source": "IPM 2024"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "While the bustling city streets were filled with the cacophony of honking horns and chatter of pedestrians, the serene countryside, where time seemed to move at a slower pace, provide a welcome retreat for their seeking solace.",
+      "options": [
+        "a. provided a welcoming retreat for who seek solace",
+        "b. provides a welcome retreat for them seeking solace",
+        "c. provides a welcoming retreat for those seeking solace",
+        "d. provided a welcome retreat for those seeking solace"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct form is 'provided a welcome retreat for those seeking solace' to match the past tense."
+    },
+    "summary": "Choose the correct form of the sentence regarding a retreat in the countryside.",
+    "source": "IPM 2024"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 50,
+    "content": {
+      "question": "I had been having a headache, so I will not attend the meeting.",
+      "options": [
+        "a. have headache",
+        "b. was having a headache",
+        "c. have a headache",
+        "d. used to have a headache"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct form is 'was having a headache' to indicate a past continuous action."
+    },
+    "summary": "Select the correct tense for expressing a past headache.",
+    "source": "IPM 2024"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 50,
+    "content": {
+      "question": "He is very careless and has loosed his keys all the time.",
+      "options": [
+        "a. is losing his keys",
+        "b. has loses his keys",
+        "c. was losing his keys",
+        "d. loses his keys"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct form is 'is losing his keys' to indicate a current ongoing action."
+    },
+    "summary": "Identify the correct form of the verb regarding losing keys.",
+    "source": "IPM 2024"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "In my opinion, the psychological thrillers of Alfred Hitchcock, who is a master of suspense and horror, have more lasting impact than any other filmmaker in history.",
+      "options": [
+        "a. had more lasting impact than any filmmaker",
+        "b. are having more lasting impact than those of other filmmakers",
+        "c. has had a more lasting impact than those of other filmmakers",
+        "d. have had a more lasting impact than those of any other filmmaker"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct form is 'have had a more lasting impact than those of any other filmmaker' to maintain subject-verb agreement."
+    },
+    "summary": "Choose the correct tense for discussing Hitchcock's impact.",
+    "source": "IPM 2024"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "My aunt Seema was the most generous of all the members of our family. Whenever we went out for dinner, she always insisted to pay for the meal.",
+      "options": [
+        "a. on and paid for the meal",
+        "b. that she had paid for the meal",
+        "c. that she will be paying for the meal",
+        "d. that she pay for the meal"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct form is 'that she had paid for the meal' to indicate past action."
+    },
+    "summary": "Identify the correct structure for expressing payment for a meal.",
+    "source": "IPM 2023"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Listening to the recording of cricket commentary from the past can be great fun. Especially, the last few overs, when the best players are gone, and the tailenders try their best to run between the wickets without getting out. This is when you realise that nothing much has changed.",
+      "options": [
+        "a. nothing much has changed, has it?",
+        "b. nothing much has changed, would it?",
+        "c. nothing much is changed, isn't it?",
+        "d. nothing much has changed, hasn't it?"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct form is 'nothing much has changed, hasn't it?' to maintain the question tag structure."
+    },
+    "summary": "Select the correct question tag for the statement about cricket commentary.",
+    "source": "IPM 2023"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 70,
+    "content": {
+      "question": "Justin couldn't understand why his friend had refused to work in a company that offered him a huge salary. If it had been him in his friend's place, he would definitely accepted such an offer.",
+      "options": [
+        "a. have definitely accept such an offer",
+        "b. have definitely accepted such an offer",
+        "c. definitely accepted such an offer",
+        "d. have definitely accepted such an offer"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct form is 'have definitely accepted such an offer' to indicate a past conditional."
+    },
+    "summary": "Choose the correct form for expressing a conditional offer acceptance.",
+    "source": "IPM 2023"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "When you play the 'Secret Santa', you are expected to buy a gift for whoever you are assigned, without letting them know that you are the one buying the gift.",
+      "options": [
+        "a. who you are assigned",
+        "b. whomever you are assigned",
+        "c. whom you are assigned",
+        "d. whoever you are assigned"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct form is 'whoever you are assigned' to indicate the person receiving the gift."
+    },
+    "summary": "Identify the correct pronoun for the Secret Santa gift assignment.",
+    "source": "IPM 2023"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The setting of a story effects the story's plot.",
+      "options": [
+        "a. affects the story plots",
+        "b. affects the story's plot",
+        "c. effects the stories' plot",
+        "d. effects the story's plot"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct form is 'affects the story's plot' to indicate influence."
+    },
+    "summary": "Choose the correct verb form regarding the effect of setting on plot.",
+    "source": "IPM 2023"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "If I had known that you needed to go to the airport yesterday, I could drive you there.",
+      "options": [
+        "a. should have driven you there.",
+        "b. would have driven you there.",
+        "c. would drive you there.",
+        "d. should drive you there."
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct form is 'would drive you there' for a hypothetical situation."
+    },
+    "summary": "Identify the correct form of the sentence.",
+    "source": "PYQ"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The Principal and professors are authorized to sanction leave to a student provided she will have a good attendance record.",
+      "options": [
+        "a. provided she has a good attendance record.",
+        "b. provided she will have a good attendance record.",
+        "c. provided she had a good attendance record.",
+        "d. provided that a good attendance record is maintained by her."
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct form is 'provided she has a good attendance record.'"
+    },
+    "summary": "Choose the correct completion for the sentence.",
+    "source": "2022"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "When all the words on the page got scrambled, she quickly pressed undo, after which the document reverted back to its original state.",
+      "options": [
+        "a. document reverted back to it's original state.",
+        "b. document reverted back to original state.",
+        "c. document reverted to it's original state.",
+        "d. document reverted to its original state."
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct form is 'document reverted to its original state.'"
+    },
+    "summary": "Identify the correct form of the sentence.",
+    "source": "2022"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "His talk on heritage sites has picked up my interest.",
+      "options": [
+        "a. aroused",
+        "b. adopted",
+        "c. caught",
+        "d. Brightened"
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct word is 'aroused' to indicate increased interest."
+    },
+    "summary": "Choose the correct word to complete the sentence.",
+    "source": "2022"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "He was having a difficult time, but never once he complained.",
+      "options": [
+        "a. not once did he complain.",
+        "b. not once did he give the complaint.",
+        "c. not once any complaining happened.",
+        "d. not once he complained."
+      ],
+      "correctIndex": 0,
+      "explanation": "The correct form is 'not once did he complain.'"
+    },
+    "summary": "Identify the correct form of the sentence.",
+    "source": "2022"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Other politicians may have claims to seniority over their peers, based upon their accomplishments and their ability to lead campaigns, but Alexandria Ocasio-Cortez, who is often described as merely being a junior member of the House of Representatives, has an unparalleled seniority over all of them by virtue of her prowess in social media management.",
+      "options": [
+        "a. as merely being a junior member of the House of Representatives",
+        "b. as being a merely junior member of the House of Representatives",
+        "c. for merely being a junior member of the House of Representatives",
+        "d. as a mere junior member of the House of Representatives"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct form is 'as a mere junior member of the House of Representatives.'"
+    },
+    "summary": "Choose the correct form to complete the sentence.",
+    "source": "2021"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Although the coastal city of Kundapur was once home to a flourishing maritime trade, their economy has been dependent in more recent years on the cotton textile and sugar industries.",
+      "options": [
+        "a. it's economy had depended in more recent years",
+        "b. its economy lies in more recent years depended",
+        "c. the economy having in more recent years depended",
+        "d. its economy has depended in more recent years"
+      ],
+      "correctIndex": 3,
+      "explanation": "The correct form is 'its economy has depended in more recent years.'"
+    },
+    "summary": "Identify the correct form of the sentence.",
+    "source": "2021"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Due to the progress in the field of modern medicine and advances in nutrition and hygiene, less people die every year from infectious diseases then ever before.",
+      "options": [
+        "a. fewer people die every year from infectious diseases then ever before.",
+        "b. less people die every year from infectious diseases then ever before.",
+        "c. fewer people die every year from infectious diseases than ever before.",
+        "d. every year, fewer die from infectious diseases than have ever before."
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct form is 'fewer people die every year from infectious diseases than ever before.'"
+    },
+    "summary": "Choose the correct completion for the sentence.",
+    "source": "2021"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The pharmaceutical company hired a consultant to supervise a taskforce studying lower salaries as to their effects on employees' morale.",
+      "options": [
+        "a. studying what the effects lower salaries would have on employees' morale",
+        "b. studying the effects of lower salaries on employee morale",
+        "c. for studying what are the effects in employees' morale that lower salaries would cause",
+        "d. studying the effects of employee morale on lower salaries"
+      ],
+      "correctIndex": 1,
+      "explanation": "The correct form is 'studying the effects of lower salaries on employee morale.'"
+    },
+    "summary": "Identify the correct form of the sentence.",
+    "source": "2020"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "Besides offering physiological rewards such as toned muscles, when regular karate is practiced the body can be turned into a dangerous weapon.",
+      "options": [
+        "a. one can turn the body into a dangerous weapon through karate, if it is practiced regularly",
+        "b. the body can be turned into a dangerous weapon as a result of karate if practiced regularly",
+        "c. when karate is practiced regularly, the body can be turned into a dangerous weapon",
+        "d. when karate is practiced, the body can be turned into a dangerous weapon"
+      ],
+      "correctIndex": 2,
+      "explanation": "The correct form is 'when karate is practiced regularly, the body can be turned into a dangerous weapon.'"
+    },
+    "summary": "Choose the correct completion for the sentence.",
+    "source": "2020"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "The animal activist has raised awareness not only on the plight of abandoned dogs, but also on overworked bulls and temple elephants.",
+      "options": [
+        "a. on the plight of not only the abandoned dogs, but also on those of overworked bulls",
+        "b. not only on the plight of the abandoned dogs, but also on that of overworked bulls",
+        "c. the plight of abandoned dogs, as well as the over worked bulls",
+        "d. the plight of abandoned dogs, but also on overworked bulls"
+      ],
+      "correctIndex": 1,
+      "explanation": "Option b maintains the correct structure and meaning."
+    },
+    "summary": "Identifying the correct phrasing in a sentence about animal activism.",
+    "source": "IPM 2020"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 50,
+    "content": {
+      "question": "The place where her father disappeared and the reason why he did are unknown to her.",
+      "options": [
+        "a. her father disappeared and the reason why he did",
+        "b. where her father disappeared and the reason he did",
+        "c. her father disappeared and the reason he did",
+        "d. where her father disappeared and the reason why he did"
+      ],
+      "correctIndex": 3,
+      "explanation": "Option d is the most grammatically correct."
+    },
+    "summary": "Choosing the correct structure for a sentence about a father's disappearance.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 50,
+    "content": {
+      "question": "Which team has the best record, yours or theirs?",
+      "options": [
+        "a. Which of the teams has the best record",
+        "b. Which one of the teams has the best record",
+        "c. Which one team has the better record",
+        "d. Which team has the better record"
+      ],
+      "correctIndex": 3,
+      "explanation": "Option d is the most concise and correct."
+    },
+    "summary": "Identifying the correct phrasing for a question about team records.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "After sensing a problem with the factory workers, the personnel officer demanded to know who the union leaders had contacted to conduct the petition drive.",
+      "options": [
+        "a. whom the union leaders had contacted",
+        "b. who had the union leaders had contacted",
+        "c. whom the union leaders have contacted",
+        "d. who union leaders contacted"
+      ],
+      "correctIndex": 0,
+      "explanation": "Option a is grammatically correct."
+    },
+    "summary": "Choosing the correct form for a sentence about union leaders.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 60,
+    "content": {
+      "question": "His wrongdoing was completely exposed, but not once he apologised for his actions.",
+      "options": [
+        "a. not once did he apologise",
+        "b. never he made an apology",
+        "c. not once did he give apology",
+        "d. not once he made an apology"
+      ],
+      "correctIndex": 0,
+      "explanation": "Option a is the correct grammatical structure."
+    },
+    "summary": "Identifying the correct phrasing regarding an apology.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 50,
+    "content": {
+      "question": "The Municipal Council can no longer wash its hands off its responsibilities.",
+      "options": [
+        "a. wash its hands from its",
+        "b. wash their hands off their",
+        "c. wash their hand of their",
+        "d. wash its hands of its"
+      ],
+      "correctIndex": 3,
+      "explanation": "Option d is the correct expression."
+    },
+    "summary": "Choosing the correct idiomatic expression about responsibilities.",
+    "source": "IPM 2019"
+  },
+  {
+    "topic": "Vocabulary Usage",
+    "percentile": 50,
+    "content": {
+      "question": "The letter states that one can avail the service offered by the company till June 20, 2019.",
+      "options": [
+        "a. avail the service on offer from",
+        "b. avail the service on offer by",
+        "c. avail of the service offered by",
+        "d. avail of the service offered from"
+      ],
+      "correctIndex": 2,
+      "explanation": "Option c is the correct usage."
+    },
+    "summary": "Identifying the correct phrasing for availing a service.",
+    "source": "IPM 2019"
+  }
+]

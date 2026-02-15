@@ -27,7 +27,7 @@ export async function DELETE(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  // Ask the LLM to analyze what's wrong and produce a short avoidance rule
+  // Ask the LLM to judge whether the question is actually bad
   const snapshot = JSON.stringify(question, null, 2);
   const analysisResponse = await openai.chat.completions.create({
     model: "gpt-4o-mini",
@@ -36,11 +36,14 @@ export async function DELETE(
       {
         role: "system",
         content:
-          "You are a question-quality reviewer. A user reported the following question as bad. " +
-          "Analyze what is wrong with it (factual errors, ambiguity, wrong answer, poor options, etc). " +
-          "Return JSON with two keys: " +
-          '"analysis" (2-3 sentence explanation of the problem) and ' +
-          '"rule" (a single concise sentence starting with "Do not..." that future question generation should follow to avoid this mistake).',
+          "You are a question-quality reviewer for a competitive exam prep app. " +
+          "A user reported the following question as bad. Your job is to OBJECTIVELY judge whether the question is actually problematic or perfectly valid. " +
+          "Check for: factual errors, ambiguous wording, wrong correct answer, obviously wrong distractors, " +
+          "grammatical issues, unclear instructions, or any quality issue. " +
+          "Return JSON with three keys: " +
+          '"isValid" (boolean — true if the question is fine and the report is unjustified, false if the question is genuinely problematic), ' +
+          '"analysis" (2-3 sentence explanation — if valid, explain why the question is correct; if invalid, explain what is wrong), and ' +
+          '"rule" (only if isValid is false: a single concise sentence starting with "Do not..." for future generation to avoid this mistake; if isValid is true, set to empty string).',
       },
       { role: "user", content: snapshot },
     ],
@@ -48,11 +51,25 @@ export async function DELETE(
   });
 
   const parsed = JSON.parse(
-    analysisResponse.choices[0]?.message?.content ?? '{"analysis":"Unknown issue","rule":"Do not generate low-quality questions."}'
+    analysisResponse.choices[0]?.message?.content ?? '{"isValid":false,"analysis":"Unknown issue","rule":"Do not generate low-quality questions."}'
   );
 
+  const isValid = parsed.isValid === true;
+
+  if (isValid) {
+    // Question is fine — don't delete, don't save rule
+    return NextResponse.json({
+      ok: true,
+      valid: true,
+      analysis: parsed.analysis,
+    });
+  }
+
+  // Question is genuinely bad — save report, create avoidance rule, delete question
   await BadReportModel.create({
     userId: new Types.ObjectId(session.user.id),
+    userEmail: session.user.email ?? "",
+    userName: session.user.name ?? "",
     topic: (question as any).topic,
     questionSnapshot: question,
     analysis: parsed.analysis,
@@ -62,5 +79,5 @@ export async function DELETE(
 
   await QuestionModel.findByIdAndDelete(id);
 
-  return NextResponse.json({ ok: true, analysis: parsed.analysis, rule: parsed.rule });
+  return NextResponse.json({ ok: true, valid: false, analysis: parsed.analysis, rule: parsed.rule });
 }

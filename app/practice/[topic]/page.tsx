@@ -74,6 +74,7 @@ export default function PracticePage() {
   const [startTime, setStartTime] = useState<number>(0);
   const [removing, setRemoving] = useState(false);
   const [reportFeedback, setReportFeedback] = useState<string | null>(null);
+  const [reportValid, setReportValid] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -98,6 +99,7 @@ export default function PracticePage() {
     setSubmitted(null);
     setExplanations([]);
     setReportFeedback(null);
+    setReportValid(false);
     setStartTime(Date.now());
     setLoading(false);
   }, [topic]);
@@ -147,7 +149,11 @@ export default function PracticePage() {
     if (res.ok) {
       const data = await res.json();
       setReportFeedback(data.analysis ?? "Question removed.");
-      setTimeout(() => loadQuestion(), 2500);
+      setReportValid(data.valid === true);
+      if (!data.valid) {
+        // Only auto-advance for genuinely bad questions
+        setTimeout(() => loadQuestion(), 6000);
+      }
     } else {
       loadQuestion();
     }
@@ -365,10 +371,16 @@ export default function PracticePage() {
         ) : null}
 
         {reportFeedback ? (
-          <Card className="border-rose-500/30 bg-rose-500/5 p-6">
-            <p className="text-xs uppercase tracking-widest text-rose-400">Bad Question Report</p>
+          <Card className={reportValid ? "border-emerald-500/30 bg-emerald-500/5 p-6" : "border-rose-500/30 bg-rose-500/5 p-6"}>
+            <p className={`text-xs uppercase tracking-widest ${reportValid ? "text-emerald-400" : "text-rose-400"}`}>
+              {reportValid ? "Question Validated" : "Bad Question Report"}
+            </p>
             <p className="mt-2 text-sm text-white/70">{reportFeedback}</p>
-            <p className="mt-1 text-xs text-white/40">This feedback has been saved — future questions will avoid this mistake.</p>
+            <p className="mt-1 text-xs text-white/40">
+              {reportValid
+                ? "Our AI reviewed this question and found it to be correct. No action was taken."
+                : "This feedback has been saved — future questions will avoid this mistake."}
+            </p>
           </Card>
         ) : null}
       </div>

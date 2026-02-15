@@ -5,6 +5,7 @@ export const TOPICS = [
   "Vocabulary Usage",
   "Paracompletions",
   "Sentence Completions",
+  "Sentence Correction",
   "Idioms & Phrases",
 ] as const;
 
