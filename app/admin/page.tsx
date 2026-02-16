@@ -239,7 +239,7 @@ export default function AdminPage() {
         {tab === "overview" && stats ? (
           <>
             {/* Global stats */}
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
               <StatCard label="Total Users" value={stats.totalUsers} />
               <StatCard label="Problems (24h)" value={stats.totalAttempts["1d"]} />
               <StatCard label="Problems (7d)" value={stats.totalAttempts["7d"]} />
