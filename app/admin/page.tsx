@@ -72,32 +72,49 @@ export default function AdminPage() {
     if (status === "unauthenticated") router.replace("/auth/sign-in");
   }, [status, router]);
 
+  // Helper for fetch with retries and error logging
+  async function fetchWithRetry(url: string, options: RequestInit = {}, retries: number = 2): Promise<{ ok: boolean; data?: any; error?: string }> {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        const res = await fetch(url, options);
+        if (!res.ok) {
+          const text = await res.text();
+          console.error(`Fetch failed: ${url} [${res.status}]`, text);
+          if (attempt === retries) return { ok: false, error: `Failed: ${url} [${res.status}]` };
+        } else {
+          return { ok: true, data: await res.json() };
+        }
+      } catch (err) {
+        console.error(`Fetch error: ${url}`, err);
+        if (attempt === retries) return { ok: false, error: `Network error: ${url}` };
+      }
+      await new Promise(r => setTimeout(r, 500)); // Wait before retry
+    }
+    return { ok: false, error: `Unknown error: ${url}` };
+  }
+
   const reload = useCallback(async () => {
     if (!session?.user?.isAdmin) return;
     setLoading(true);
-    try {
-      const [statsRes, reportsRes, suggestionsRes] = await Promise.all([
-        fetch("/api/admin/stats"),
-        fetch("/api/admin/reports"),
-        fetch("/api/admin/suggestions"),
-      ]);
-      if (!statsRes.ok || !reportsRes.ok) {
-        setError("Failed to load admin data.");
-        return;
-      }
-      const s = await statsRes.json();
-      const r = await reportsRes.json();
-      setStats(s);
-      setReports(r.reports ?? []);
-      if (suggestionsRes.ok) {
-        const sg = await suggestionsRes.json();
-        setSuggestions(sg.suggestions ?? []);
-      }
-    } catch {
-      setError("Network error.");
-    } finally {
-      setLoading(false);
+    setError(null);
+    // Fetch endpoints in parallel
+    const [stats, reports, suggestions] = await Promise.all([
+      fetchWithRetry("/api/admin/stats"),
+      fetchWithRetry("/api/admin/reports"),
+      fetchWithRetry("/api/admin/suggestions"),
+    ]);
+    let errorMsg = "";
+    if (!stats.ok) errorMsg += `Stats: ${stats.error}\n`;
+    if (!reports.ok) errorMsg += `Reports: ${reports.error}\n`;
+    if (!suggestions.ok) errorMsg += `Suggestions: ${suggestions.error}\n`;
+    if (errorMsg) {
+      setError(errorMsg.trim());
+    } else {
+      setStats(stats.data);
+      setReports(reports.data?.reports ?? []);
+      setSuggestions(suggestions.data?.suggestions ?? []);
     }
+    setLoading(false);
   }, [session]);
 
   useEffect(() => {
