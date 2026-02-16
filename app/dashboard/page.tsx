@@ -10,8 +10,6 @@ import { UserModel } from "@/models/User";
 import { Logo } from "@/components/logo";
 import ScoreGrid from "@/app/dashboard/score-grid";
 import SuggestionBox from "@/app/dashboard/suggestion-box";
-import dynamic from "next/dynamic";
-const AnnouncementBoard = dynamic(() => import("@/components/announcement-board"), { ssr: false });
 import SignOutButton from "@/components/sign-out-button";
 
 export default async function DashboardPage() {
@@ -76,7 +74,11 @@ export default async function DashboardPage() {
           </div>
         </header>
 
-        <AnnouncementBoard />
+        {/* Client-side only announcement board */}
+        {/* eslint-disable-next-line @next/next/no-async-client-component */}
+        {/** @ts-expect-error Server Component importing client wrapper */}
+        <AnnouncementBoardWrapper />
+        import AnnouncementBoardWrapper from "@/components/announcement-board-wrapper";
         <SuggestionBox />
 
         <ScoreGrid
