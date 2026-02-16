@@ -239,13 +239,7 @@ export default async function AboutPage() {
           <section className="space-y-4">
             <h2 className="text-xl font-semibold text-white">RAG Pipeline (Retrieval-Augmented Generation)</h2>
             <p>
-              Questions aren&apos;t generated from thin air. I scanned and extracted 274
-              previous year question papers and stored them as reference documents in
-              MongoDB. When generating a new question, the system retrieves relevant
-              past questions as few-shot examples and feeds them to the LLM alongside
-              detailed topic-specific prompts. This grounds the output in real exam
-              patterns — the sentence structures, option styles, and difficulty curves
-              all mirror actual IPMAT/CAT verbal sections.
+              Questions aren&apos;t generated from thin air. The 274 official IPMAT Indore Verbal Ability PYQs used to train Verbit&apos;s RAG model were sourced from AfterBoards, who generously provided them for this project. These PYQs are not distributed, but serve as reference for generating new, exam-style practice. I scanned and extracted these previous year question papers and stored them as reference documents in MongoDB. When generating a new question, the system retrieves relevant past questions as few-shot examples and feeds them to the LLM alongside detailed topic-specific prompts. This grounds the output in real exam patterns — the sentence structures, option styles, and difficulty curves all mirror actual IPMAT/CAT verbal sections.
             </p>
           </section>
 
