@@ -7,27 +7,7 @@ import SignOutButton from "@/components/sign-out-button";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Verbit | IPMAT Indore VA PYQ, Adaptive AI, Free CAT Verbal Practice",
-  description: "Learn about Verbit: adaptive verbal ability practice for IPMAT Indore and CAT, powered by AI and 274 official PYQs. 100% free, no coaching, no paywall. Provided by AfterBoards.",
-  keywords: [
-    "IPMAT verbal ability",
-    "IPMAT Indore PYQ",
-    "CAT verbal practice",
-    "free IPMAT questions",
-    "AI question generator",
-    "adaptive verbal aptitude",
-    "IPMAT 2026",
-    "IIM Indore entrance",
-    "IPMAT English",
-    "IPMAT mock test",
-    "IPMAT solved papers",
-    "AfterBoards",
-    "RAG model",
-    "online verbal practice",
-    "IPMAT study material",
-    "IPMAT tips",
-    "IPMAT coaching alternative"
-  ],
+  title: "About | Verbit",
 };
 
 export default async function AboutPage() {
@@ -85,19 +65,30 @@ export default async function AboutPage() {
         </header>
 
         <article className="prose-invert prose-sm space-y-8 text-white/80 leading-relaxed">
-          <h1 className="text-3xl font-bold text-white">About Verbit: IPMAT Indore Verbal Ability, PYQs &amp; AI Practice</h1>
+          <h1 className="text-3xl font-bold text-white">About Verbit</h1>
 
-          <div className="rounded-xl border border-amber-400/40 bg-amber-300/10 p-4 mb-6 text-base text-amber-200 font-semibold shadow" itemScope itemType="https://schema.org/CreativeWork">
+          <div className="rounded-xl border border-amber-400/40 bg-amber-300/10 p-4 mb-6 text-base text-amber-200 font-semibold shadow">
             <span>
               <span className="text-amber-100">RAG is trained on <b>274 Official IPMAT Indore VA PYQs</b> (provided for free by </span>
-              <a href="https://www.afterboards.in/past-year-questions" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-100" itemProp="provider" itemScope itemType="https://schema.org/Organization"><span itemProp="name">AfterBoards</span></a>
+              <a href="https://www.afterboards.in/past-year-questions" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-100">AfterBoards</a>
               <span className="text-amber-100">).</span>
             </span>
           </div>
 
           <section className="space-y-4">
             <p>
-              Welcome to Verbit — the <b>free, AI-powered IPMAT Indore Verbal Ability and CAT English practice platform</b> trusted by serious aspirants. I&apos;m Shinjan, a 1st Year IPM student at IIM Indore. I built Verbit to automate and optimize verbal practice using <b>official PYQs</b> and advanced LLMs, so you can focus on learning, not logistics. Generate <b>unlimited adaptive questions</b>, track your <b>VerScore</b>, and master every topic — all for free, with no coaching or paywall.
+              Hi, I&apos;m Shinjan — 1st Year IPM student at IIM Indore.
+              I&apos;ve always guided aspirants to use carefully curated prompts to
+              leverage the full power of LLMs for verbal ability practice — and it
+              genuinely works well. But the process is inefficient: crafting the right
+              prompt every time, copy-pasting outputs, manually tracking what
+              you&apos;ve already done. A lot of time gets wasted on logistics instead
+              of actual practice. So I decided to automate the entire workflow into
+              a single platform — one that generates{" "}
+              <strong className="text-white">unlimited</strong> fresh questions,{" "}
+              <strong className="text-white">adapts</strong> to your skill level{" "}
+              <strong className="text-white">in real time</strong>, and costs you{" "}
+              <strong className="text-white">absolutely nothing</strong>. That&apos;s Verbit.
             </p>
           </section>
 
@@ -248,7 +239,13 @@ export default async function AboutPage() {
           <section className="space-y-4">
             <h2 className="text-xl font-semibold text-white">RAG Pipeline (Retrieval-Augmented Generation)</h2>
             <p>
-              Questions aren&apos;t generated from thin air. The <b>274 official IPMAT Indore Verbal Ability PYQs</b> used here were sourced from <a href="https://www.afterboards.in/past-year-questions" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-100">AfterBoards</a>, who generously provided them to me for free. I scanned and extracted these previous year question papers and stored them as reference documents in MongoDB. When generating a new question, the system retrieves relevant past questions as few-shot examples and feeds them to the LLM alongside detailed topic-specific prompts. This grounds the output in real exam patterns — the sentence structures, option styles, and difficulty curves all mirror actual IPMAT/CAT verbal sections.
+              Questions aren&apos;t generated from thin air. I scanned and extracted 274
+              previous year question papers and stored them as reference documents in
+              MongoDB. When generating a new question, the system retrieves relevant
+              past questions as few-shot examples and feeds them to the LLM alongside
+              detailed topic-specific prompts. This grounds the output in real exam
+              patterns — the sentence structures, option styles, and difficulty curves
+              all mirror actual IPMAT/CAT verbal sections.
             </p>
           </section>
 

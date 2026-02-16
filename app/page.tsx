@@ -1,9 +1,8 @@
 "use client";
 
-
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Head from "next/head";
+
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { Badge } from "@/components/ui/badge";
@@ -53,47 +52,32 @@ export default function Home() {
   }, [snapshots.length]);
 
   return (
-    <>
-      <Head>
-        <title>Verbit | Free IPMAT & CAT Verbal Ability Practice, PYQs, Adaptive AI</title>
-        <meta name="description" content="Practice IPMAT Indore Verbal Ability with 274 official PYQs, adaptive AI question generator, and real-time VerScore. Free, modern, and built for CAT/IPMAT aspirants. No coaching, no paywall. Provided by AfterBoards." />
-        <meta name="keywords" content="IPMAT verbal ability, IPMAT Indore PYQ, CAT verbal practice, free IPMAT questions, AI question generator, adaptive verbal aptitude, IPMAT 2026, IIM Indore entrance, IPMAT English, IPMAT mock test, IPMAT solved papers, AfterBoards, RAG model, online verbal practice, IPMAT study material, IPMAT tips, IPMAT coaching alternative" />
-        <meta property="og:title" content="Verbit | Free IPMAT & CAT Verbal Ability Practice" />
-        <meta property="og:description" content="Practice with 274 official IPMAT Indore VA PYQs, adaptive AI, and real exam patterns. 100% free. Provided by AfterBoards." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://verbit.afterboards.in/" />
-      </Head>
-      <div className="min-h-screen bg-grid">
-        <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-16 px-6 py-12">
-          <header className="flex items-center justify-between">
-            <Logo />
-            <nav className="flex items-center gap-4">
-              <Link href="/about" className="text-sm text-white/50 transition hover:text-white/80">
-                About
-              </Link>
-              <Link href="/auth/sign-in">
-                <Button size="sm">Sign in</Button>
-              </Link>
-            </nav>
-          </header>
+    <div className="min-h-screen bg-grid">
+      <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-16 px-6 py-12">
+        <header className="flex items-center justify-between">
+          <Logo />
+          <nav className="flex items-center gap-4">
+            <Link href="/about" className="text-sm text-white/50 transition hover:text-white/80">
+              About
+            </Link>
+            <Link href="/auth/sign-in">
+              <Button size="sm">Sign in</Button>
+            </Link>
+          </nav>
+        </header>
 
-          <section className="grid gap-12 lg:grid-cols-2">
-            <div className="space-y-6">
-              <Badge>IPMAT Indore VA PYQ • AI Verbal Practice • Free</Badge>
-              <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
-                Adaptive Verbal Ability Practice for <span className="text-amber-300">IPMAT Indore</span> &amp; <span className="text-amber-300">CAT</span>
-              </h1>
-              <p className="text-lg text-white/60">
-                Practice with <b>274 official IPMAT Indore Verbal Ability PYQs</b> (provided by <a href="https://www.afterboards.in/past-year-questions" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-100">AfterBoards</a>), plus unlimited AI-generated questions. Adaptive scoring, real exam patterns, and instant feedback. 100% free. No coaching, no paywall.
-              </p>
-              <ul className="list-disc pl-5 text-white/70 text-base space-y-1">
-                <li>All <b>official IPMAT Indore VA PYQs</b> (2019–2025) included</li>
-                <li>Adaptive AI question generator (RAG model)</li>
-                <li>Topic-wise VerScore &amp; percentile tracking</li>
-                <li>Real exam-style MCQs, parajumbles, RC, idioms, and more</li>
-                <li>Mobile-friendly, fast, and distraction-free</li>
-              </ul>
-              <div className="flex flex-wrap gap-4">
+        <section className="grid gap-12 lg:grid-cols-2">
+          <div className="space-y-6">
+            <Badge>LLM-powered verbal practice</Badge>
+            <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
+              Adaptive verbal aptitude training for CAT and IPMAT.
+            </h1>
+            <p className="text-lg text-white/60">
+              Verbit generates fresh verbal questions, tracks VerScore per topic,
+              and adjusts difficulty in real time. Fast, modern, and built for
+              serious aspirants.
+            </p>
+            <div className="flex flex-wrap gap-4">
               <Link href="/auth/sign-in">
                 <Button size="lg">Start Practicing</Button>
               </Link>
@@ -176,7 +160,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-      </div>
-    </>
+    </div>
   );
 }
