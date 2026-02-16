@@ -70,10 +70,10 @@ export default function Home() {
           <div className="space-y-6">
             <Badge>LLM-powered verbal practice</Badge>
             <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
-              Adaptive verbal aptitude training for CAT and IPMAT.
+              Unlimited adaptive verbal aptitude training for CAT and IPMAT.
             </h1>
             <p className="text-lg text-white/60">
-              Verbit generates fresh verbal questions, tracks VerScore per topic,
+              Verbit generates fresh verbal questions with each click, tracks VerScore per topic,
               and adjusts difficulty in real time. Fast, modern, and built for
               serious aspirants.
             </p>
