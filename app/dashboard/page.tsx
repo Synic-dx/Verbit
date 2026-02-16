@@ -77,8 +77,8 @@ export default async function DashboardPage() {
         {/* Client-side only announcement board */}
         {/* eslint-disable-next-line @next/next/no-async-client-component */}
         {/** @ts-expect-error Server Component importing client wrapper */}
+      import AnnouncementBoardWrapper from "@/components/announcement-board-wrapper";
         <AnnouncementBoardWrapper />
-        import AnnouncementBoardWrapper from "@/components/announcement-board-wrapper";
         <SuggestionBox />
 
         <ScoreGrid
