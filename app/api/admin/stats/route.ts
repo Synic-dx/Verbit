@@ -9,6 +9,20 @@ import { UserAptitudeModel } from "@/models/UserAptitude";
 import { AttemptModel } from "@/models/Attempt";
 
 export async function GET() {
+
+  const now = new Date();
+  // Calculate users active on at least 3 different days in the last 7 days
+  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const attempts7d = await AttemptModel.aggregate([
+    { $match: { createdAt: { $gte: sevenDaysAgo } } },
+    { $project: { userId: 1, day: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } } } },
+    { $group: { _id: { userId: "$userId", day: "$day" }, count: { $sum: 1 } } },
+    { $group: { _id: "$_id.userId", days: { $sum: 1 } } },
+    { $match: { days: { $gte: 3 } } },
+    { $count: "active7d3" }
+  ]);
+  const active7d3 = attempts7d.length > 0 ? attempts7d[0].active7d3 : 0;
+
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -22,7 +36,6 @@ export async function GET() {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const now = new Date();
   const oneDay = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   const sevenDays = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
   const thirtyDays = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
@@ -109,5 +122,6 @@ export async function GET() {
     totalUsers: users.length,
     totalAttempts: { "1d": total1d, "7d": total7d, "30d": total30d, all: totalAll },
     users: userList,
+    active7d3,
   });
 }

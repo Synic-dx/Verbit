@@ -27,6 +27,7 @@ type StatsData = {
   totalUsers: number;
   totalAttempts: UserAttempts;
   users: UserEntry[];
+  active7d3?: number;
 };
 
 type ReportEntry = {
@@ -243,6 +244,7 @@ export default function AdminPage() {
               <StatCard label="Problems (24h)" value={stats.totalAttempts["1d"]} />
               <StatCard label="Problems (7d)" value={stats.totalAttempts["7d"]} />
               <StatCard label="Problems (30d)" value={stats.totalAttempts["30d"]} />
+              <StatCard label="Active Users (3/7d)" value={stats.active7d3 ?? 0} />
             </div>
 
             {/* Timeframe picker */}
