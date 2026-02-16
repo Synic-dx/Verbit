@@ -132,7 +132,7 @@ export default async function AboutPage() {
             <p>
               When you hit the <strong>&ldquo;Report bad question&rdquo;</strong> button and
               describe what&apos;s wrong, the system doesn&apos;t just blindly remove the
-              question. It sends your report and the full question to an AI evaluator
+              question. It sends your report and the full question to another AI evaluator
               that independently assesses whether the question is actually flawed. If
               your report is valid — say the correct answer is wrong, there are
               multiple correct options, or the passage contradicts the question — the
