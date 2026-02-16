@@ -256,7 +256,7 @@ function buildPrompt(topic: Topic, difficulty: number) {
         "Give 4 sentences (a, b, c, d), each using the same idiom or phrase. " +
         "The question text MUST begin with: 'In which sentence is the idiom/phrase used correctly?' " +
         "Exactly one sentence uses the idiom correctly. " +
-        "The other 3 should misuse it: wrong context, literal misapplication, or garbled phrasing.\n\n" +
+        "The other 3 should misuse it: wrong context, literal misapplication, or garbled phrasing. But should be tricky and not obvious \n\n" +
         "Choose idioms commonly tested in competitive exams — well-known but with meanings that are " +
         "non-obvious from component words (e.g. 'red herring', 'throw in the towel', 'bark up the wrong tree', " +
         "'a dime a dozen', 'burn the midnight oil'). Avoid region-specific slang.",
