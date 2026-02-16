@@ -9,7 +9,7 @@ interface Announcement {
 
 const ANNOUNCEMENTS: Announcement[] = [
   {
-    message: "Model Trained on all VA PYQs provided by AfterBoards (big thanks to Bhavesh Bhaiya)! You will now get better and more relevant questions. But continue reporting bad ones so we can improve further!",
+    message: "Model Trained on all VA PYQs provided by AfterBoards (big thanks to Bhavesh Bhaiya). You will now get better and more relevant questions. But continue reporting bad ones so we can improve further.",
     time: "2026-02-16 17:00 IST"
   }
 ];
