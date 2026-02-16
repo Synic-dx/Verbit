@@ -1,5 +1,5 @@
 import Link from "next/link";
-import AnnouncementBoardWrapper from "@/components/announcement-board-wrapper";
+import AnnouncementBoardWrapper from "@/components/AnnouncementBoardWrapper";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
