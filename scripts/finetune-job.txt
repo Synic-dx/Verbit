@@ -4,3 +4,4 @@ BASE_MODEL=gpt-4o-mini-2024-07-18
 SUFFIX=verbit-verbal
 EXAMPLES=274
 EPOCHS=3
+FINETUNED_MODEL=ft:gpt-4o-mini-2024-07-18:personal:verbit-verbal:D9pqRXSS

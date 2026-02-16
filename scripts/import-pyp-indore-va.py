@@ -77,8 +77,12 @@ def main():
         topic = topic_map.get(subtopic, None)
         if not topic or topic not in RAG_TOPICS:
             continue
-        difficulty_str = q.get("difficulty", "Medium")
-        difficulty = DIFFICULTY_MAP.get(difficulty_str, 70)
+        # Use difficultyScore if present, else fallback
+        if "difficultyScore" in q:
+            difficulty = q["difficultyScore"]
+        else:
+            difficulty_str = q.get("difficulty", "Medium")
+            difficulty = DIFFICULTY_MAP.get(difficulty_str, 70)
         percentile = 50 + (difficulty - 50) * 0.7  # crude mapping
         content_obj = {
             "question": q.get("question", ""),
