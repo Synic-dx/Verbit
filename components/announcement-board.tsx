@@ -29,7 +29,7 @@ export default function AnnouncementBoard() {
                   part === "AfterBoards" ? (
                     <a
                       key={idx}
-                      href="https://www.afterboards.in"
+                      href="https://www.afterboards.in/past-year-questions"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="underline text-blue-300 hover:text-blue-200 transition-colors"
