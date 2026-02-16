@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Verbit | IPMAT Indore VA PYQ, Adaptive AI, Free CAT Verbal Practice",
-  description: "Learn about Verbit: adaptive verbal ability practice for IPMAT Indore and CAT, powered by AI and 274 official PYQs. 100% free, no coaching, no paywall. Provided by AfterBoards.",
+  description: "Learn about Verbit: adaptive verbal ability practice for IPMAT Indore and CAT, powered by AI and 274 official PYQs. 100% free, no coaching, no paywall. Supported by AfterBoards.",
   keywords: [
     "IPMAT verbal ability",
     "IPMAT Indore PYQ",
