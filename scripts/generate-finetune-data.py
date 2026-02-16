@@ -107,7 +107,13 @@ def main():
         sys.exit(1)
 
     mongo = MongoClient(MONGODB_URI)
-    db = mongo.get_default_database() or mongo["verbit"]
+    # Always use 'verbit' database if default is not set
+    try:
+        db = mongo.get_default_database()
+        if db is None:
+            db = mongo["verbit"]
+    except Exception:
+        db = mongo["verbit"]
     col = db[COLLECTION]
 
     docs = list(col.find({}, {"embedding": 0}))

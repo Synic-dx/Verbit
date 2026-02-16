@@ -60,7 +60,7 @@ def main():
         sys.exit(1)
 
     # Count lines
-    line_count = sum(1 for _ in jsonl_path.open())
+    line_count = sum(1 for _ in jsonl_path.open(encoding="utf-8"))
     print(f"📄 Training file: {jsonl_path} ({line_count} examples)")
 
     if line_count < 10:
