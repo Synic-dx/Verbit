@@ -67,6 +67,14 @@ export default async function AboutPage() {
         <article className="prose-invert prose-sm space-y-8 text-white/80 leading-relaxed">
           <h1 className="text-3xl font-bold text-white">About Verbit</h1>
 
+          <div className="rounded-xl border border-amber-400/40 bg-amber-300/10 p-4 mb-6 text-base text-amber-200 font-semibold shadow">
+            <span>
+              <span className="text-amber-100">RAG is trained on <b>274 Official IPMAT Indore VA PYQs</b> (provided for free by </span>
+              <a href="https://www.afterboards.in/past-year-questions" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-100">AfterBoards</a>
+              <span className="text-amber-100">).</span>
+            </span>
+          </div>
+
           <section className="space-y-4">
             <p>
               Hi, I&apos;m Shinjan — 1st Year IPM student at IIM Indore.
@@ -231,7 +239,7 @@ export default async function AboutPage() {
           <section className="space-y-4">
             <h2 className="text-xl font-semibold text-white">RAG Pipeline (Retrieval-Augmented Generation)</h2>
             <p>
-              Questions aren&apos;t generated from thin air. I scanned and extracted 156
+              Questions aren&apos;t generated from thin air. I scanned and extracted 274
               previous year question papers and stored them as reference documents in
               MongoDB. When generating a new question, the system retrieves relevant
               past questions as few-shot examples and feeds them to the LLM alongside
