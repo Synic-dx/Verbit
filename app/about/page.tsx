@@ -7,7 +7,7 @@ import SignOutButton from "@/components/sign-out-button";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Verbit | IPMAT Indore Verbal Ability, Adaptive AI, Unlimited Practice",
+  title: "About | Verbit",
 };
 
 export default async function AboutPage() {
@@ -65,24 +65,35 @@ export default async function AboutPage() {
         </header>
 
         <article className="prose-invert prose-sm space-y-8 text-white/80 leading-relaxed">
-          <h1 className="text-3xl font-bold text-white">About Verbit: IPMAT Indore Verbal Ability &amp; Adaptive Practice</h1>
+          <h1 className="text-3xl font-bold text-white">About Verbit</h1>
 
           <div className="rounded-xl border border-amber-400/40 bg-amber-300/10 p-4 mb-6 text-base text-amber-200 font-semibold shadow">
             <span>
-              <span className="text-amber-100">Verbit's RAG model is trained on <b>274 official IPMAT Indore Verbal Ability PYQs</b> (generously provided by </span>
+              <span className="text-amber-100">RAG is trained on <b>274 Official IPMAT Indore VA PYQs</b> (provided for free by </span>
               <a href="https://www.afterboards.in/past-year-questions" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-100">AfterBoards</a>
-              <span className="text-amber-100">). These are used as reference for generating new, exam-style practice—not distributed directly.</span>
+              <span className="text-amber-100">).</span>
             </span>
           </div>
 
           <section className="space-y-4">
             <p>
-              Hi, I&apos;m Shinjan — 1st Year IPM student at IIM Indore. I built Verbit to automate and optimize verbal practice for IPMAT Indore and CAT using <b>official IPMAT Indore PYQs</b> as training data and advanced LLMs. Generate <strong className="text-white">unlimited</strong> adaptive questions, track your progress, and master every topic — all for free, with no coaching or paywall.
+              Hi, I&apos;m Shinjan — 1st Year IPM student at IIM Indore.
+              I&apos;ve always guided aspirants to use carefully curated prompts to
+              leverage the full power of LLMs for verbal ability practice — and it
+              genuinely works well. But the process is inefficient: crafting the right
+              prompt every time, copy-pasting outputs, manually tracking what
+              you&apos;ve already done. A lot of time gets wasted on logistics instead
+              of actual practice. So I decided to automate the entire workflow into
+              a single platform — one that generates{" "}
+              <strong className="text-white">unlimited</strong> fresh questions,{" "}
+              <strong className="text-white">adapts</strong> to your skill level{" "}
+              <strong className="text-white">in real time</strong>, and costs you{" "}
+              <strong className="text-white">absolutely nothing</strong>. That&apos;s Verbit.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">Why Verbit Is Free (and will stay free)</h2>
+            <h2 className="text-xl font-semibold text-white">Why It&apos;s Free (and will stay free)</h2>
             <p>
               This platform is 100% automated — every question, every evaluation,
               every difficulty adjustment is done by AI. There is no human curation,
@@ -103,7 +114,7 @@ export default async function AboutPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">Daily Limits: RC &amp; Conversation Sets</h2>
+            <h2 className="text-xl font-semibold text-white">Daily Limits on RC &amp; Conversation Sets</h2>
             <p>
               Reading Comprehension and Conversation Sets are the most token-heavy
               features on the platform — each set involves generating a full passage
@@ -119,7 +130,7 @@ export default async function AboutPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">AI-Generated Questions: Expect Errors</h2>
+            <h2 className="text-xl font-semibold text-white">There Will Be Errors</h2>
             <p>
               Let me be upfront: there <em>will</em> be mistakes. AI-generated questions
               are not perfect. You&apos;ll encounter questions with ambiguous options,
@@ -143,7 +154,7 @@ export default async function AboutPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">How VerScore (Adaptive Rating) Works</h2>
+            <h2 className="text-xl font-semibold text-white">How VerScore Works</h2>
             <p>
               Your VerScore is a per-topic adaptive rating on a 0–100 scale. Under
               the hood, it&apos;s mapped to a <strong>percentile</strong> using a
@@ -161,7 +172,7 @@ export default async function AboutPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">Adaptive Difficulty: Elo-Inspired System</h2>
+            <h2 className="text-xl font-semibold text-white">Adaptive Difficulty (Elo-inspired)</h2>
             <p>
               After every question, your VerScore is updated using an Elo-like
               system. Your current score and the question&apos;s difficulty are both
@@ -182,7 +193,7 @@ export default async function AboutPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">Calibration Phase: Starting Strong</h2>
+            <h2 className="text-xl font-semibold text-white">Calibration Phase</h2>
             <p>
               When you first start a topic, Verbit doesn&apos;t know your level. Instead
               of starting you at zero and making you grind through easy questions,
@@ -204,7 +215,7 @@ export default async function AboutPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">Dynamic Question Difficulty: IRT-Bayesian</h2>
+            <h2 className="text-xl font-semibold text-white">Dynamic Question Difficulty (IRT-Bayesian)</h2>
             <p>
               Questions aren&apos;t static either. Every question in the database has its
               own difficulty rating that evolves over time based on how users perform
@@ -226,14 +237,20 @@ export default async function AboutPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">RAG Pipeline: Retrieval-Augmented Generation</h2>
+            <h2 className="text-xl font-semibold text-white">RAG Pipeline (Retrieval-Augmented Generation)</h2>
             <p>
-              Questions aren&apos;t generated from thin air. The <b>274 official IPMAT Indore Verbal Ability PYQs</b> used to train Verbit's RAG model were sourced from <a href="https://www.afterboards.in/past-year-questions" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-100">AfterBoards</a>, who generously provided them for this project. These PYQs are not distributed, but serve as reference for generating new, exam-style practice. I scanned and extracted these previous year question papers and stored them as reference documents in MongoDB. When generating a new question, the system retrieves relevant past questions as few-shot examples and feeds them to the LLM alongside detailed topic-specific prompts. This grounds the output in real exam patterns — the sentence structures, option styles, and difficulty curves all mirror actual IPMAT/CAT verbal sections.
+              Questions aren&apos;t generated from thin air. I scanned and extracted 274
+              previous year question papers and stored them as reference documents in
+              MongoDB. When generating a new question, the system retrieves relevant
+              past questions as few-shot examples and feeds them to the LLM alongside
+              detailed topic-specific prompts. This grounds the output in real exam
+              patterns — the sentence structures, option styles, and difficulty curves
+              all mirror actual IPMAT/CAT verbal sections.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">Deduplication: Smarter Practice</h2>
+            <h2 className="text-xl font-semibold text-white">Deduplication</h2>
             <p>
               Nobody wants to see the same vocabulary word or idiom twice. The system
               tracks every word/idiom you&apos;ve already been tested on and actively
@@ -246,7 +263,7 @@ export default async function AboutPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">Topic Coverage: IPMAT &amp; CAT Verbal</h2>
+            <h2 className="text-xl font-semibold text-white">Topic Coverage</h2>
             <p>
               Verbit covers 8 verbal aptitude topics modelled after the IPMAT and CAT
               exam patterns:
@@ -269,7 +286,7 @@ export default async function AboutPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-white">Tech Stack: Modern &amp; Scalable</h2>
+            <h2 className="text-xl font-semibold text-white">Tech Stack</h2>
             <ul className="list-inside list-disc space-y-1 text-white/70">
               <li>Next.js (App Router, TypeScript)</li>
               <li>MongoDB Atlas</li>
