@@ -4,8 +4,9 @@ import { authOptions } from "@/lib/auth";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import SignOutButton from "@/components/sign-out-button";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "About | Verbit",
 };
 
