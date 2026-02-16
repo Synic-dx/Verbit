@@ -10,6 +10,8 @@ import { UserModel } from "@/models/User";
 import { Logo } from "@/components/logo";
 import ScoreGrid from "@/app/dashboard/score-grid";
 import SuggestionBox from "@/app/dashboard/suggestion-box";
+import dynamic from "next/dynamic";
+const AnnouncementBoard = dynamic(() => import("@/components/announcement-board"), { ssr: false });
 import SignOutButton from "@/components/sign-out-button";
 
 export default async function DashboardPage() {
@@ -74,6 +76,7 @@ export default async function DashboardPage() {
           </div>
         </header>
 
+        <AnnouncementBoard />
         <SuggestionBox />
 
         <ScoreGrid

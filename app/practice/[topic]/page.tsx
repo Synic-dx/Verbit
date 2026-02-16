@@ -319,7 +319,7 @@ export default function PracticePage() {
               <div className="flex-1 space-y-6 overflow-y-auto scroll-smooth px-6 py-6">
                 {question.questions.map((q, index) => (
                   <div key={q.text} className="space-y-3">
-                    <p className="text-white">{index + 1}. {q.text}</p>
+                    <p className="text-white" dangerouslySetInnerHTML={{ __html: `${index + 1}. ${q.text}` }} />
                     <div className="grid gap-2">
                       {q.options.map((opt, optIndex) => (
                         <button
@@ -347,7 +347,7 @@ export default function PracticePage() {
                       ))}
                     </div>
                     {submitted ? (
-                      <p className="text-xs text-white/50">{q.explanation}</p>
+                      <p className="text-xs text-white/50" dangerouslySetInnerHTML={{ __html: q.explanation }} />
                     ) : null}
                   </div>
                 ))}
@@ -437,7 +437,7 @@ export default function PracticePage() {
               <p className="text-sm font-medium text-white/50">{TOPIC_HINTS[topic]}</p>
             ) : null}
             <div className="space-y-4">
-              <p className="text-lg text-white">{question.question}</p>
+              <p className="text-lg text-white" dangerouslySetInnerHTML={{ __html: question.question }} />
               <div className="grid gap-3">
                 {question.options.map((option, index) => (
                   <button
@@ -462,7 +462,7 @@ export default function PracticePage() {
               </div>
             </div>
             {submitted ? (
-              <p className="text-sm text-white/60">{explanations[0]}</p>
+              <p className="text-sm text-white/60" dangerouslySetInnerHTML={{ __html: explanations[0] }} />
             ) : null}
             <div className="flex items-center justify-end gap-3">
               {!submitted ? (
