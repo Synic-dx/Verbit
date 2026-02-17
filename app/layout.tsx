@@ -3,7 +3,7 @@ import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import { getServerSession } from "next-auth";
 import "./globals.css";
 import Providers from "@/app/providers";
-import Footer from "@/components/Footer";
+import FooterVisibility from "@/components/FooterVisibility";
 import { authOptions } from "@/lib/auth";
 
 const spaceGrotesk = Space_Grotesk({
@@ -29,8 +29,7 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession(authOptions);
 
-  // Use pathname from window for client-side check
-  const pathname = typeof window !== "undefined" ? window.location.pathname : "";
+
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -38,8 +37,7 @@ export default async function RootLayout({
         className={`${spaceGrotesk.variable} ${plexMono.variable} antialiased`}
       >
         <Providers session={session}>{children}</Providers>
-          {/* Hide Footer on landing page */}
-          {!(typeof window !== "undefined" && window.location.pathname === "/") && <Footer />}
+        <FooterVisibility />
       </body>
     </html>
   );
