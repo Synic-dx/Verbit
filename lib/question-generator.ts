@@ -75,191 +75,64 @@ async function getAvoidanceRules(topic: Topic): Promise<string> {
 }
 
 function buildPrompt(topic: Topic, difficulty: number) {
+    // RC passage length scales with difficulty: lower → shorter, higher → longer
+    const rcWordCount = difficulty <= 30 ? "500-600" : difficulty <= 60 ? "600-700" : "700-800";
   const percentile = verScoreToPercentile(difficulty);
-  const levelTag = `IPMAT/CAT Percentile ${percentile} level`;
-
-  // RC passage length scales with difficulty: lower → shorter, higher → longer
-  const rcWordCount = difficulty <= 30 ? "500-600" : difficulty <= 60 ? "600-700" : "700-800";
+  let levelTag = `IPMAT/CAT Percentile ${percentile} level`;
+  let eliteClause = "";
+  if (difficulty >= 90) {
+    levelTag = `Olympiad/760+ SAT/99th percentile CAT/GMAT/GRE (VerScore ${difficulty})`;
+    eliteClause = " These must be of top elite SAT/GMAT/GRE level—extremely rare, challenging, and creative, matching the most difficult questions ever seen on those exams.";
+  } else if (difficulty >= 80) {
+    levelTag = `Very Advanced (VerScore ${difficulty}, ~98th percentile)`;
+  } else if (difficulty >= 70) {
+    levelTag = `Advanced (VerScore ${difficulty}, ~95th percentile)`;
+  } else if (difficulty >= 60) {
+    levelTag = `Above Average (VerScore ${difficulty}, ~90th percentile)`;
+  } else if (difficulty >= 50) {
+    levelTag = `Median (VerScore ${difficulty}, 50th percentile)`;
+  }
 
   const topicDescriptions: Record<Topic, { schemaName: string; description: string }> = {
     "Reading Comprehension Sets": {
       schemaName: "rc",
       description:
-        `Generate a ${levelTag} Reading Comprehension set. ` +
-        `Write an original passage of ${rcWordCount} words. ` +
-        "The passage may be argumentative, analytical, descriptive, or informational — " +
-        "on a topic typical of IPMAT/CAT exams. Choose from a WIDE range of domains: " +
-        "social media regulation, economic policy, climate science, technology ethics, political systems, " +
-        "urbanisation, public health, cultural commentary, globalisation, behavioural economics, " +
-        "cognitive psychology, artificial intelligence ethics, space exploration, renewable energy, " +
-        "philosophy of science, ancient civilisations, modern art movements, linguistic diversity, " +
-        "constitutional law, gender studies, migration patterns, biodiversity conservation, " +
-        "digital privacy, education reform, media literacy, supply chain economics, " +
-        "neuroscience discoveries, historical revisionism, sports analytics, music theory, " +
-        "food security, water scarcity, intellectual property law, urban planning, " +
-        "decolonisation, literary criticism, quantum computing, gene editing ethics, " +
-        "democratic backsliding, gig economy, mental health policy, archaeology. " +
-        "Pick a UNIQUE and SPECIFIC topic within the chosen domain — do NOT write generic overviews. " +
-        "It should read like an excerpt from a newspaper editorial, journal article, or policy analysis — " +
-        "with a clear thesis, supporting evidence, and nuanced reasoning. " +
-        "FORMATTING: Structure the passage with clear paragraph breaks (use \\n\\n between paragraphs). " +
-        "The passage MUST have 3-5 distinct paragraphs — do NOT write it as a single block of text. " +
-        "Create exactly 6 questions covering: (1) main idea or central argument, (2) author's tone or purpose, " +
-        "(3) logical inference, (4) specific detail retrieval, (5) meaning of a word/phrase as used in the passage, " +
-        "(6) conclusion or implication. " +
-        "Each option must be a full-sentence statement — conceptual or interpretive. " +
-        "Options should be plausible paraphrases — avoid obviously wrong or absurd distractors. " +
-        "Each explanation must quote or cite the specific sentence(s) that justify the answer.",
+        `Generate a ${levelTag} Reading Comprehension set. Passage: ${rcWordCount} words, 3–5 paragraphs, unique, exam-relevant topic (current affairs, science, economics, social issues). Style: editorial or journal article. 6 questions: main idea, tone, inference, detail, word/phrase meaning, conclusion. Higher difficulty: denser arguments, more inference, advanced vocabulary, subtler distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
     "Conversation Sets": {
       schemaName: "rc",
       description:
-        `Generate a ${levelTag} Conversation-based comprehension set. ` +
-        "Write a realistic dialogue (400-600 words) between two speakers discussing a substantive topic. " +
-        "Choose from a WIDE range of domains: business strategy, economics, technology, philosophy, " +
-        "behavioral psychology, artificial intelligence, environmental policy, education systems, " +
-        "healthcare innovation, urban design, space science, literary analysis, political theory, " +
-        "cultural anthropology, media ethics, startup ecosystem, public policy, " +
-        "data privacy, renewable energy, neuroscience, global trade, sports management, " +
-        "music industry, food science, legal reform, architecture, linguistics, " +
-        "historical events, scientific methodology, ethical dilemmas, social entrepreneurship, " +
-        "digital transformation, financial markets, climate adaptation, art curation. " +
-        "Pick a UNIQUE and SPECIFIC angle within the chosen domain — do NOT write generic discussions. " +
-        "Style: business podcast, editorial interview, or panel discussion. " +
-        "Use named speakers with roles (e.g. 'Interviewer', 'CEO', 'Economist'). " +
-        "Each speaker should have a distinct position and reasoning style. " +
-        "FORMATTING: Use \\n\\n between speaker turns to create clear visual separation. " +
-        "Each speaker turn should start on a new line with the speaker's name followed by a colon. " +
-        "Create exactly 6 questions testing: (1) meaning of a specific term in context, " +
-        "(2) concept explanation, (3) logical inference, (4) main idea or summary of the conversation, " +
-        "(5) a speaker's primary argument or intent, (6) a factual detail from the transcript. " +
-        "Each option must be a full-sentence explanation or interpretation. " +
-        "Distractors should be subtle — plausible paraphrases that distort the speaker's actual position.",
+        `Generate a ${levelTag} Conversation set. Dialogue: 400–600 words, 2 named speakers, unique, exam-relevant topic (business, policy, science). 6 questions: term meaning, concept, inference, main idea, argument/intent, detail. Higher difficulty: nuanced positions, indirect reasoning, subtler distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
     "Parajumbles": {
       schemaName: "pj",
       description:
-        `Generate a ${levelTag} Parajumble question. ` +
-        "Produce 4-5 sentences (labeled A, B, C, D, and optionally E) that together form a coherent paragraph " +
-        "on a factual or analytical topic (e.g. ancient civilisations, scientific discoveries, economic history, " +
-        "literary movements, geopolitical events). " +
-        "Present the sentences in a SCRAMBLED order. " +
-        "Sentences should contain subtle connectors when correctly ordered — pronoun references (this, these, such, its), " +
-        "cause-effect links, chronological markers, and demonstrative phrases that point back to prior sentences. " +
-        "The correct order should require careful analysis: chronological order, cause and effect, " +
-        "pronoun references, opening vs concluding sentences, and logical argument flow. " +
-        "Avoid explicit position markers like 'firstly', 'in conclusion', 'to begin with'. " +
-        "Do NOT use numbered lists.",
+        `Generate a ${levelTag} Parajumble. 4–5 sentences (A–E), scrambled, form a coherent paragraph. Topic: factual/analytical, exam-relevant. Higher difficulty: subtler logical/pronoun/chronology connectors. No explicit position markers or numbered lists. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
     "Vocabulary Usage": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Vocabulary Usage question. ` +
-        "Randomly choose ONE of these two formats:\n\n" +
-        "FORMAT A — Incorrect Word Usage:\n" +
-        "One target word is used in 4 different sentences (labeled a, b, c, d). " +
-        "Each option contains one full sentence. " +
-        "Exactly ONE sentence uses the word incorrectly or inappropriately " +
-        "(wrong meaning, wrong connotation, or confused with a paronym). " +
-        "The other 3 must use it correctly in distinct real-world contexts. " +
-        "The question text MUST begin with: 'One of the statements below contains the word [WORD] used incorrectly " +
-        "or inappropriately. Choose the statement with the incorrect usage.' " +
-        "Choose words with nuanced meanings commonly tested in IPMAT/CAT " +
-        "(e.g. 'train', 'bank', 'novel', 'precipitate', 'qualify', 'check'). " +
-        "The incorrect usage should be a plausible mistake.\n\n" +
-        "FORMAT B — Meaning-based Fill:\n" +
-        "Write a sentence with ONE blank (shown as '______'). " +
-        "The question text MUST begin with: 'Choose the word that best fills the blank.' " +
-        "followed by the sentence with the blank. " +
-        "Provide 4 single-word options (a, b, c, d). " +
-        "Only one word fits the context correctly in meaning, grammar, and collocational fit. " +
-        "The sentence should be on a real-world topic (economics, science, current affairs, environment). " +
-        "Distractors should be words that seem plausible on first reading but fail on closer examination.",
+        `Generate a ${levelTag} Vocabulary Usage question. Randomly pick: 1) Incorrect Usage: 4 sentences (a–d) with a target word, only one is incorrect (meaning, connotation, paronym confusion). 2) Multi-Blank: If difficulty < 60, use 2 blanks; if ≥ 60, use 3. 4 options (a–d), each a set of 2 or 3 words. Higher difficulty: rarer words, subtler errors, more plausible distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
     "Paracompletions": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Paragraph Completion question. ` +
-        "Write a short coherent paragraph of 3-5 sentences on an analytical or factual topic " +
-        "(e.g. monsoon economy, urbanisation, scientific methodology, trade policy, cultural evolution). " +
-        "The FINAL sentence is missing. " +
-        "The question text MUST begin with: 'Choose the sentence that best completes the paragraph below.' " +
-        "followed by the paragraph text ending with '______' where the missing sentence should be. " +
-        "Provide 4 options (a, b, c, d). Each option is a full sentence that could conclude the paragraph. " +
-        "The correct option should logically and stylistically complete the paragraph — " +
-        "it should serve as a natural conclusion, summary, or implication of what came before. " +
-        "Distractors should be topically relevant but subtly wrong: " +
-        "(a) introduce a slight contradiction, (b) shift the tone or register, " +
-        "(c) repeat information already stated, or (d) introduce a tangential point.",
+        `Generate a ${levelTag} Paragraph Completion question. Paragraph: 3–5 sentences, analytical/factual, exam-relevant. Final sentence missing, shown as '______'. 4 options (a–d), only one completes logically and stylistically. Higher difficulty: subtler logic, more nuanced distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
     "Sentence Completions": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Sentence Completion question (IPMAT/CAT style). ` +
-        "Randomly choose ONE of these three formats:\n\n" +
-        "FORMAT A — Single Blank:\n" +
-        "Write one sentence with one blank (shown as '______'). " +
-        "The question text MUST begin with: 'Fill in the blank with the most appropriate word.' " +
-        "followed by the sentence. " +
-        "Provide 4 single-word options (a, b, c, d). " +
-        "Only one word fits grammatically and contextually.\n\n" +
-        "FORMAT B — Double Blank:\n" +
-        "Write one sentence with two blanks. " +
-        "The question text MUST begin with: 'Fill in the blanks with the most appropriate pair of words.' " +
-        "followed by the sentence. " +
-        "Provide 4 options, each containing a pair of words (comma-separated). " +
-        "Only one pair fits both blanks logically and grammatically.\n\n" +
-        "FORMAT C — Triple Blank:\n" +
-        "Write one sentence with three blanks. " +
-        "The question text MUST begin with: 'Fill in the blanks with the most appropriate set of words.' " +
-        "followed by the sentence. " +
-        "Provide 4 options, each containing a set of three words (comma-separated). " +
-        "The correct set must fit grammatically, maintain logical meaning, and match tone or contrast. " +
-        "Distractors should have words that individually seem plausible but fail as a complete set.\n\n" +
-        "The sentence should be on an academic or real-world topic (science, history, economics, current affairs).",
+        `Generate a ${levelTag} Sentence Completion question (IPMAT/CAT style). Randomly pick: 1) Single Blank: 1 blank, 4 options. 2) Double Blank: 2 blanks, 4 options (pairs). 3) Triple Blank: 3 blanks, 4 options (triplets). Higher difficulty: more blanks, rarer words, subtler fit. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
     "Sentence Correction": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Sentence Correction question (IPMAT/CAT style). ` +
-        "Randomly choose ONE of these two formats:\n\n" +
-        "FORMAT A — Error Spotting:\n" +
-        "Write one sentence divided into four parts (labeled a, b, c, d). " +
-        "Exactly one part contains a grammatical error. " +
-        "The question text MUST begin with the instruction: 'Identify the part of the sentence that contains an error.' " +
-        "followed by the full sentence with parts labeled. " +
-        "Each option represents one part of the sentence.\n\n" +
-        "FORMAT B — Correct Version:\n" +
-        "Write one sentence that contains a grammatical error or awkward phrasing. " +
-        "The question text MUST begin with the instruction: 'Choose the option that corrects the error in the sentence below.' " +
-        "followed by the full original sentence. " +
-        "Provide 4 options (a, b, c, d), each offering a corrected version of the problematic part. " +
-        "Exactly one option is grammatically correct, idiomatic, and contextually appropriate.\n\n" +
-        "Common error types to use: subject-verb agreement, tense errors, modifier placement, " +
-        "word choice (e.g. 'regarded to be' → 'regarded as'), preposition errors, and parallelism. " +
-        "Focus on commonly tested grammar traps in IPMAT/CAT: subject-verb agreement with intervening clauses, " +
-        "gerund vs infinitive, conditional moods, pronoun-antecedent agreement, and misplaced modifiers. " +
-        "The sentence should be from an academic or journalistic context.",
+        `Generate a ${levelTag} Sentence Correction question (IPMAT/CAT style). Randomly pick: 1) Error Spotting: 1 sentence split into 4 parts (a–d), only one has a grammar error. 2) Correct Version: 1 sentence with an error, 4 corrected options. Higher difficulty: subtler grammar traps, more plausible distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
     "Idioms & Phrases": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Idioms & Phrases question. ` +
-        "Randomly choose ONE of these two formats:\n\n" +
-        "FORMAT A — Meaning:\n" +
-        "One idiom or phrase is given. " +
-        "The question text MUST begin with: 'What is the meaning of the idiom/phrase: [IDIOM]?' " +
-        "Provide 4 options (a, b, c, d), each offering a short meaning or definition. " +
-        "Only one meaning is correct. " +
-        "Distractors should be plausible interpretations based on the component words.\n\n" +
-        "FORMAT B — Correct Usage:\n" +
-        "Give 4 sentences (a, b, c, d), each using the same idiom or phrase. " +
-        "The question text MUST begin with: 'In which sentence is the idiom/phrase used correctly?' " +
-        "Exactly one sentence uses the idiom correctly. " +
-        "The other 3 should misuse it: wrong context, literal misapplication, or garbled phrasing. But should be tricky and not obvious \n\n" +
-        "Choose idioms commonly tested in competitive exams — well-known but with meanings that are " +
-        "non-obvious from component words (e.g. 'red herring', 'throw in the towel', 'bark up the wrong tree', " +
-        "'a dime a dozen', 'burn the midnight oil'). Avoid region-specific slang.",
+        `Generate a ${levelTag} Idioms & Phrases question. Randomly pick: 1) Meaning: 1 idiom, 4 options (only one correct). 2) Correct Usage: 4 sentences (a–d), only one uses the idiom correctly. Higher difficulty: rarer idioms, subtler errors, more plausible distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
   };
 
@@ -277,7 +150,7 @@ function buildPrompt(topic: Topic, difficulty: number) {
 
   return {
     schemaName: config.schemaName,
-    prompt: `${config.description}\n\n${schemaInstructions}\n\nTarget difficulty: ${difficulty}.`,
+    prompt: `${config.description}${eliteClause}\n\n${schemaInstructions}\n\nTarget difficulty: ${difficulty}.`,
   };
 }
 

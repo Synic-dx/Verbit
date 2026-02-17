@@ -18,7 +18,7 @@ type ScoreItem = {
   calibrationAttempts: number;
 };
 
-type ViewMode = "verscore" | "percentile";
+export type ViewMode = "verscore" | "percentile";
 
 export default function ScoreGrid({ items }: { items: ScoreItem[] }) {
   const [viewMode, setViewMode] = useState<ViewMode>("verscore");
