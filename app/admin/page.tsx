@@ -125,6 +125,30 @@ export default function AdminPage() {
     reload();
   }, [reload]);
 
+  // Error tracking banner
+  const errorBanner = error ? (
+    <Card className="border-rose-500/30 bg-rose-500/5 p-4 mb-4">
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-rose-200 whitespace-pre-line">{error}</p>
+        <button className="text-xs text-rose-300/50 hover:text-rose-300" onClick={() => setError(null)}>×</button>
+      </div>
+    </Card>
+  ) : null;
+
+  // Extra console logging for reports/suggestions
+  useEffect(() => {
+    if (reports && reports.length === 0) {
+      console.warn("No reports fetched.");
+    } else {
+      console.log("Fetched reports:", reports);
+    }
+    if (suggestions && suggestions.length === 0) {
+      console.warn("No suggestions fetched.");
+    } else {
+      console.log("Fetched suggestions:", suggestions);
+    }
+  }, [reports, suggestions]);
+
   const runAction = async (body: Record<string, unknown>, confirmMsg: string) => {
     if (!confirm(confirmMsg)) return;
     setActionLoading(true);
@@ -247,6 +271,8 @@ export default function AdminPage() {
           </Button>
         </div>
 
+        {/* Error banner */}
+        {errorBanner}
         {/* Action result banner */}
         {actionResult ? (
           <Card className="border-amber-500/30 bg-amber-500/5 p-4">
@@ -255,6 +281,48 @@ export default function AdminPage() {
               <button className="text-xs text-amber-300/50 hover:text-amber-300" onClick={() => setActionResult(null)}>×</button>
             </div>
           </Card>
+        ) : null}
+
+        {tab === "reports" ? (
+          <>
+            <div className="grid gap-4 mt-4">
+              {reports.length > 0 ? (
+                reports.map((report) => (
+                  <ReportCard
+                    key={report.id}
+                    report={report}
+                    expanded={expandedReport === report.id}
+                    onToggle={() => setExpandedReport(expandedReport === report.id ? null : report.id)}
+                    onAction={runAction}
+                    busy={actionLoading}
+                  />
+                ))
+              ) : (
+                <Card className="p-5 text-white/30 mt-4">No bad reports found.</Card>
+              )}
+            </div>
+          </>
+        ) : null}
+
+        {tab === "suggestions" ? (
+          <>
+            <div className="grid gap-4 mt-4">
+              {suggestions.length > 0 ? (
+                suggestions.map((s) => (
+                  <Card key={s.id} className="p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge className="bg-cyan-500/20 text-cyan-300 text-[10px]">Suggestion</Badge>
+                      <span className="text-xs text-white/30">{new Date(s.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    <p className="text-sm text-white/80 mb-1">{s.message}</p>
+                    <p className="text-xs text-white/40">By {s.userName} ({s.userEmail})</p>
+                  </Card>
+                ))
+              ) : (
+                <Card className="p-5 text-white/30 mt-4">No suggestions found.</Card>
+              )}
+            </div>
+          </>
         ) : null}
 
 
@@ -575,10 +643,12 @@ function UserRow({
                 </div>
               )}
               <div className="flex gap-4 text-xs text-white/40">
-                <span>24h: {user.attempts["1d"]}</span>
-                <span>7d: {user.attempts["7d"]}</span>
-                <span>30d: {user.attempts["30d"]}</span>
-                <span>All: {user.attempts.all}</span>
+                <div>
+                  <span>24h: {user.attempts["1d"]}</span>
+                  <span>7d: {user.attempts["7d"]}</span>
+                  <span>30d: {user.attempts["30d"]}</span>
+                  <span>All: {user.attempts.all}</span>
+                </div>
               </div>
               {/* Admin actions for this user */}
               <div className="flex flex-wrap gap-2 border-t border-white/10 pt-3">

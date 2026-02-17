@@ -32,11 +32,15 @@ export const authOptions: NextAuthOptions = {
         if (!email || !password) return null;
 
         await connectDb();
-        const user = await UserModel.findOne({ email }).lean();
+        const user = await UserModel.findOne({ email });
         if (!user?.passwordHash) return null;
 
         const ok = await compare(password, user.passwordHash);
         if (!ok) return null;
+
+        // Update lastLogin
+        user.lastLogin = new Date();
+        await user.save();
 
         return {
           id: String(user._id),
@@ -86,12 +90,12 @@ export const authOptions: NextAuthOptions = {
           const updates: Record<string, unknown> = {};
           if (!existingUser.image && user.image) updates.image = user.image;
           if (!existingUser.name && user.name) updates.name = user.name;
-          if (Object.keys(updates).length > 0) {
-            await db.collection("users").updateOne(
-              { _id: existingUser._id },
-              { $set: updates },
-            );
-          }
+          // Always update lastLogin
+          updates.lastLogin = new Date();
+          await db.collection("users").updateOne(
+            { _id: existingUser._id },
+            { $set: updates },
+          );
 
           // Override the user.id so the JWT uses the existing user's ID
           user.id = String(existingUser._id);

@@ -1,0 +1,558 @@
+[{
+  "_id": {
+    "$oid": "6992027ddebb753801bdcb78"
+  },
+  "userId": {
+    "$oid": "6991fdfc257023cd139f121c"
+  },
+  "userEmail": "shinjan2025@gmail.com",
+  "userName": "Shinjan",
+  "topic": "Vocabulary Usage",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "6992024adebb753801bdcb6d"
+    },
+    "topic": "Vocabulary Usage",
+    "question": "One of the statements below contains the word 'bank' used incorrectly or inappropriately. Choose the statement with the incorrect usage.",
+    "options": [
+      "a. She decided to bank her savings in a high-interest account.",
+      "b. The river bank was a perfect spot for our picnic.",
+      "c. He was excited to bank on his friends for support during the project.",
+      "d. The bank of the mountain offered breathtaking views of the valley."
+    ],
+    "correctIndex": 2,
+    "explanation": "In option c, 'bank on' means to rely on or depend on, which is correct in a different context. However, it is used here in a way that suggests it is synonymous with saving or depositing, which is incorrect.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 13,
+    "createdAt": {
+      "$date": "2026-02-15T17:28:42.143Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question incorrectly identifies option c as containing the word 'bank' used inappropriately. The phrase 'bank on' is a valid idiomatic expression meaning to rely on someone or something, and it is used correctly in this context. Therefore, the correct answer should be one of the other options, which do not misuse 'bank'.",
+  "rule": "Do not create questions that misidentify correct usages of words or phrases.",
+  "createdAt": {
+    "$date": "2026-02-15T17:29:33.305Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "699206a8b579de56d2ca6e3c"
+  },
+  "userId": {
+    "$oid": "6991fdfc257023cd139f121c"
+  },
+  "userEmail": "shinjan2025@gmail.com",
+  "userName": "Shinjan",
+  "topic": "Sentence Completions",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "69920648b579de56d2ca6e31"
+    },
+    "topic": "Sentence Completions",
+    "question": "Fill in the blanks with the most appropriate pair of words. The rapid advancement in technology has led to a significant increase in productivity, but it has also raised concerns about ______ and ______ in the workplace.",
+    "options": [
+      "efficiency, redundancy",
+      "creativity, innovation",
+      "stability, satisfaction",
+      "flexibility, autonomy"
+    ],
+    "correctIndex": 0,
+    "explanation": "The words 'efficiency' and 'redundancy' fit the context, as the advancement in technology boosts productivity (efficiency) but may also lead to job losses (redundancy).",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 6,
+    "createdAt": {
+      "$date": "2026-02-15T17:45:44.350Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question is problematic due to its ambiguity regarding which specific downsides of technology it is addressing. While 'efficiency' and 'redundancy' are valid concerns, the phrasing does not clearly indicate that these are the intended downsides, leading to confusion about the correct answer. Other options could also be seen as relevant, which undermines the question's clarity.",
+  "rule": "Do not create questions with ambiguous wording that can lead to multiple interpretations.",
+  "createdAt": {
+    "$date": "2026-02-15T17:47:20.141Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6992c5985f3ac89b9e8fc746"
+  },
+  "userId": {
+    "$oid": "6992121368452799a47c9188"
+  },
+  "userEmail": "42standondrk@gmail.com",
+  "userName": "Jesan",
+  "topic": "Idioms & Phrases",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "699297ee42f2028c38be1987"
+    },
+    "topic": "Idioms & Phrases",
+    "question": "What is the meaning of the idiom/phrase: 'burn the midnight oil'?",
+    "options": [
+      "a. To work late into the night",
+      "b. To waste time on trivial matters",
+      "c. To make a mistake in a task",
+      "d. To be overly cautious"
+    ],
+    "correctIndex": 0,
+    "explanation": "'Burn the midnight oil' means to work late into the night, often to complete a task or study. It originates from the time when oil lamps were used for light, indicating late-night work.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 96,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-16T04:07:10.558Z"
+    },
+    "__v": 0
+  },
+  "analysis": "User reported this as a repeated/duplicate question.",
+  "rule": "Do not regenerate questions that are too similar to previously served ones.",
+  "createdAt": {
+    "$date": "2026-02-16T07:22:00.520Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69930596f26c1079837f0063"
+  },
+  "userId": {
+    "$oid": "699227f71bc0e5375f25a177"
+  },
+  "userEmail": "astralvortex07@gmail.com",
+  "userName": "Astral Vortex",
+  "topic": "Idioms & Phrases",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "69930565f26c1079837f003e"
+    },
+    "topic": "Idioms & Phrases",
+    "question": "What is the meaning of the idiom/phrase: ____________?",
+    "options": [
+      "to throw someone off the scent",
+      "to throw someone off the cent",
+      "to throw someone off the sent",
+      "to throw someone off the scent"
+    ],
+    "correctIndex": 3,
+    "explanation": "The correct idiom is \"to throw someone off the scent,\" which means to mislead someone or distract them from discovering the truth. When a detective tries to confuse a suspect or when someone deliberately provides false clues to prevent others from finding out what they're really doing, they're throwing someone off the scent. This idiom originates from hunting, where dogs following a scent trail can be misdirected by false trails.\n\nExample: The spy changed his appearance and used a fake name to throw the authorities off the scent while he carried out his secret mission.\n\n<hr>\n\nLeft to Right:\n\nOption 1 → Uses \"cent\" instead of \"scent\"; changes meaning completely as \"cent\" refers to money.\n\nOption 2 → \"Cent\" is a currency unit; makes the idiom nonsensical and meaningless.\n\nOption 3 → Uses \"sent\" instead of \"scent\"; creates a grammatically incorrect and meaningless phrase.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 25,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-16T11:54:13.457Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question is indeed incomplete as it lacks the specific idiom or phrase that is supposed to be defined. Additionally, the options provided contain a repetition of the correct answer, which is not typical for multiple-choice questions. This can lead to confusion and does not effectively test the user's knowledge of the idiom.",
+  "rule": "Do not leave the question incomplete by omitting the specific idiom or phrase to be defined.",
+  "createdAt": {
+    "$date": "2026-02-16T11:55:02.579Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69934163d766edc3b2acea36"
+  },
+  "userId": {
+    "$oid": "69933c0c284b9e11264052f5"
+  },
+  "userEmail": "amisha.bansal570@gmail.com",
+  "userName": "Amisha Bansal",
+  "topic": "Paracompletions",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "69933f53d766edc3b2ace9e0"
+    },
+    "topic": "Paracompletions",
+    "question": "Choose the sentence that best completes the paragraph below. The monsoon season is crucial for India's economy, influencing agricultural productivity and overall growth. Regular rainfall patterns support crop cycles, while erratic weather, such as droughts or floods, can devastate farmers’ livelihoods. The government often implements measures like food price stabilization to mitigate the socio-economic impacts of monsoon variability. Additionally, monsoon performance affects industrial production, consumer demand, and investment decisions. ______",
+    "options": [
+      "Thus, the monsoon serves as a barometer for India's economic health and stability.",
+      "Consequently, the monsoon becomes a period of anxiety and unpredictability for the nation.",
+      "Therefore, the government must prioritize investment in irrigation and water management systems.",
+      "Hence, the monsoon's impact stretches far beyond agriculture, shaping India's economic landscape."
+    ],
+    "correctIndex": 3,
+    "explanation": "Option 4 is correct as it effectively summarizes the broad economic impact of the monsoon discussed in the paragraph, emphasizing its influence beyond agriculture.\n\n<hr>\n\nThe paragraph examines the monsoon's critical role in India's economy, highlighting how regular rainfall supports agriculture while irregular patterns can lead to severe socio-economic consequences. It details government interventions and the monsoon's far-reaching effects on various economic sectors, creating a comprehensive view of its importance. The missing sentence needs to encapsulate this wide-ranging economic impact and the monsoon's central role in shaping India's economic dynamics.\n\n<hr>\n\nOption 1 -> Uses \"barometer,\" which is metaphorical and not consistent with the analytical tone of the paragraph.\n\nOption 2 -> Introduces emotional language like \"anxiety and unpredictability,\" which shifts the tone away from the factual, analytical style established.\n\nOption 3 -> While relevant, it suggests a specific solution (investment in irrigation) rather than summarizing the broader economic implications of the monsoon's impact.\n\nOption 4 -> Naturally concludes by emphasizing that the monsoon's influence extends beyond agriculture, shaping the entire economic landscape of India, which aligns perfectly with the paragraph's comprehensive analysis.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 89,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-16T16:01:23.468Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question is problematic because it allows for multiple valid completions, particularly option 1, which also aligns with the paragraph's content about the monsoon's influence on India's economy. This ambiguity in the correct answer undermines the question's effectiveness, as it does not have a single clear correct option. Additionally, the explanation provided does not sufficiently clarify why option 4 is the only correct choice.",
+  "rule": "Do not create questions with multiple valid answers that can be justified by the text.",
+  "createdAt": {
+    "$date": "2026-02-16T16:10:11.989Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6993424337bd3e5ce6bfa432"
+  },
+  "userId": {
+    "$oid": "69933c0c284b9e11264052f5"
+  },
+  "userEmail": "amisha.bansal570@gmail.com",
+  "userName": "Amisha Bansal",
+  "topic": "Vocabulary Usage",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "6993422437bd3e5ce6bfa42b"
+    },
+    "topic": "Vocabulary Usage",
+    "question": "Choose the word that best fills the blank. The European Parliament’s recent decision to impose restrictions on the use of artificial intelligence in ________ is seen as a crucial step in establishing ethical guidelines and ensuring transparency in the development of AI technologies.",
+    "options": [
+      "comics",
+      "cameras",
+      "comics",
+      "commerce"
+    ],
+    "correctIndex": 2,
+    "explanation": "<ol> <li><b>Comics</b>: Refers to comic strips or comic books. This is not a relevant context for discussing AI restrictions, as AI is not typically associated with comics.</li> <li><b>Cameras</b>: Refers to devices used for capturing images. While AI can be used in cameras (e.g., facial recognition), the phrase \"in cameras\" does not logically fit as a broad category for AI restrictions.</li> <li><b>Commercials</b>: Refers to advertisements. AI can significantly impact advertising through targeted marketing, content generation, and data analysis. Restrictions on AI in \"commercials\" would be relevant, as this area directly affects consumer privacy and ethical advertising practices.</li> <li><b>Commerce</b>: Refers to the activity of buying and selling, especially on a large scale. AI's role in commerce includes inventory management, customer service chatbots, and personalized shopping experiences. While AI restrictions in commerce would also be significant, \"commercials\" is the more precise term for areas directly impacted by advertising ethics.</li> </ol>",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 46,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-16T16:13:24.899Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question contains a factual error as it includes two identical options ('comics'), which can confuse test-takers and undermine the integrity of the question. Additionally, the explanation provided for the options contains inaccuracies regarding the relevance of 'commercials' versus 'commerce' in the context of AI restrictions.",
+  "rule": "Do not include identical options in multiple-choice questions.",
+  "createdAt": {
+    "$date": "2026-02-16T16:13:55.720Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6993436337bd3e5ce6bfa48c"
+  },
+  "userId": {
+    "$oid": "69933c0c284b9e11264052f5"
+  },
+  "userEmail": "amisha.bansal570@gmail.com",
+  "userName": "Amisha Bansal",
+  "topic": "Vocabulary Usage",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "6992fc7b993f8b778395f0cf"
+    },
+    "topic": "Vocabulary Usage",
+    "question": "One of the statements below contains the word ______ used incorrectly or inappropriately. Choose the statement with the incorrect usage.",
+    "options": [
+      "a. If you want to do well on the math test, you should train yourself to do calculations quickly and accurately.",
+      "b. The bank had to train the new employees on the use of the software that managed financial transactions.",
+      "c. The athlete needed to train hard every day to improve his performance and qualify for the national championship.",
+      "d. The school decided to train students on how to respond during emergencies, like earthquakes or fires."
+    ],
+    "correctIndex": 1,
+    "explanation": "The correct word is **train**.\n\nMeaning 1: To teach a person or animal a particular skill or type of behavior through instruction and practice.\n-> Example: Parents often train their children to be responsible by assigning them household chores.\n\nMeaning 2: To undergo physical exercise and conditioning to prepare for a competition or improve athletic performance.\n-> Example: Athletes typically train for months before a major sporting event to maximize their chances of success.\n\n<hr>\n\nOption 1 -> Correct usage of \"train\" meaning to prepare or condition oneself (mentally and physically) through practice.\n\nOption 2 -> Incorrect usage of \"train\" where \"train\" should be \"train\" meaning to teach or instruct.\n\nOption 3 -> Correct usage of \"train\" meaning to physically prepare and condition for athletic competition.\n\nOption 4 -> Correct usage of \"train\" meaning to instruct or teach students specific skills or procedures.\n\n<hr>\n\nHence, **Option 2** is correct.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 66,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-16T11:16:11.804Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question is problematic because it incorrectly identifies one of the options as having an incorrect usage of the word 'train.' All options use 'train' correctly in their respective contexts, making the question misleading and the provided correct answer invalid.",
+  "rule": "Do not create questions that incorrectly identify correct usages of words.",
+  "createdAt": {
+    "$date": "2026-02-16T16:18:43.610Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "699346f7d12b2e9f4cb782b9"
+  },
+  "userId": {
+    "$oid": "69933c0c284b9e11264052f5"
+  },
+  "userEmail": "amisha.bansal570@gmail.com",
+  "userName": "Amisha Bansal",
+  "topic": "Sentence Correction",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "69934674d12b2e9f4cb782b2"
+    },
+    "topic": "Sentence Correction",
+    "question": "Choose the option that corrects the error in the sentence below.",
+    "options": [
+      "In the last decade, the international community has worked for the climate change mitigation and adaptation, and for the sustainable development of the world’s economy, and the international community is committed to the climate change and sustainable development of the world’s economy and will continue to work for this.",
+      "The international community has in the last decade worked for the climate change mitigation and adaptation, and for the sustainable development of the world’s economy, and the international community is committed to the climate change and sustainable development of the world’s economy, and will continue to work for this.",
+      "In the last decade, the international community has worked for the climate change mitigation and adaptation, and for the sustainable development of the world’s economy, and the international community is committed to the climate change and sustainable development of the world’s economy, and will continue to work for this.",
+      "In the last decade, the international community has worked for climate change mitigation and adaptation, and for the sustainable development of the world’s economy, and is committed to climate change and sustainable development of the world’s economy, and will continue to work for this."
+    ],
+    "correctIndex": 3,
+    "explanation": "The sentence suffers from redundancy and awkward phrasing due to repeated mentions of \"the international community\" and \"climate change and sustainable development of the world’s economy\".\n\n**Redundancy** occurs when unnecessary repetition makes a sentence longer without adding value. Here, the phrase \"the international community\" appears three times, and the phrase \"climate change and sustainable development of the world’s economy\" is repeated in full. This clutters the sentence and distracts from its purpose.\n\n**Awkward phrasing** happens when sentence structure feels unnatural or forced. The original sentence strings together too many clauses with \"and,\" resulting in a choppy, run-on feel. Proper coordination and conciseness create smoother, more elegant writing.\n\n<hr>\n\nOption 1 → Eliminates one \"the international community\" but keeps other redundancies, resulting in an improved yet still awkward sentence.\n\nOption 2 → Retains all original phrases, only changing \"has worked for the climate change mitigation\" to \"has in the last decade worked for the climate change,\" creating an even more awkward sentence.\n\nOption 3 → Keeps all redundancies intact, resulting in a long, repetitive, and awkward sentence.\n\nOption 4 → Eliminates redundancy by using \"climate change\" and \"sustainable development\" without repeating \"the international community\" unnecessarily, creating a concise and clear sentence.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 20,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-16T16:31:48.267Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question is problematic because the correct answer provided (Option 4) does not fully correct the issues of redundancy and awkward phrasing present in the original sentence. While it reduces some redundancy, it still retains a convoluted structure that could be improved further. Additionally, the other options do not offer a clear improvement, leading to confusion about the best choice.",
+  "rule": "Do not provide answer options that do not effectively correct the identified issues in the original sentence.",
+  "createdAt": {
+    "$date": "2026-02-16T16:33:59.453Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6993feba0dbb89a5f25a73e3"
+  },
+  "userId": {
+    "$oid": "6992e254d06e59600996a42a"
+  },
+  "userEmail": "dedebasish66@gmail.com",
+  "userName": "Debarghya Dey",
+  "topic": "Sentence Correction",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "6992fcc4993f8b778395f0e0"
+    },
+    "topic": "Sentence Correction",
+    "question": "Identify the part of the sentence that contains an error. The scientist, along with his research team, <b>a</b> were awarded the Nobel Prize for their discovery of a vaccine <b>b</b> which is <b>c</b> used to cure high blood pressure and diabetes <b>d</b> .",
+    "options": [
+      "was awarded the Nobel Prize for their discovery of a vaccine",
+      "was awarded the Nobel Prize for the discovery of a vaccine",
+      "were awarded the Nobel Prize for their discovery of a vaccine",
+      "was awarded the Nobel Prize for the discovery of a vaccine"
+    ],
+    "correctIndex": 0,
+    "explanation": "This question tests subject-verb agreement with compound subjects and idiomatic usage.\n\nWhen \"along with,\" \"together with,\" or similar phrases join a subject, the verb agrees with the main subject only. Think of it like a celebrity with entourage: \"The star, along with his agents, IS going to the party\" — not \"are going.\" Also, award phrases typically say \"awarded FOR the discovery OF,\" not \"for their discovery of,\" unless it's possessive emphasis.\n\nOption 1 → Correct verb \"was awarded\" matching singular \"scientist\" principal subject.\n\nOption 2 → Missing possessive \"their\" makes it sound like a generic award.\n\nOption 3 → Wrong verb \"were awarded\" treating \"scientist\" as plural.\n\nOption 4 → Correct verb but missing \"for their\" makes it awkwardly formal.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 89,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-16T11:17:24.390Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question contains a factual error as options 2 and 4 are identical, which can confuse test-takers and undermine the integrity of the question. Additionally, having duplicate options violates standard practices for multiple-choice questions, as it can lead to ambiguity in selecting an answer.",
+  "rule": "Do not include identical options in multiple-choice questions.",
+  "createdAt": {
+    "$date": "2026-02-17T05:38:02.617Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "699401ab3ec0f9838a40beec"
+  },
+  "userId": {
+    "$oid": "6992e254d06e59600996a42a"
+  },
+  "userEmail": "dedebasish66@gmail.com",
+  "userName": "Debarghya Dey",
+  "topic": "Idioms & Phrases",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "69939045a1b94dad0ddc192a"
+    },
+    "topic": "Idioms & Phrases",
+    "question": "What is the meaning of the idiom/phrase: 'burn the candle at both ends'?",
+    "options": [
+      "to work extremely hard during the day and night",
+      "to waste resources and energy recklessly",
+      "to remain cheerful and optimistic despite difficulties",
+      "to be well-prepared and organized for challenges"
+    ],
+    "correctIndex": 0,
+    "explanation": "The meaning is to exhaust oneself by staying up late and waking up early, thereby working hard both day and night. It reflects the idea of using both ends of a candle, which shortens its life. Example: \"If you continue to burn the candle at both ends with your demanding job and late-night study sessions, you'll soon burn out completely.\" This explains why option 1 is correct.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 99,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-16T21:46:45.602Z"
+    },
+    "__v": 0
+  },
+  "analysis": "User reported this as a repeated/duplicate question.",
+  "rule": "Do not regenerate questions that are too similar to previously served ones.",
+  "createdAt": {
+    "$date": "2026-02-17T05:50:35.440Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69940aa71e15c857f03144d2"
+  },
+  "userId": {
+    "$oid": "6992e254d06e59600996a42a"
+  },
+  "userEmail": "dedebasish66@gmail.com",
+  "userName": "Debarghya Dey",
+  "topic": "Sentence Completions",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "69940a541e15c857f03144c5"
+    },
+    "topic": "Sentence Completions",
+    "question": "Fill in the blanks with the most appropriate pair of words.",
+    "options": [
+      "factors, enhance",
+      "circumstances, aggravate",
+      "elements, explain",
+      "conditions, ameliorate"
+    ],
+    "correctIndex": 3,
+    "explanation": "The sentence discusses how certain conditions affect brain function and emotional well-being.\n\n**Option 1 -> Incorrect.** 'Enhance' suggests improvement, which contradicts the negative impact described (diminished brain function and emotional dysregulation).\n\n**Option 2 -> Incorrect.** 'Aggravate' implies worsening, which is redundant after already mentioning the negative effects of 'conditions'.\n\n**Option 3 -> Incorrect.** 'Explain' doesn't fit logically; it's not about clarifying but showing how conditions affect outcomes.\n\n**Option 4 -> Correct.** 'Conditions' accurately refers to the various health/environmental factors mentioned, and 'ameliorate' correctly suggests that improving these conditions can alleviate (not worsen) the negative effects on brain and emotional health.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 88,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-17T06:27:32.090Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question lacks a complete sentence or context for the fill-in-the-blank task, making it impossible for the respondent to determine which words fit appropriately. Without a clear sentence structure, the options provided do not have a basis for selection, leading to confusion.",
+  "rule": "Do not create fill-in-the-blank questions without providing a complete sentence or context.",
+  "createdAt": {
+    "$date": "2026-02-17T06:28:55.878Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69940ae31e15c857f03144e8"
+  },
+  "userId": {
+    "$oid": "6992e254d06e59600996a42a"
+  },
+  "userEmail": "dedebasish66@gmail.com",
+  "userName": "Debarghya Dey",
+  "topic": "Sentence Completions",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "69940ab71e15c857f03144de"
+    },
+    "topic": "Sentence Completions",
+    "question": "Fill in the blanks with the most appropriate pair of words.",
+    "options": [
+      "designed to, do away with",
+      "aimed at, getting rid of",
+      "intended for, eliminating",
+      "meant to, dispose of"
+    ],
+    "correctIndex": 1,
+    "explanation": "This sentence discusses a program that addresses or targets a specific problem. The correct pair needs to convey purpose and the action of removing the problem.\n\nOption 1 -> \"designed to, do away with\" -> grammatically correct, but \"do away with\" is more informal and less direct than needed for a serious program description.\n\n<b>Option 2</b> -> \"aimed at, getting rid of\" -> both phrases are precise and appropriately formal for describing a serious program's objectives.\n\nOption 3 -> \"intended for, eliminating\" -> \"intended for\" works, but \"eliminating\" sounds too extreme for a typical program description.\n\nOption 4 -> \"meant to, dispose of\" -> \"dispose of\" is not the right tone; it sounds more like throwing something away rather than addressing a serious issue.\n\n<hr>\n\nWhen a program is <i>aimed at</i> solving a problem, it's specifically targeting that issue as its goal. Think of it like archer aiming at a bullseye - the bullseye represents the problem they're trying to hit and solve. The phrase <i>getting rid of</i> means removing or eliminating something unwanted, like getting rid of clutter in your room - making the space better by removing what doesn't belong there.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 98,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-17T06:29:11.353Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question lacks a complete sentence that requires filling in the blanks, making it impossible for users to understand the context and select the most appropriate pair of words. Without a clear sentence structure, the question is ambiguous and does not provide the necessary information for answering correctly.",
+  "rule": "Do not create fill-in-the-blank questions without providing a complete sentence for context.",
+  "createdAt": {
+    "$date": "2026-02-17T06:29:55.231Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6994865d7e29299a9f260cd4"
+  },
+  "userId": {
+    "$oid": "6991fdfc257023cd139f121c"
+  },
+  "userEmail": "shinjan2025@gmail.com",
+  "userName": "Shinjan",
+  "topic": "Vocabulary Usage",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "69948538c510970f08e61631"
+    },
+    "topic": "Vocabulary Usage",
+    "question": "One of the most beautiful aspects of a <i>social</i> media platform is its ability to <b>connect</b> people from all walks of life and all parts of the world. This <u>connection</u> is especially empowering for those who may be <b>marginalised</b>, as it can offer them a sense of community and belonging that they may not have in their <u>immediate</u> environment. However, there are also drawbacks to this <i>connectivity</i>. Social media can create echo chambers, where individuals are exposed only to <b>similar</b> views and opinions, and they may also be subjected to online harassment or bullying. As such, while social media has the potential to be a force for good, it is important to use it thoughtfully and responsibly.",
+    "options": [
+      "unconventional, disconnected",
+      "unexpected, disjointed",
+      "nontraditional, divided",
+      "unorthodox, disconnected"
+    ],
+    "correctIndex": 0,
+    "explanation": "The question is testing word usage in the context of social media's role in connecting people.\n\n<b>Connection</b> is the act of linking or joining things together, creating relationships, or establishing communication between people or entities. In social media, connection refers to the networks and relationships formed between users, allowing them to interact, share content, and communicate across distances.\n\n<hr>\n\nOption 1 -> <i>Unconventional</i> - not based on or conforming to what is generally done or believed. Fits well as it describes a unique or different approach to connection. <i>Disconnected</i> - not joined or linked together; separate. Fits well as it contrasts with the idea of connecting people.\n\nOption 2 -> <i>Unexpected</i> - not expected or regarded as likely to happen. Does not fit well as it does not specifically relate to the nature of the connections being described. <i>Disjointed</i> - lacking a coherent sequence or connection. Does not fit well as it contradicts the idea of creating connections.\n\nOption 3 -> <i>Nontraditional</i> - not following established customs or practices. Fits reasonably well but is less precise than \"unconventional\" in this context. <i>Divided</i> - separated into parts or groups. Does not fit well as it contradicts the idea of connecting people.\n\nOption 4 -> <i>Unorthodox</i> - contrary to what is usual, traditional, or accepted; not orthodox. Fits well as it describes a different or unique approach to connection. <i>Disconnected</i> - not joined or linked together; separate. Fits well as it contrasts with the idea of connecting people.\n\n<hr>\n\nHence, <b>Option 1</b> is correct",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 62,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-17T15:11:52.773Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question lacks clear instructions on what the user is expected to do with the provided text and options. It does not specify that the user should identify which pair of words best fits the context of the passage, leading to ambiguity in understanding the task.",
+  "rule": "Do not omit clear instructions on what the user is expected to do with the question.",
+  "createdAt": {
+    "$date": "2026-02-17T15:16:45.128Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "699487b17e29299a9f260d0c"
+  },
+  "userId": {
+    "$oid": "6991fdfc257023cd139f121c"
+  },
+  "userEmail": "shinjan2025@gmail.com",
+  "userName": "Shinjan",
+  "topic": "Vocabulary Usage",
+  "questionSnapshot": {
+    "_id": {
+      "$oid": "699487367e29299a9f260cff"
+    },
+    "topic": "Vocabulary Usage",
+    "question": "One of the sentences below uses the word <b>bequeath</b> incorrectly. Choose the option which has the incorrect sentence.",
+    "options": [
+      "The most important thing is not to bequeath your wealth to your heirs, but to do good with it.",
+      "The late artist bequeathed all her works to the state, who put them on display in a gallery.",
+      "His father bequeathed a lot of land to him, but he later sold all of it.",
+      "The scientist bequeathed his knowledge to his students, who went on to make many discoveries."
+    ],
+    "correctIndex": 0,
+    "explanation": "The incorrect usage of <i>bequeath</i> is in the first sentence. To bequeath means to leave personal property or assets to someone through a will or after one's death. It specifically refers to tangible items or wealth, not to abstract concepts like wealth itself or moral principles. The other sentences correctly use bequeath in the context of passing down art, land, or knowledge as a legacy.",
+    "questions": [],
+    "pjSentences": [],
+    "difficulty": 66,
+    "attemptCount": 0,
+    "createdAt": {
+      "$date": "2026-02-17T15:20:22.380Z"
+    },
+    "__v": 0
+  },
+  "analysis": "The question is problematic because the explanation provided is misleading. While 'bequeath' typically refers to tangible items, it can also refer to intangible assets like knowledge, especially in a metaphorical sense. Therefore, the first sentence is not incorrect, and the explanation does not accurately reflect the usage of 'bequeath' in the context of knowledge.",
+  "rule": "Do not provide misleading explanations about the usage of vocabulary words.",
+  "createdAt": {
+    "$date": "2026-02-17T15:22:25.270Z"
+  },
+  "__v": 0
+}]

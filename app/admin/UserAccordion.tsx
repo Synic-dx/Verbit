@@ -18,6 +18,7 @@ export type UserDetail = {
     all: number;
   };
   scores: { topic: string; verScore: number; calibrated: boolean }[];
+  lastAttemptTimes?: Record<string, string | null>;
   // Add more fields as needed
 };
 
@@ -31,14 +32,24 @@ export default function UserAccordion({ userId, onClose }: { userId: string; onC
   useEffect(() => {
     setLoading(true);
     setError(null);
-    fetch(`/api/admin/user/${userId}`)
-      .then((res) => res.json())
+    fetch(`/api/admin/user/${userId}`, { credentials: "include" })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`API error: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
+        if (!data.user || !data.user.id) {
+          setError("User data missing or malformed.");
+          setLoading(false);
+          return;
+        }
         setUser(data.user);
         setLoading(false);
       })
-      .catch(() => {
-        setError("Failed to load user data.");
+      .catch((err) => {
+        setError("Failed to load user data. " + (err?.message || ""));
         setLoading(false);
       });
   }, [userId]);
@@ -73,8 +84,8 @@ export default function UserAccordion({ userId, onClose }: { userId: string; onC
             <span className="ml-2 text-xs text-white/40">{user.email}</span>
           </div>
           <div className="flex gap-4 text-xs text-white/40">
-            <span>Created: {new Date(user.createdAt).toLocaleString()}</span>
-            <span>Last Login: {new Date(user.lastLogin).toLocaleString()}</span>
+            <span><strong>Account Created:</strong> {new Date(user.createdAt).toLocaleString()}</span>
+            <span><strong>Last Login:</strong> {new Date(user.lastLogin).toLocaleString()}</span>
             <span>24h: {user.attempts["1d"]}</span>
             <span>7d: {user.attempts["7d"]}</span>
             <span>30d: {user.attempts["30d"]}</span>
@@ -87,6 +98,9 @@ export default function UserAccordion({ userId, onClose }: { userId: string; onC
                 <p className="text-lg font-semibold text-white">
                   {s.verScore.toFixed(1)}
                   {!s.calibrated && <span className="ml-1 text-xs font-normal text-amber-300/70">cal</span>}
+                </p>
+                <p className="text-xs text-white/40 mt-1">
+                  Last Attempt: {user.lastAttemptTimes && user.lastAttemptTimes[s.topic] ? new Date(user.lastAttemptTimes[s.topic]!).toLocaleString() : "No data"}
                 </p>
               </div>
             ))}
