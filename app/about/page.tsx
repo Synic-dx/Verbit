@@ -106,10 +106,8 @@ export default async function AboutPage() {
             <p>
               The AI credits (OpenAI API calls) that power every question generation
               and evaluation are paid out of my own pocket, and I&apos;m fine bearing
-              that cost for as long as I can. When I eventually run out of credits,
-              I&apos;ll put up a small donation link — every rupee collected will go
-              directly toward purchasing more API credits so the platform keeps
-              running. No profit, no middlemen.
+              that cost for as long as I can. My goal is to keep Verbit free and donation-based for everyone, so every rupee collected will go directly toward purchasing more API credits to keep the platform running. No profit, no middlemen.
+              If donation raising ever fails, I may introduce a subscription, but even then, I will never charge above the actual API costs. That would make Verbit the most affordable self-learning tool in the market—no markup, no hidden fees, just transparent pricing.
             </p>
           </section>
 
