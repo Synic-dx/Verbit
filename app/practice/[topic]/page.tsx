@@ -309,7 +309,7 @@ export default function PracticePage() {
                 </h2>
               </div>
               <div className="flex-1 overflow-y-auto scroll-smooth px-6 py-4 text-white/80 whitespace-pre-line">
-                {question.passage}
+                <span dangerouslySetInnerHTML={{ __html: question.passage }} />
               </div>
             </Card>
             <Card className="flex h-full flex-col overflow-hidden">
@@ -342,7 +342,7 @@ export default function PracticePage() {
                           }}
                           disabled={Boolean(submitted)}
                         >
-                          {opt}
+                          <span dangerouslySetInnerHTML={{ __html: opt }} />
                         </button>
                       ))}
                     </div>
@@ -380,7 +380,7 @@ export default function PracticePage() {
             <div className="space-y-3 text-white/80">
               {question.pjSentences.map((sentence, index) => (
                 <p key={sentence}>
-                  {String.fromCharCode(65 + index)}. {sentence}
+                  <span className="font-bold">{String.fromCharCode(65 + index)}.</span> <span dangerouslySetInnerHTML={{ __html: sentence }} />
                 </p>
               ))}
             </div>
@@ -456,7 +456,7 @@ export default function PracticePage() {
                     onClick={() => setSelected(index)}
                     disabled={Boolean(submitted)}
                   >
-                    {option}
+                    <span dangerouslySetInnerHTML={{ __html: option }} />
                   </button>
                 ))}
               </div>
