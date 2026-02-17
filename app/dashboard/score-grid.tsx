@@ -98,9 +98,13 @@ export default function ScoreGrid({ items, viewMode, setViewMode }: ScoreGridPro
                   <span className="text-xs uppercase tracking-widest text-white/40">
                     {!item.calibrated ? "Assessment phase" : "Adaptive range"}
                   </span>
-                  <Link href={`/practice/${encodeURIComponent(item.topic)}`}>
-                    <Button size="sm">{!item.calibrated ? "Calibrate" : "Practice"}</Button>
-                  </Link>
+                  {item.topic === "Parajumbles" ? (
+                    <Button size="sm" disabled className="opacity-50 cursor-not-allowed">Practice</Button>
+                  ) : (
+                    <Link href={`/practice/${encodeURIComponent(item.topic)}`}>
+                      <Button size="sm">{!item.calibrated ? "Calibrate" : "Practice"}</Button>
+                    </Link>
+                  )}
                 </div>
               </CardContent>
             </Card>

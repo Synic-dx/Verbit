@@ -144,12 +144,9 @@ function buildPrompt(topic: Topic, difficulty: number) {
 
   const schemaInstructions =
     config.schemaName === "rc"
-      ? "Return JSON with keys: passageTitle, passage, questions (array of 6). " +
-        "Each question has text, options (4 strings), correctIndex (0-3), explanation."
+      ? "Return JSON with keys: passageTitle, passage, questions (array of 6). Each question has text, options (4 strings), correctIndex (0-3), explanation."
       : config.schemaName === "pj"
-        ? "Return JSON with keys: pjSentences (array of sentences in scrambled order), " +
-          "pjCorrectOrder (string like BDAC using letters A-E matching sentence indices), " +
-          "pjExplanation (a brief explanation of why this is the correct order, referencing logical flow and connectors)."
+        ? "Return ONLY a JSON object in this exact format (no markdown, no extra fields): {\"pjSentences\": [\"Sentence A text.\", \"Sentence B text.\", \"Sentence C text.\", \"Sentence D text.\"], \"pjCorrectOrder\": \"ACBD\", \"pjExplanation\": \"Explanation of the correct order, referencing logical flow and connectors.\" } STRICT REQUIREMENTS: pjSentences must be an array of exactly 4 or 5 sentences, each at least 5 words, and must be scrambled (not in correct order). pjCorrectOrder must be a string of 4 or 5 uppercase letters A-E, each letter used once, matching the correct order of the sentences. pjExplanation must be a non-empty string. The explanation must be objective, logically grounded, and defensible, providing solid reasons for why this order is correct and concrete, provable reasons for why any other order is invalid. DO NOT add any extra fields or omit any required fields. DO NOT use markdown. DO NOT return a single string, HTML, or MCQ fields. If you deviate from this schema, your output will be rejected."
         : "Return JSON with keys: question, options (4 strings), correctIndex (0-3), explanation.";
 
   return {
@@ -221,7 +218,11 @@ export async function generateQuestion(topic: Topic, difficulty: number, avoidWo
     },
   });
 
+
   const content = response.choices[0]?.message?.content ?? "";
+  // Print raw LLM output to terminal for debugging
+  // eslint-disable-next-line no-console
+  console.log("\n[LLM RAW OUTPUT]", content, "\n");
 
   if (!content) {
     throw new Error("OpenAI returned empty response");
@@ -258,7 +259,15 @@ export async function generateQuestion(topic: Topic, difficulty: number, avoidWo
   }
 
   if (schemaName === "pj") {
-    const validated = pjSchema.parse(parsed);
+    // Zod-based validation: will throw if not matching schema
+    const result = pjSchema.safeParse(parsed);
+    if (!result.success) {
+      // Print the error and the raw object for debugging
+      // eslint-disable-next-line no-console
+      console.error("[Zod Validation Error]", result.error, parsed);
+      throw new Error("AI did not return valid Parajumbles JSON: " + result.error.message);
+    }
+    const validated = result.data;
     return { ...validated, difficulty: assignedDifficulty, topic } as GeneratedQuestion;
   }
 

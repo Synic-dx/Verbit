@@ -189,7 +189,9 @@ export default function PracticePage() {
     const answer = isRC(question)
       ? rcAnswers
       : isPJ(question)
-      ? pjInput
+      ? typeof pjInput === "string"
+        ? pjInput.replace(/\s+/g, "").toUpperCase()
+        : pjInput
       : selected;
 
     const res = await fetch("/api/submit", {
