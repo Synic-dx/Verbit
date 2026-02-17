@@ -3,12 +3,21 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { connectDb } from "@/lib/db";
 import { UserModel } from "@/models/User";
-
-let ANNOUNCEMENTS: { message: string; time: string }[] = [];
+import { AnnouncementModel } from "@/models/Announcement";
 
 export async function GET() {
-  // In production, fetch from DB. For now, use in-memory.
-  return NextResponse.json({ announcements: ANNOUNCEMENTS.slice(0, 3) });
+  await connectDb();
+  // Fetch latest 3 announcements from DB, newest first
+  const announcements = await AnnouncementModel.find({})
+    .sort({ time: -1 })
+    .limit(3)
+    .lean();
+  // Format time as ISO string for compatibility
+  const formatted = announcements.map((a) => ({
+    message: a.message,
+    time: a.time instanceof Date ? a.time.toISOString() : String(a.time),
+  }));
+  return NextResponse.json({ announcements: formatted });
 }
 
 export async function POST(req: Request) {
@@ -23,7 +32,14 @@ export async function POST(req: Request) {
   if (!message || typeof message !== "string" || !message.trim()) {
     return NextResponse.json({ error: "Message required" }, { status: 400 });
   }
-  ANNOUNCEMENTS.unshift({ message: message.trim(), time: new Date().toISOString() });
-  ANNOUNCEMENTS = ANNOUNCEMENTS.slice(0, 10); // keep last 10
+  // Save to DB, keep only last 10
+  await AnnouncementModel.create({ message: message.trim() });
+  // Optionally, delete older announcements (keep only 10)
+  const all = await AnnouncementModel.find({}).sort({ time: -1 });
+  if (all.length > 10) {
+    const toDelete = all.slice(10);
+    const ids = toDelete.map((a) => a._id);
+    await AnnouncementModel.deleteMany({ _id: { $in: ids } });
+  }
   return NextResponse.json({ ok: true });
 }
