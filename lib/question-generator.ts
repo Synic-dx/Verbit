@@ -81,11 +81,8 @@ function buildPrompt(topic: Topic, difficulty: number) {
   let levelTag = `IPMAT/CAT Percentile ${percentile} (VerScore ${difficulty})`;
   let eliteClause = "";
   if (difficulty >= 95) {
-    levelTag = `Olympiad/Top 100 (VerScore 100, 100th percentile)`;
-    eliteClause = " These must be of total topnotch, world-elite level—unprecedented, creative, and extremely rare.";
-  } else if (difficulty >= 90) {
-    levelTag = `Ultra Elite (VerScore 95, 99.8th percentile)`;
-    eliteClause = " These must be of top elite SAT/GMAT/GRE level—extremely rare, challenging, and creative, matching the most difficult questions ever seen on those exams.";
+    levelTag = `99.8th percentile (VerScore 95)`;
+    eliteClause = " These must be of top elite SAT/GMAT/GRE/Olympiad level—extremely rare, creative, and matching the most difficult questions ever seen on those exams.";
   } else if (difficulty >= 85) {
     levelTag = `99th percentile (VerScore 85)`;
   } else if (difficulty >= 75) {
