@@ -76,6 +76,26 @@ const TOPIC_HINTS: Record<string, string> = {
   "Idioms & Phrases": "", // instruction varies by format, embedded in question text
 };
 
+function AnimatedGenerating() {
+  // Animated 'Generating...' with dots
+  const [dots, setDots] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setDots((d) => (d + 1) % 4), 500);
+    return () => clearInterval(interval);
+  }, []);
+  return <span>Generating{'.'.repeat(dots)}</span>;
+}
+
+function AnimatedLoading() {
+  // Animated 'Loading...' with cycling dots
+  const [dots, setDots] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setDots((d) => (d + 1) % 4), 400);
+    return () => clearInterval(interval);
+  }, []);
+  return <span>Loading{'.'.repeat(dots)}</span>;
+}
+
 export default function PracticePage() {
   const params = useParams();
   const router = useRouter();
@@ -299,7 +319,14 @@ export default function PracticePage() {
         </header>
 
         {loading || !question ? (
-          <Card className="p-10 text-white/70">Loading question...</Card>
+          <Card className="p-10 text-white/70">
+            {loading && !question ? (
+              // Show 'Generating...' if OpenAI API call is in progress (i.e., after user action or initial load)
+              (topic === "Reading Comprehension Sets" || topic === "Conversation Sets" || topic === "Parajumbles" || topic === "Vocabulary Usage" || topic === "Paracompletions" || topic === "Sentence Completions" || topic === "Sentence Correction" || topic === "Idioms & Phrases")
+                ? <AnimatedGenerating />
+                : <AnimatedLoading />
+            ) : <AnimatedLoading />}
+          </Card>
         ) : isRC(question) ? (
           <div className="grid h-screen grid-cols-1 gap-6 overflow-hidden lg:grid-cols-2">
             <Card className="flex h-full flex-col overflow-hidden">

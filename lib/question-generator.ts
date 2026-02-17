@@ -52,7 +52,9 @@ function randomDifficulty(verScore: number, band = 6): number {
 
 const BASE_SYSTEM_PROMPT =
   "You generate CAT/IPMAT verbal questions. Return only valid JSON. " +
-  "Follow the requested schema precisely. Avoid markdown.";
+  "Follow the requested schema precisely. Avoid markdown. " +
+  "All content produced, including correct options, must be grammatically correct. " +
+  "Before delivering your output, check and ensure that every question, passage, and option is free of grammar errors and reads naturally.";
 
 /** Fetch learned avoidance rules for a topic (most recent 15). */
 async function getAvoidanceRules(topic: Topic): Promise<string> {
