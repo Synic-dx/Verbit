@@ -51,23 +51,7 @@ export default function DashboardClient({ isAdmin, scoreMap, calibrationMap }: {
             <SignOutButton />
           </div>
         </header>
-        <div className="flex flex-row gap-6 w-full mb-4 items-center">
-          <div className="flex-1 min-w-0">
-            <AnnouncementBoardWrapper />
-          </div>
-          <div className="flex-1 min-w-0">
-            <SuggestionBox />
-          </div>
-          <div className="flex items-center gap-2 ml-4">
-            <span className="text-xs uppercase tracking-[0.3em] text-white/40">Score View</span>
-            <button
-              className="rounded-full bg-white/10 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-white/20 border border-white/10"
-              onClick={() => setViewMode(viewMode === "verscore" ? "percentile" : "verscore")}
-            >
-              {viewMode === "verscore" ? "Show Percentile" : "Show VerScore"}
-            </button>
-          </div>
-        </div>
+        {/* Score view toggler below logo removed */}
         <ScoreGrid
           items={TOPICS.map((topic) => {
             const cal = calibrationMap.get(topic);
