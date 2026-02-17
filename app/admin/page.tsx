@@ -313,52 +313,66 @@ export default function AdminPage() {
           </>
         ) : null}
 
-        {tab === "reports" ? (
-          <div className="space-y-4">
-            {reports.length === 0 ? (
-              <Card className="p-8 text-white/50">No bad question reports yet.</Card>
-            ) : (
-              reports.map((r) => (
-                <ReportCard
-                  key={r.id}
-                  report={r}
-                  expanded={expandedReport === r.id}
-                  onToggle={() => setExpandedReport(expandedReport === r.id ? null : r.id)}
-                  onAction={runAction}
-                  busy={actionLoading}
-                />
-              ))
-            )}
-          </div>
-        ) : null}
 
-        {tab === "suggestions" ? (
-          <div className="space-y-4">
-            {suggestions.length === 0 ? (
-              <Card className="p-6 text-white/50">No suggestions yet.</Card>
-            ) : (
-              suggestions.map((s) => (
-                <Card key={s.id} className="border-blue-500/20 p-5">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-white">{s.userName}</span>
-                        <span className="text-xs text-white/30">{s.userEmail}</span>
-                        <span className="text-xs text-white/20">
-                          {new Date(s.createdAt).toLocaleString()}
-                        </span>
-                      </div>
-                      <p className="text-sm text-white/70">{s.message}</p>
-                    </div>
-                  </div>
-                </Card>
-              ))
-            )}
-          </div>
-        ) : null}
+
 
         {tab === "tools" ? (
           <div className="space-y-6">
+            {/* Post Announcement */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold text-white mb-2">Post Update</h3>
+              <p className="text-xs text-white/50 mb-2">Type your update and submit. The current date and time will be attached automatically.</p>
+              <form
+                className="flex flex-col gap-3"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const form = e.target as HTMLFormElement;
+                  const input = form.elements.namedItem("announcement") as HTMLInputElement;
+                  const message = input.value.trim();
+                  if (!message) return;
+                  setActionLoading(true);
+                  setActionResult(null);
+                  try {
+                    const res = await fetch("/api/announcements", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ message }),
+                    });
+                    const data = await res.json();
+                    if (data.ok) {
+                      setActionResult("Update posted.");
+                      input.value = "";
+                    } else {
+                      setActionResult(`Error: ${data.error}`);
+                    }
+                  } catch {
+                    setActionResult("Network error.");
+                  } finally {
+                    setActionLoading(false);
+                  }
+                }}
+              >
+                <textarea
+                  name="announcement"
+                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20"
+                  placeholder="Enter update message..."
+                  rows={2}
+                  maxLength={500}
+                  required
+                  disabled={actionLoading}
+                />
+                <div className="flex justify-end">
+                  <Button
+                    type="submit"
+                    size="sm"
+                    variant="default"
+                    disabled={actionLoading}
+                  >
+                    Post Update
+                  </Button>
+                </div>
+              </form>
+            </Card>
             {/* Question Bank Reset */}
             <Card className="p-6">
               <h3 className="text-lg font-semibold text-white">Reset Question Bank</h3>
@@ -382,7 +396,7 @@ export default function AdminPage() {
                     size="sm"
                     variant="secondary"
                     disabled={actionLoading}
-                    onClick={() => runAction({ action: "resetQuestions", topic: t }, `Delete all questions for "${t}"?`)}
+                    onClick={() => runAction({ action: "resetQuestions", topic: t }, `Delete all questions for \"${t}\"?`)}
                   >
                     {t}
                   </Button>

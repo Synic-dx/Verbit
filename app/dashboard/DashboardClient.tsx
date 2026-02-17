@@ -51,6 +51,7 @@ export default function DashboardClient({ isAdmin, scoreMap, calibrationMap }: {
             <SignOutButton />
           </div>
         </header>
+        <AnnouncementBoardWrapper />
         {/* Score view toggler below logo removed */}
         <ScoreGrid
           items={TOPICS.map((topic) => {
