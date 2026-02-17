@@ -70,16 +70,15 @@ export default function Home() {
           <div className="space-y-6">
             <Badge>LLM-powered verbal practice</Badge>
             <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
-              Unlimited adaptive verbal aptitude training for CAT and IPMAT.
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">Unlimited</span> adaptive verbal aptitude training for <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">CAT</span> and <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">IPMAT</span>.
             </h1>
             <p className="text-lg text-white/60">
-              Verbit generates fresh verbal questions with each click, tracks VerScore per topic,
-              and adjusts difficulty in real time. Fast, modern, and built for
-              serious aspirants.
+              Verbit generates fresh verbal questions with each click, tracks VerScore per topic, and adjusts difficulty in real time. Fast, modern, and built for serious aspirants.<br />
+              <span className="text-white/40 text-xs block mt-2">Trained on 7 years of <a href="https://www.afterboards.in/past-year-questions" target="_blank" rel="noopener noreferrer" className="underline bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent hover:text-white">Official IPMAT Indore PYQs</a>.</span>
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/auth/sign-in">
-                <Button size="lg">Start Practicing</Button>
+                <Button size="lg">Practice for Free</Button>
               </Link>
             </div>
           </div>
@@ -151,10 +150,7 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-sm text-white/50">
-                VerScore uses a logarithmic scale: 0 maps to the 50th percentile,
-                50 maps to about the 90th, and 100 maps to the 100th. Each update
-                converts your VerScore to a live percentile so you see your
-                standing instantly.
+                <span className="font-semibold text-white/80">VerScore</span> is a per-topic, anchor-based metric using a <span className="font-semibold text-white/80">logarithmic percentile scale</span> that represents actual examination patterns—so you know your true standing, not just a score. Every question is difficulty-rated live and <span className="font-semibold text-white/80">adaptively served</span> to match your VerScore, making each session elite and personalized. Experience real-exam rigor: <span className="font-semibold text-white/80">dual-pane RC</span>, parajumbles with free input, and a <span className="font-semibold text-white/80">fine-tuned question engine</span> modeled on PYQs and exam stats.
               </p>
             </div>
           </div>
