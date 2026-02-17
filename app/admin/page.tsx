@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TOPICS } from "@/lib/topics";
 import SignOutButton from "@/components/sign-out-button";
+import UserAccordion, { SortOption } from "./UserAccordion";
 
 type UserScore = { topic: string; verScore: number; calibrated: boolean };
 type UserAttempts = { "1d": number; "7d": number; "30d": number; all: number };
@@ -19,6 +20,8 @@ type UserEntry = {
   name: string;
   email: string;
   isAdmin: boolean;
+  lastLogin?: string | null;
+  createdAt?: string | null;
   scores: UserScore[];
   attempts: UserAttempts;
 };
@@ -63,6 +66,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedUser, setExpandedUser] = useState<string | null>(null);
+  const [sortOption, setSortOption] = useState<SortOption>("mostSolved");
   const [expandedReport, setExpandedReport] = useState<string | null>(null);
   const [timeframe, setTimeframe] = useState<"1d" | "7d" | "30d" | "all">("7d");
   const [actionLoading, setActionLoading] = useState(false);
@@ -253,6 +257,7 @@ export default function AdminPage() {
           </Card>
         ) : null}
 
+
         {tab === "overview" && stats ? (
           <>
             {/* Global stats */}
@@ -264,26 +269,43 @@ export default function AdminPage() {
               <StatCard label="Active Users (3/7d)" value={stats.active7d3 ?? 0} />
             </div>
 
-            {/* Timeframe picker */}
-            <div className="flex items-center gap-2">
-              <span className="text-xs uppercase tracking-widest text-white/40">Timeframe:</span>
-              {(["1d", "7d", "30d", "all"] as const).map((tf) => (
+            {/* Timeframe and sort picker */}
+            <div className="flex flex-wrap items-center gap-4 mt-2">
+              <div className="flex items-center gap-2">
+                <span className="text-xs uppercase tracking-widest text-white/40">Timeframe:</span>
+                {(["1d", "7d", "30d", "all"] as const).map((tf) => (
+                  <button
+                    key={tf}
+                    className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+                      timeframe === tf
+                        ? "bg-white/15 text-white"
+                        : "text-white/40 hover:text-white/70"
+                    }`}
+                    onClick={() => setTimeframe(tf)}
+                  >
+                    {tf === "all" ? "All time" : tf}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs uppercase tracking-widest text-white/40">Sort by:</span>
                 <button
-                  key={tf}
-                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-                    timeframe === tf
-                      ? "bg-white/15 text-white"
-                      : "text-white/40 hover:text-white/70"
-                  }`}
-                  onClick={() => setTimeframe(tf)}
-                >
-                  {tf === "all" ? "All time" : tf}
-                </button>
-              ))}
+                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${sortOption === "mostSolved" ? "bg-white/15 text-white" : "text-white/40 hover:text-white/70"}`}
+                  onClick={() => setSortOption("mostSolved")}
+                >Most Solved</button>
+                <button
+                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${sortOption === "lastLogin" ? "bg-white/15 text-white" : "text-white/40 hover:text-white/70"}`}
+                  onClick={() => setSortOption("lastLogin")}
+                >Last Login</button>
+                <button
+                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${sortOption === "newest" ? "bg-white/15 text-white" : "text-white/40 hover:text-white/70"}`}
+                  onClick={() => setSortOption("newest")}
+                >Newest</button>
+              </div>
             </div>
 
-            {/* User table */}
-            <Card className="overflow-hidden">
+            {/* User table with accordion */}
+            <Card className="overflow-hidden mt-4">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead>
@@ -295,17 +317,40 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {stats.users.map((u) => (
-                      <UserRow
-                        key={u.id}
-                        user={u}
-                        timeframe={timeframe}
-                        expanded={expandedUser === u.id}
-                        onToggle={() => setExpandedUser(expandedUser === u.id ? null : u.id)}
-                        onAction={runAction}
-                        busy={actionLoading}
-                      />
-                    ))}
+                    {[...stats.users]
+                      .sort((a, b) => {
+                        if (sortOption === "mostSolved") {
+                          return (b.attempts[timeframe] || 0) - (a.attempts[timeframe] || 0);
+                        }
+                        if (sortOption === "lastLogin") {
+                          // fallback to 0 if missing
+                          return (new Date(b.lastLogin || 0).getTime()) - (new Date(a.lastLogin || 0).getTime());
+                        }
+                        if (sortOption === "newest") {
+                          return (new Date(b.createdAt || 0).getTime()) - (new Date(a.createdAt || 0).getTime());
+                        }
+                        return 0;
+                      })
+                      .map((u) => [
+                        <tr
+                          key={u.id}
+                          className="cursor-pointer border-b border-white/5 transition hover:bg-white/5"
+                          onClick={() => setExpandedUser(expandedUser === u.id ? null : u.id)}
+                        >
+                          <td className="px-4 py-3 font-medium text-white">
+                            {u.name}
+                            {u.isAdmin ? (
+                              <Badge className="ml-2 bg-amber-500/20 text-amber-300 text-[10px]">Admin</Badge>
+                            ) : null}
+                          </td>
+                          <td className="px-4 py-3 text-white/60">{u.email}</td>
+                          <td className="px-4 py-3 text-right text-white/80">{u.attempts[timeframe]}</td>
+                          <td className="px-4 py-3 text-right text-white/40">{expandedUser === u.id ? "▲" : "▼"}</td>
+                        </tr>,
+                        expandedUser === u.id ? (
+                          <UserAccordion key={u.id + "-accordion"} userId={u.id} onClose={() => setExpandedUser(null)} />
+                        ) : null,
+                      ])}
                   </tbody>
                 </table>
               </div>

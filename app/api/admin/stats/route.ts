@@ -41,7 +41,7 @@ export async function GET() {
   const thirtyDays = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
   // Fetch all users
-  const users = await UserModel.find({}, { name: 1, email: 1, isAdmin: 1, createdAt: 1 })
+  const users = await UserModel.find({}, { name: 1, email: 1, isAdmin: 1, createdAt: 1, lastLogin: 1 })
     .sort({ createdAt: -1 })
     .lean();
 
@@ -108,6 +108,8 @@ export async function GET() {
       name: u.name ?? "—",
       email: u.email,
       isAdmin: u.isAdmin ?? false,
+      lastLogin: u.lastLogin ?? null,
+      createdAt: u.createdAt ?? null,
       scores: aptitudeMap.get(uid) ?? [],
       attempts: {
         "1d": map1d.get(uid) ?? 0,
