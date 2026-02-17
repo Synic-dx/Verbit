@@ -121,6 +121,7 @@ export default function PracticePage() {
   const [dailyUsed, setDailyUsed] = useState(0);
   const [dailyLimit, setDailyLimit] = useState(0);
   const [showLimitModal, setShowLimitModal] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -132,35 +133,48 @@ export default function PracticePage() {
     if (!TOPICS.includes(topic as any)) return;
 
     setLoading(true);
-    const res = await fetch(`/api/question?topic=${encodeURIComponent(topic)}`);
-    if (!res.ok) {
-      if (res.status === 429) {
-        const errData = await res.json();
-        setDailyUsed(errData.used ?? 0);
-        setDailyLimit(errData.limit ?? 5);
-        setShowLimitModal(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/question?topic=${encodeURIComponent(topic)}`);
+      if (!res.ok) {
+        if (res.status === 429) {
+          const errData = await res.json();
+          setDailyUsed(errData.used ?? 0);
+          setDailyLimit(errData.limit ?? 5);
+          setShowLimitModal(true);
+        } else {
+          setError('Failed to load question. Please try again.');
+        }
+        setLoading(false);
+        return;
       }
+      const data = await res.json();
+      if (!data || (typeof data === 'object' && Object.keys(data).length === 0)) {
+        setError('No question data received.');
+        setLoading(false);
+        return;
+      }
+      setQuestion(data);
+      setSelected(null);
+      setRcAnswers(Array(6).fill(-1));
+      setPjInput("");
+      setSubmitted(null);
+      setExplanations([]);
+      setReportFeedback(null);
+      setReportValid(false);
+      setCalibrating(data.calibrating ?? false);
+      setCalibrationStep(data.calibrationStep ?? 0);
+      setCalibrationTotal(data.calibrationTotal ?? 10);
+      if (data.dailyUsed !== undefined) {
+        setDailyUsed(data.dailyUsed);
+        setDailyLimit(data.dailyLimit ?? 5);
+      }
+      setStartTime(Date.now());
       setLoading(false);
-      return;
+    } catch (err) {
+      setError('Error loading question. Please try again.');
+      setLoading(false);
     }
-    const data = await res.json();
-    setQuestion(data);
-    setSelected(null);
-    setRcAnswers(Array(6).fill(-1));
-    setPjInput("");
-    setSubmitted(null);
-    setExplanations([]);
-    setReportFeedback(null);
-    setReportValid(false);
-    setCalibrating(data.calibrating ?? false);
-    setCalibrationStep(data.calibrationStep ?? 0);
-    setCalibrationTotal(data.calibrationTotal ?? 10);
-    if (data.dailyUsed !== undefined) {
-      setDailyUsed(data.dailyUsed);
-      setDailyLimit(data.dailyLimit ?? 5);
-    }
-    setStartTime(Date.now());
-    setLoading(false);
   }, [topic]);
 
   useEffect(() => {
@@ -318,7 +332,11 @@ export default function PracticePage() {
           </div>
         </header>
 
-        {loading || !question ? (
+        {error ? (
+          <Card className="p-10 text-rose-300 bg-rose-500/10 border-rose-500/20">
+            {error}
+          </Card>
+        ) : loading || !question ? (
           <Card className="p-10 text-white/70">
             {loading && !question ? (
               // Show 'Generating...' if OpenAI API call is in progress (i.e., after user action or initial load)
