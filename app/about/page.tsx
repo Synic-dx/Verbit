@@ -157,17 +157,23 @@ export default async function AboutPage() {
             <h2 className="text-xl font-semibold text-white">How VerScore Works</h2>
             <p>
               Your VerScore is a per-topic adaptive rating on a 0–100 scale. Under
-              the hood, it&apos;s mapped to a <strong>percentile</strong> using a
-              logarithmic curve:
+              the hood, it&apos;s mapped to a <strong>percentile</strong> using a new anchor-based scale:
             </p>
             <div className="rounded-xl border border-white/10 bg-white/5 p-4 font-mono text-sm text-white/70">
-              <p>percentile = 50 + 50 × log₁₀(1 + 0.255 × verScore) / log₁₀(1 + 0.255 × 100)</p>
+              <p>VerScore → Percentile anchors:</p>
+              <ul>
+                <li>0 → 50th percentile</li>
+                <li>50 → 90th percentile</li>
+                <li>65 → 95th percentile</li>
+                <li>75 → 98th percentile</li>
+                <li>85 → 99th percentile</li>
+                <li>95 → 99.8th percentile</li>
+                <li>100 → 100th percentile</li>
+              </ul>
+              <p>Mapping is piecewise linear between anchors.</p>
             </div>
             <p>
-              A VerScore of 0 maps to the 50th percentile (average), ~50 maps to
-              roughly the 90th percentile, and 100 maps to the 100th. This
-              logarithmic scaling means early gains come faster, but climbing higher
-              gets exponentially harder — just like in real competitive exams.
+              A VerScore of 0 maps to the 50th percentile (average), 50 to the 90th, 65 to the 95th, 75 to the 98th, 85 to the 99th, 95 to the 99.8th, and 100 to the 100th percentile. This new mapping more closely matches real exam percentiles and makes progress at the top end much harder.
             </p>
           </section>
 

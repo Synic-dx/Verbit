@@ -11,6 +11,7 @@ import {
   percentileToVerScore,
 } from "@/lib/scoring";
 
+
 type ScoreItem = {
   topic: string;
   verScore: number;
@@ -20,8 +21,13 @@ type ScoreItem = {
 
 export type ViewMode = "verscore" | "percentile";
 
-export default function ScoreGrid({ items }: { items: ScoreItem[] }) {
-  const [viewMode, setViewMode] = useState<ViewMode>("verscore");
+interface ScoreGridProps {
+  items: ScoreItem[];
+  viewMode: ViewMode;
+  setViewMode?: (mode: ViewMode) => void;
+}
+
+export default function ScoreGrid({ items, viewMode, setViewMode }: ScoreGridProps) {
 
   const scored = useMemo(
     () =>
@@ -41,9 +47,11 @@ export default function ScoreGrid({ items }: { items: ScoreItem[] }) {
         <Button
           size="sm"
           variant="secondary"
-          onClick={() =>
-            setViewMode((prev) => (prev === "verscore" ? "percentile" : "verscore"))
-          }
+          onClick={() => {
+            if (setViewMode) {
+              setViewMode(viewMode === "verscore" ? "percentile" : "verscore");
+            }
+          }}
         >
           {viewMode === "verscore" ? "Show Percentile" : "Show VerScore"}
         </Button>

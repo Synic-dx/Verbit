@@ -90,6 +90,8 @@ export default async function DashboardPage() {
               calibrationAttempts: cal?.calibrationAttempts ?? 0,
             };
           })}
+          viewMode={"verscore"}
+          setViewMode={() => {}}
         />
       </div>
     </div>

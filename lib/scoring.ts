@@ -14,23 +14,50 @@ export const IDEAL_TIME_SECONDS: Record<Topic, number> = {
   "Idioms & Phrases": 50,
 };
 
-export function verScoreToPercentile(verScore: number) {
-  const bounded = clamp(verScore, 0, 100);
-  const curve = 0.255;
-  const scaled =
-    Math.log10(1 + curve * bounded) / Math.log10(1 + curve * 100);
-  const percentile = 50 + 50 * scaled;
-  return Math.round(percentile * 10) / 10;
+
+// Anchor points for VerScore to Percentile mapping
+const ANCHORS: [number, number][] = [
+  [0, 50],
+  [50, 90],
+  [65, 95],
+  [75, 98],
+  [85, 99],
+  [95, 99.8],
+  [100, 100],
+];
+
+/**
+ * Piecewise linear mapping from VerScore (0-100) to percentile using anchor points.
+ */
+export function verScoreToPercentile(verScore: number): number {
+  const v = clamp(verScore, 0, 100);
+  for (let i = 0; i < ANCHORS.length - 1; i++) {
+    const [v0, p0] = ANCHORS[i];
+    const [v1, p1] = ANCHORS[i + 1];
+    if (v >= v0 && v <= v1) {
+      // Linear interpolation
+      const t = (v - v0) / (v1 - v0);
+      return Math.round((p0 + t * (p1 - p0)) * 10) / 10;
+    }
+  }
+  return 100;
 }
 
-export function percentileToVerScore(percentile: number) {
-  const bounded = clamp(percentile, 50, 100);
-  const curve = 0.255;
-  const ratio = (bounded - 50) / 50;
-  const maxBase = 1 + curve * 100;
-  const base = Math.pow(maxBase, ratio);
-  const verScore = (base - 1) / curve;
-  return Math.round(clamp(verScore, 0, 100) * 10) / 10;
+/**
+ * Inverse piecewise linear mapping from percentile (50-100) to VerScore using anchor points.
+ */
+export function percentileToVerScore(percentile: number): number {
+  const p = clamp(percentile, 50, 100);
+  for (let i = 0; i < ANCHORS.length - 1; i++) {
+    const [v0, p0] = ANCHORS[i];
+    const [v1, p1] = ANCHORS[i + 1];
+    if (p >= p0 && p <= p1) {
+      // Linear interpolation
+      const t = (p - p0) / (p1 - p0);
+      return Math.round((v0 + t * (v1 - v0)) * 10) / 10;
+    }
+  }
+  return 100;
 }
 
 

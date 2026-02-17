@@ -79,6 +79,7 @@ export default function DashboardClient({ isAdmin, scoreMap, calibrationMap }: {
             };
           })}
           viewMode={viewMode}
+          setViewMode={setViewMode}
         />
       </div>
     </div>

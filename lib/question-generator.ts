@@ -78,19 +78,24 @@ function buildPrompt(topic: Topic, difficulty: number) {
     // RC passage length scales with difficulty: lower → shorter, higher → longer
     const rcWordCount = difficulty <= 30 ? "500-600" : difficulty <= 60 ? "600-700" : "700-800";
   const percentile = verScoreToPercentile(difficulty);
-  let levelTag = `IPMAT/CAT Percentile ${percentile} level`;
+  let levelTag = `IPMAT/CAT Percentile ${percentile} (VerScore ${difficulty})`;
   let eliteClause = "";
-  if (difficulty >= 90) {
-    levelTag = `Olympiad/760+ SAT/99th percentile CAT/GMAT/GRE (VerScore ${difficulty})`;
+  if (difficulty >= 95) {
+    levelTag = `Olympiad/Top 100 (VerScore 100, 100th percentile)`;
+    eliteClause = " These must be of total topnotch, world-elite level—unprecedented, creative, and extremely rare.";
+  } else if (difficulty >= 90) {
+    levelTag = `Ultra Elite (VerScore 95, 99.8th percentile)`;
     eliteClause = " These must be of top elite SAT/GMAT/GRE level—extremely rare, challenging, and creative, matching the most difficult questions ever seen on those exams.";
-  } else if (difficulty >= 80) {
-    levelTag = `Very Advanced (VerScore ${difficulty}, ~98th percentile)`;
-  } else if (difficulty >= 70) {
-    levelTag = `Advanced (VerScore ${difficulty}, ~95th percentile)`;
-  } else if (difficulty >= 60) {
-    levelTag = `Above Average (VerScore ${difficulty}, ~90th percentile)`;
+  } else if (difficulty >= 85) {
+    levelTag = `99th percentile (VerScore 85)`;
+  } else if (difficulty >= 75) {
+    levelTag = `98th percentile (VerScore 75)`;
+  } else if (difficulty >= 65) {
+    levelTag = `95th percentile (VerScore 65)`;
   } else if (difficulty >= 50) {
-    levelTag = `Median (VerScore ${difficulty}, 50th percentile)`;
+    levelTag = `90th percentile (VerScore 50)`;
+  } else {
+    levelTag = `50th percentile (VerScore 0)`;
   }
 
   const topicDescriptions: Record<Topic, { schemaName: string; description: string }> = {

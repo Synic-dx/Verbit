@@ -40,7 +40,15 @@ Open `http://localhost:3000`.
 
 ## Core Features
 
-- Adaptive VerScore per topic with percentile mapping.
+- Adaptive VerScore per topic with new anchor-based percentile mapping:
+	- 0 → 50th percentile
+	- 50 → 90th percentile
+	- 65 → 95th percentile
+	- 75 → 98th percentile
+	- 85 → 99th percentile
+	- 95 → 99.8th percentile
+	- 100 → 100th percentile
+	(Piecewise linear mapping between anchors)
 - RC dual-pane layout with independent scrolling.
 - Parajumbles free-input evaluation.
 - LLM-generated questions saved to MongoDB.
