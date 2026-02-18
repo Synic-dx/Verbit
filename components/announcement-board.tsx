@@ -26,7 +26,7 @@ export default function AnnouncementBoard() {
         <h2 className="text-lg font-semibold text-white mb-2">Updates</h2>
         <div className="max-h-40 overflow-y-auto flex flex-col gap-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
           {announcements.length > 0 ? (
-            announcements.slice(0, 3).map((a, i) => (
+            announcements.slice(0, 10).map((a, i) => (
               <div key={i} className="p-3 rounded-xl bg-white/5 text-white/90 flex flex-col gap-1">
                 <span className="text-sm">{a.message}</span>
                 <span className="text-xs text-white/40">{new Date(a.time).toLocaleString()}</span>
