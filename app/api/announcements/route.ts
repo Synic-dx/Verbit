@@ -7,10 +7,10 @@ import { AnnouncementModel } from "@/models/Announcement";
 
 export async function GET() {
   await connectDb();
-  // Fetch latest 3 announcements from DB, newest first
+  // Fetch latest 10 announcements from DB, newest first
   const announcements = await AnnouncementModel.find({})
     .sort({ time: -1 })
-    .limit(3)
+    .limit(10)
     .lean();
   // Format time as ISO string for compatibility
   const formatted = announcements.map((a) => ({
