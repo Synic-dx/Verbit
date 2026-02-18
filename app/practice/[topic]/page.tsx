@@ -97,6 +97,12 @@ function AnimatedLoading() {
 }
 
 export default function PracticePage() {
+    // Like/Dislike state with netLikes
+    const [liked, setLiked] = useState<boolean>(false);
+    const [likeLoading, setLikeLoading] = useState<boolean>(false);
+    const [disliked, setDisliked] = useState<boolean>(false);
+    const [dislikeLoading, setDislikeLoading] = useState<boolean>(false);
+    const [netLikes, setNetLikes] = useState<number>(0);
   const params = useParams();
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -134,6 +140,8 @@ export default function PracticePage() {
 
     setLoading(true);
     setError(null);
+    // setLikes(0) removed: no like count state
+    setLiked(false);
     try {
       const res = await fetch(`/api/question?topic=${encodeURIComponent(topic)}`);
       if (!res.ok) {
@@ -170,6 +178,25 @@ export default function PracticePage() {
         setDailyLimit(data.dailyLimit ?? 5);
       }
       setStartTime(Date.now());
+      // Fetch like/dislike toggled state and netLikes for this question
+      if (data.id) {
+        try {
+          const likeRes = await fetch(`/api/question/${data.id}/like`, { method: 'GET' });
+          if (likeRes.ok) {
+            const likeData = await likeRes.json();
+            setLiked(likeData.liked ?? false);
+            setNetLikes(typeof likeData.netLikes === 'number' ? likeData.netLikes : 0);
+          }
+        } catch {}
+        try {
+          const dislikeRes = await fetch(`/api/question/${data.id}/dislike`, { method: 'GET' });
+          if (dislikeRes.ok) {
+            const dislikeData = await dislikeRes.json();
+            setDisliked(dislikeData.disliked ?? false);
+            if (typeof dislikeData.netLikes === 'number') setNetLikes(dislikeData.netLikes);
+          }
+        } catch {}
+      }
       setLoading(false);
     } catch (err) {
       setError('Error loading question. Please try again.');
@@ -398,22 +425,7 @@ export default function PracticePage() {
                     ) : null}
                   </div>
                 ))}
-                <div className="flex items-center justify-end gap-3 pt-4">
-                  {!submitted ? (
-                    <>
-                      <Button variant="secondary" onClick={handleSkip}>
-                        Skip
-                      </Button>
-                      <Button onClick={handleSubmit}>
-                        Submit
-                      </Button>
-                    </>
-                  ) : (
-                    <Button onClick={loadQuestion}>
-                      Next →
-                    </Button>
-                  )}
-                </div>
+                {/* Remove feedback button group from here. */}
               </div>
             </Card>
           </div>
@@ -467,11 +479,7 @@ export default function PracticePage() {
                     Submit
                   </Button>
                 </>
-              ) : (
-                <Button onClick={loadQuestion}>
-                  Next →
-                </Button>
-              )}
+              ) : null}
             </div>
           </Card>
         ) : (
@@ -488,7 +496,7 @@ export default function PracticePage() {
               <div className="grid gap-3">
                 {question.options.map((option, index) => (
                   <button
-                    key={option}
+                    key={option + '-' + index}
                     className={`rounded-2xl border px-4 py-3 text-left text-sm transition ${
                       submitted
                         ? submitted.correctIndex === index
@@ -509,8 +517,90 @@ export default function PracticePage() {
               </div>
             </div>
             {submitted ? (
-              <p className="text-sm text-white/60" dangerouslySetInnerHTML={{ __html: explanations[0] }} />
+              <>
+                <p className="text-sm text-white/60" dangerouslySetInnerHTML={{ __html: explanations[0] }} />
+              </>
             ) : null}
+                  {/* Centralized feedback button group for all question types */}
+                  {submitted && question ? (
+                    <div className="flex items-center justify-end gap-3 mt-4">
+                      <div className="flex items-center gap-2">
+                        <button
+                          aria-label="Dislike question"
+                          className={`rounded-full p-2 transition border border-white/10 hover:bg-rose-600/20 ${disliked ? 'text-rose-400 scale-125 animate-likepop' : 'text-white/40'}`}
+                          disabled={dislikeLoading || (!disliked && dislikeLoading)}
+                          onClick={async () => {
+                            if (!question || dislikeLoading) return;
+                            setDislikeLoading(true);
+                            if (!disliked) {
+                              const res = await fetch(`/api/question/${question.id}/dislike`, { method: 'POST' });
+                              if (res.ok) {
+                                setDisliked(true);
+                                setLiked(false);
+                                // Update netLikes using delta if present
+                                const data = await res.json();
+                                if (typeof data.netLikes === 'number') setNetLikes(data.netLikes);
+                                else if (typeof data.delta === 'number') setNetLikes((prev) => prev + data.delta);
+                                else setNetLikes((prev) => prev - 1);
+                              } else {
+                                setDisliked(true);
+                                setLiked(false);
+                                setNetLikes((prev) => prev - 1);
+                              }
+                            } else if (disliked) {
+                              const res = await fetch(`/api/question/${question.id}/dislike`, { method: 'DELETE' });
+                              if (res.ok) {
+                                setDisliked(false);
+                                const data = await res.json();
+                                if (typeof data.netLikes === 'number') setNetLikes(data.netLikes);
+                                else setNetLikes((prev) => prev + 1);
+                              } else {
+                                setDisliked(false);
+                                setNetLikes((prev) => prev + 1);
+                              }
+                            }
+                            setDislikeLoading(false);
+                          }}
+                        >
+                          <span role="img" aria-label="thumbs down">👎</span>
+                        </button>
+                        <span className="mx-2 text-xs text-white/60 select-none min-w-[2ch] text-center">{netLikes}</span>
+                        <button
+                          aria-label="Like question"
+                          className={`rounded-full p-2 transition border border-white/10 hover:bg-emerald-600/20 ${liked ? 'text-emerald-400 scale-125 animate-likepop' : 'text-white/40'}`}
+                          disabled={likeLoading || (!liked && likeLoading)}
+                          onClick={async () => {
+                            if (!question || likeLoading) return;
+                            setLikeLoading(true);
+                            if (!liked) {
+                              const res = await fetch(`/api/question/${question.id}/like`, { method: 'POST' });
+                              if (res.ok) {
+                                setLiked(true);
+                                setDisliked(false);
+                                const data = await res.json();
+                                if (typeof data.netLikes === 'number') setNetLikes(data.netLikes);
+                                else setNetLikes((prev) => prev + 1);
+                              }
+                            } else if (liked) {
+                              const res = await fetch(`/api/question/${question.id}/like`, { method: 'DELETE' });
+                              if (res.ok) {
+                                setLiked(false);
+                                const data = await res.json();
+                                if (typeof data.netLikes === 'number') setNetLikes(data.netLikes);
+                                else setNetLikes((prev) => prev - 1);
+                              }
+                            }
+                            setLikeLoading(false);
+                          }}
+                        >
+                          <span role="img" aria-label="thumbs up">👍</span>
+                        </button>
+                      </div>
+                      <Button onClick={loadQuestion}>
+                        Next →
+                      </Button>
+                    </div>
+                  ) : null}
             <div className="flex items-center justify-end gap-3">
               {!submitted ? (
                 <>
@@ -521,11 +611,7 @@ export default function PracticePage() {
                     Submit
                   </Button>
                 </>
-              ) : (
-                <Button onClick={loadQuestion}>
-                  Next →
-                </Button>
-              )}
+              ) : null}
             </div>
           </Card>
         )}

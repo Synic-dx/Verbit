@@ -77,8 +77,8 @@ async function getAvoidanceRules(topic: Topic): Promise<string> {
 }
 
 function buildPrompt(topic: Topic, difficulty: number) {
-    // RC passage length scales with difficulty: lower → shorter, higher → longer
-    const rcWordCount = difficulty <= 30 ? "500-600" : difficulty <= 60 ? "600-700" : "700-800";
+  // RC passage length scales with difficulty: lower → shorter, higher → longer
+  const rcWordCount = difficulty <= 30 ? "500-600" : difficulty <= 60 ? "600-700" : "700-800";
   const percentile = verScoreToPercentile(difficulty);
   let levelTag = `IPMAT/CAT Percentile ${percentile} (VerScore ${difficulty})`;
   let eliteClause = "";
@@ -116,7 +116,7 @@ function buildPrompt(topic: Topic, difficulty: number) {
     "Vocabulary Usage": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Vocabulary Usage question. Randomly pick: 1) Incorrect Usage: 4 sentences (a–d) with a target word, only one is incorrect (meaning, connotation, paronym confusion). 2) Multi-Blank: If difficulty < 60, use 2 blanks; if ≥ 60, use 3. 4 options (a–d), each a set of 2 or 3 words. Higher difficulty: rarer words, subtler errors, more plausible distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Vocabulary Usage question. The question prompt must clearly describe what the user has to do. Randomly pick: 1) Incorrect Usage: 4 sentences (a–d) with a target word, only one is incorrect (meaning, connotation, paronym confusion). 2) Multi-Blank: If difficulty < 60, use 2 blanks; if ≥ 60, use 3. 4 options (a–d), each a set of 2 or 3 words. 3) Direct Definition: Ask for the definition of a word, and clearly <b>highlight</b> the vocab word in the question. Higher difficulty: rarer words, subtler errors, more plausible distractors. Always specify if the question is about usage or definition, and highlight the vocab word if it is a definition question. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
     "Paracompletions": {
       schemaName: "normal",
@@ -136,22 +136,25 @@ function buildPrompt(topic: Topic, difficulty: number) {
     "Idioms & Phrases": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Idioms & Phrases question. Only use standard, recognized idioms and phrases in English (no made-up or obscure expressions). Randomly pick: 1) Meaning: 1 idiom, 4 options (only one correct). 2) Correct Usage: 4 sentences (a–d), only one uses the idiom correctly. Higher difficulty: rarer idioms, subtler errors, more plausible distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Idioms & Phrases question. Use only standard, widely recognized idioms or phrasal verbs (as found in major dictionaries). Do NOT use literal phrases or paraphrased expressions. All answer options must be genuine idioms or phrasal verbs, each with a distinct meaning or usage. Do not use ambiguous, misleading, or synonymous options. The context must be concise (max 3 sentences). Randomly pick: (1) Meaning/Definition: 1 idiom, 4 options (one correct), <b>highlight</b> the idiom; (2) Usage: Fill in the blank with 4 idiom options, one fits. Always specify if the question is about usage or definition, and highlight the idiom/phrase if it is a definition question. The idiom and its definition/explanation must not be identical or trivially similar. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
   };
 
   const config = topicDescriptions[topic];
 
+  // If topic hint/description is missing, add a generic instruction
+  const description = config?.description || `Generate a ${levelTag} verbal question for the topic '${topic}'. Ensure the prompt describes what needs to be done, including the format, number of options, and what the user is expected to answer. Use <i>, <b>, <u> for formatting. No markdown.`;
+
   const schemaInstructions =
-    config.schemaName === "rc"
+    config?.schemaName === "rc"
       ? "Return JSON with keys: passageTitle, passage, questions (array of 6). Each question has text, options (4 strings), correctIndex (0-3), explanation."
-      : config.schemaName === "pj"
+      : config?.schemaName === "pj"
         ? "Return ONLY a JSON object in this exact format (no markdown, no extra fields): {\"pjSentences\": [\"Sentence A text.\", \"Sentence B text.\", \"Sentence C text.\", \"Sentence D text.\"], \"pjCorrectOrder\": \"ACBD\", \"pjExplanation\": \"Explanation of the correct order, referencing logical flow and connectors.\" } STRICT REQUIREMENTS: pjSentences must be an array of exactly 4 or 5 sentences, each at least 5 words, and must be scrambled (not in correct order). pjCorrectOrder must be a string of 4 or 5 uppercase letters A-E, each letter used once, matching the correct order of the sentences. pjExplanation must be a non-empty string. The explanation must be objective, logically grounded, and defensible, providing solid reasons for why this order is correct and concrete, provable reasons for why any other order is invalid. DO NOT add any extra fields or omit any required fields. DO NOT use markdown. DO NOT return a single string, HTML, or MCQ fields. If you deviate from this schema, your output will be rejected."
         : "Return JSON with keys: question, options (4 strings), correctIndex (0-3), explanation.";
 
   return {
-    schemaName: config.schemaName,
-    prompt: `${config.description}${eliteClause}\n\n${schemaInstructions}\n\nTarget difficulty: ${difficulty}.`,
+    schemaName: config?.schemaName || "normal",
+    prompt: `${description}${eliteClause}\n\n${schemaInstructions}\n\nTarget difficulty: ${difficulty}.`,
   };
 }
 
@@ -217,12 +220,15 @@ export async function generateQuestion(topic: Topic, difficulty: number, avoidWo
       type: "json_object",
     },
   });
+  // Log token usage for each topic
+  if (response.usage) {
+    console.log(`Topic: ${topic} | Tokens used: ${response.usage.total_tokens}`);
+  } else {
+    console.log(`Topic: ${topic} | Tokens used: unknown`);
+  }
 
 
   const content = response.choices[0]?.message?.content ?? "";
-  // Print raw LLM output to terminal for debugging
-  // eslint-disable-next-line no-console
-  console.log("\n[LLM RAW OUTPUT]", content, "\n");
 
   if (!content) {
     throw new Error("OpenAI returned empty response");

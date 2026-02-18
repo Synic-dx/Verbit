@@ -186,7 +186,7 @@ export async function POST(req: Request) {
       idealTime: idealTimeForDiff,
       attemptCount: question.attemptCount ?? 0,
     });
-    void QuestionModel.updateOne(
+    await QuestionModel.updateOne(
       { _id: question._id },
       { $set: { difficulty: updatedDiff }, $inc: { attemptCount: 1 } }
     );
@@ -335,7 +335,7 @@ export async function POST(req: Request) {
     idealTime,
     attemptCount: question.attemptCount ?? 0,
   });
-  void QuestionModel.updateOne(
+  await QuestionModel.updateOne(
     { _id: question._id },
     { $set: { difficulty: updatedDiffNormal }, $inc: { attemptCount: 1 } }
   );

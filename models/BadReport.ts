@@ -10,7 +10,7 @@ const BadReportSchema = new Schema({
   analysis: { type: String, required: true },
   rule: { type: String, required: true },
   createdAt: { type: Date, default: Date.now, index: true },
-  questionId: { type: Types.ObjectId, required: false, index: true }, // ADDED for direct lookup
+  questionId: { type: Types.ObjectId, required: false }, // ADDED for direct lookup
 });
 
 BadReportSchema.index({ topic: 1, createdAt: -1 });

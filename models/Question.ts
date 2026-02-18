@@ -1,6 +1,8 @@
 import { Schema, model, models } from "mongoose";
 
 const QuestionSchema = new Schema({
+    dislikes: { type: Number, default: 0, index: true },
+    dislikedBy: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
   topic: { type: String, required: true, index: true },
   question: { type: String },
   options: [{ type: String }],
@@ -23,6 +25,8 @@ const QuestionSchema = new Schema({
   attemptCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
   servedTo: { type: Number, default: 0 },
+  likes: { type: Number, default: 0, index: true },
+  likedBy: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
 });
 
 export const QuestionModel = models.Question || model("Question", QuestionSchema);
