@@ -46,6 +46,7 @@ export async function DELETE(
       analysis: "User reported this as a repeated/duplicate question.",
       rule: "Do not regenerate questions that are too similar to previously served ones.",
       createdAt: new Date(),
+      questionId: question._id,
     });
     await QuestionModel.findByIdAndDelete(id);
     return NextResponse.json({
@@ -97,6 +98,19 @@ export async function DELETE(
       analysis: parsed.analysis,
     });
   }
+
+  // Save bad report with questionId for direct lookup
+  await BadReportModel.create({
+    userId: new Types.ObjectId(session.user.id),
+    userEmail: session.user.email ?? "",
+    userName: session.user.name ?? "",
+    topic: (question as any).topic,
+    questionSnapshot: question,
+    analysis: parsed.analysis,
+    rule: parsed.rule,
+    createdAt: new Date(),
+    questionId: question._id,
+  });
 
   // Question is genuinely bad — save report, create avoidance rule, delete question
   await BadReportModel.create({

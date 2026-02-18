@@ -9,6 +9,7 @@ import { QuestionModel } from "@/models/Question";
 import { UserAptitudeModel } from "@/models/UserAptitude";
 import { AttemptModel } from "@/models/Attempt";
 import { IDEAL_TIME_SECONDS, updateVerScore, verScoreToPercentile, computeCalibrationScore, getCalibrationConfig, updateQuestionDifficulty } from "@/lib/scoring";
+import { BadReportModel } from "@/models/BadReport";
 import type { Topic } from "@/lib/topics";
 import { generateQuestion } from "@/lib/question-generator";
 
@@ -86,6 +87,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Question not found" }, { status: 404 });
   }
 
+
+  // Check if this question has a bad report (faulty)
+  const badReport = await BadReportModel.findOne({ questionId: question._id });
+
   const aptitude = await UserAptitudeModel.findOneAndUpdate(
     { userId: new Types.ObjectId(session.user.id), topic },
     { $setOnInsert: { verScore: 0, calibrated: false, calibrationAttempts: 0, lastUpdated: new Date() } },
@@ -126,6 +131,30 @@ export async function POST(req: Request) {
   } else {
     actual = body.answer === question.correctIndex ? 1 : 0;
     correct = actual === 1;
+  }
+
+  // If question is faulty, do not update verScore or calibration, return previous state
+  if (badReport) {
+    const correctIndex = question.correctIndex ?? null;
+    const correctIndices = (question.questions ?? []).map(
+      (q: { correctIndex?: number }) => q.correctIndex ?? null
+    );
+    const pjCorrectOrder = question.pjCorrectOrder ?? null;
+    return NextResponse.json({
+      correct: false,
+      faulty: true,
+      calibrating: !isCalibrated && calibrationStep < calConfig.total,
+      calibrationComplete: isCalibrated,
+      calibrationStep,
+      calibrationTotal: calConfig.total,
+      newVerScore: verScore,
+      percentile: verScoreToPercentile(verScore),
+      correctIndex,
+      correctIndices,
+      pjCorrectOrder,
+      pjExplanation: question.pjExplanation ?? null,
+      error: "This question was found faulty and will not affect your score/calibration."
+    });
   }
 
   /* ── Calibration branch ──────────────────────────────────── */

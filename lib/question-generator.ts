@@ -136,7 +136,7 @@ function buildPrompt(topic: Topic, difficulty: number) {
     "Idioms & Phrases": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Idioms & Phrases question. Randomly pick: 1) Meaning: 1 idiom, 4 options (only one correct). 2) Correct Usage: 4 sentences (a–d), only one uses the idiom correctly. Higher difficulty: rarer idioms, subtler errors, more plausible distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Idioms & Phrases question. Only use standard, recognized idioms and phrases in English (no made-up or obscure expressions). Randomly pick: 1) Meaning: 1 idiom, 4 options (only one correct). 2) Correct Usage: 4 sentences (a–d), only one uses the idiom correctly. Higher difficulty: rarer idioms, subtler errors, more plausible distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
     },
   };
 
