@@ -101,42 +101,42 @@ function buildPrompt(topic: Topic, difficulty: number) {
     "Reading Comprehension Sets": {
       schemaName: "rc",
       description:
-        `Generate a ${levelTag} Reading Comprehension set. Passage: ${rcWordCount} words, 3–5 paragraphs, unique, exam-relevant topic (current affairs, science, economics, social issues). Style: editorial or journal article. 6 questions: main idea, tone, inference, detail, word/phrase meaning, conclusion. Higher difficulty: denser arguments, more inference, advanced vocabulary, subtler distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Reading Comprehension set. Passage: ${rcWordCount} words, 3–5 paragraphs, unique, exam-relevant topic (current affairs, science, economics, social issues). Style: editorial or journal article. 6 questions: main idea, tone, inference, detail, word/phrase meaning, conclusion. Higher difficulty: denser arguments, more inference, advanced vocabulary, subtler distractors. Use HTML tags, and where a paragraph break is intended, insert a single line break (<br>) for clarity. No markdown.`,
     },
     "Conversation Sets": {
       schemaName: "rc",
       description:
-        `Generate a ${levelTag} Conversation set. Dialogue: 400–600 words, 2 named speakers, unique, exam-relevant topic (business, policy, science). 6 questions: term meaning, concept, inference, main idea, argument/intent, detail. Higher difficulty: nuanced positions, indirect reasoning, subtler distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Conversation set. Dialogue: 400–600 words, 2 named speakers, unique, exam-relevant topic (business, policy, science). 6 questions: term meaning, concept, inference, main idea, argument/intent, detail. Higher difficulty: nuanced positions, indirect reasoning, subtler distractors. Use HTML tags, and where a paragraph break is intended, insert a single line break (<br>) for clarity. No markdown.`,
     },
     "Parajumbles": {
       schemaName: "pj",
       description:
-        `Generate a ${levelTag} Parajumble. 4–5 sentences (A–E), scrambled, form a coherent paragraph. Topic: factual/analytical, exam-relevant. Higher difficulty: subtler logical/pronoun/chronology connectors. No explicit position markers or numbered lists. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Parajumble. 4–5 sentences (A–E), scrambled, form a coherent paragraph. Topic: factual/analytical, exam-relevant. Higher difficulty: subtler logical/pronoun/chronology connectors. No explicit position markers or numbered lists. Use HTML tags and paragraph breaks where applicable. No markdown.`,
     },
     "Vocabulary Usage": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Vocabulary Usage question. The question prompt must clearly describe what the user has to do. Randomly pick: 1) Incorrect Usage: 4 sentences (a–d) with a target word, only one is incorrect (meaning, connotation, paronym confusion). 2) Multi-Blank: If difficulty < 60, use 2 blanks; if ≥ 60, use 3. 4 options (a–d), each a set of 2 or 3 words. 3) Direct Definition: Ask for the definition of a word, and clearly <b>highlight</b> the vocab word in the question. Higher difficulty: rarer words, subtler errors, more plausible distractors. Always specify if the question is about usage or definition, and highlight the vocab word if it is a definition question. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Vocabulary Usage question. The question prompt must clearly describe what the user has to do. Randomly pick: 1) Incorrect Usage: 4 sentences (a–d) with a target word, only one is incorrect (meaning, connotation, paronym confusion). 2) Multi-Blank: If difficulty < 60, use 2 blanks; if ≥ 60, use 3. 4 options (a–d), each a set of 2 or 3 words. 3) Direct Definition: Ask for the definition of a word, and clearly <b>highlight</b> the vocab word in the question. Higher difficulty: rarer words, subtler errors, more plausible distractors. Always specify if the question is about usage or definition, and highlight the vocab word if it is a definition question. Use HTML tags and paragraph breaks where applicable. No markdown.`,
     },
     "Paracompletions": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Paragraph Completion question. Paragraph: 3–5 sentences, analytical/factual, exam-relevant. Final sentence missing, shown as '______'. 4 options (a–d), only one completes logically and stylistically. Higher difficulty: subtler logic, more nuanced distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Paragraph Completion question. Paragraph: 3–5 sentences, analytical/factual, exam-relevant. Final sentence missing, shown as '______'. 4 options (a–d), only one completes logically and stylistically. Higher difficulty: subtler logic, more nuanced distractors. Use HTML tags and paragraph breaks where applicable. No markdown.`,
     },
     "Sentence Completions": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Sentence Completion question (IPMAT/CAT style). Randomly pick: 1) Single Blank: 1 blank, 4 options. 2) Double Blank: 2 blanks, 4 options (pairs). 3) Triple Blank: 3 blanks, 4 options (triplets). Higher difficulty: more blanks, rarer words, subtler fit. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Sentence Completion question (IPMAT/CAT style). Randomly pick: 1) Single Blank: 1 blank, 4 options. 2) Double Blank: 2 blanks, 4 options (pairs). 3) Triple Blank: 3 blanks, 4 options (triplets). Higher difficulty: more blanks, rarer words, subtler fit. Use HTML tags and paragraph breaks where applicable. No markdown.`,
     },
     "Sentence Correction": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Sentence Correction question (IPMAT/CAT style). Randomly pick: 1) Error Spotting: 1 sentence split into 4 parts (a–d), only one has a grammar error. 2) Correct Version: 1 sentence with an error, 4 corrected options. Higher difficulty: subtler grammar traps, more plausible distractors. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Sentence Correction question (IPMAT/CAT style). Randomly pick: 1) Error Spotting: 1 sentence split into 4 parts (a–d), only one has a grammar error. 2) Correct Version: 1 sentence with an error, 4 corrected options. Higher difficulty: subtler grammar traps, more plausible distractors. Use HTML tags and paragraph breaks where applicable. No markdown.`,
     },
     "Idioms & Phrases": {
       schemaName: "normal",
       description:
-        `Generate a ${levelTag} Idioms & Phrases question. Use only standard, widely recognized idioms or phrasal verbs (as found in major dictionaries). Do NOT use literal phrases or paraphrased expressions. All answer options must be genuine idioms or phrasal verbs, each with a distinct meaning or usage. Do not use ambiguous, misleading, or synonymous options. The context must be concise (max 3 sentences). Randomly pick: (1) Meaning/Definition: 1 idiom, 4 options (one correct), <b>highlight</b> the idiom; (2) Usage: Fill in the blank with 4 idiom options, one fits. Always specify if the question is about usage or definition, and highlight the idiom/phrase if it is a definition question. The idiom and its definition/explanation must not be identical or trivially similar. Use <i>, <b>, <u> for formatting. No markdown.`,
+        `Generate a ${levelTag} Idioms & Phrases question. Use only standard, widely recognized idioms or phrasal verbs (as found in major dictionaries). Do NOT use literal phrases or paraphrased expressions. All answer options must be genuine idioms or phrasal verbs, each with a distinct meaning or usage. Do not use ambiguous, misleading, or synonymous options. The context must be concise (max 3 sentences). Randomly pick: (1) Meaning/Definition: 1 idiom, 4 options (one correct), <b>highlight</b> the idiom; (2) Usage: Fill in the blank with 4 idiom options, one fits. Always specify if the question is about usage or definition, and highlight the idiom/phrase if it is a definition question. The idiom and its definition/explanation must not be identical or trivially similar. Use HTML tags and paragraph breaks where applicable. No markdown.`,
     },
   };
 

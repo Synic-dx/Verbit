@@ -382,8 +382,17 @@ export default function PracticePage() {
                   {question.passageTitle}
                 </h2>
               </div>
-              <div className="flex-1 overflow-y-auto scroll-smooth px-6 py-4 text-white/80 whitespace-pre-line">
-                <span dangerouslySetInnerHTML={{ __html: question.passage }} />
+              <div className="flex-1 overflow-y-auto scroll-smooth px-6 py-4 text-white/80">
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: (question.passage.includes('<p>') || question.passage.includes('<br') || question.passage.includes('<div>'))
+                      ? question.passage
+                      : question.passage
+                          .split(/\n{2,}/)
+                          .map(para => `<p>${para.replace(/\n/g, '<br>')}</p>`)
+                          .join('')
+                  }}
+                />
               </div>
             </Card>
             <Card className="flex h-full flex-col overflow-hidden">
@@ -397,7 +406,7 @@ export default function PracticePage() {
                     <div className="grid gap-2">
                       {q.options.map((opt, optIndex) => (
                         <button
-                          key={opt}
+                          key={opt + '-' + optIndex}
                           className={`rounded-2xl border px-4 py-3 text-left text-sm transition ${
                             submitted
                               ? submitted.correctIndices[index] === optIndex
@@ -425,7 +434,94 @@ export default function PracticePage() {
                     ) : null}
                   </div>
                 ))}
-                {/* Remove feedback button group from here. */}
+                {/* Submit/Skip buttons for RC/Conversation Sets */}
+                {!submitted ? (
+                  <div className="flex items-center justify-end gap-3 mt-6">
+                    <Button variant="secondary" onClick={handleSkip}>
+                      Skip
+                    </Button>
+                    <Button onClick={handleSubmit}>
+                      Submit
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-end gap-3 mt-6">
+                    <div className="flex items-center gap-2">
+                      <button
+                        aria-label="Dislike question"
+                        className={`rounded-full p-2 transition border border-white/10 hover:bg-rose-600/20 ${disliked ? 'text-rose-400 scale-125 animate-likepop' : 'text-white/40'}`}
+                        disabled={dislikeLoading || (!disliked && dislikeLoading)}
+                        onClick={async () => {
+                          if (!question || dislikeLoading) return;
+                          setDislikeLoading(true);
+                          if (!disliked) {
+                            const res = await fetch(`/api/question/${question.id}/dislike`, { method: 'POST' });
+                            if (res.ok) {
+                              setDisliked(true);
+                              setLiked(false);
+                              const data = await res.json();
+                              if (typeof data.netLikes === 'number') setNetLikes(data.netLikes);
+                              else if (typeof data.delta === 'number') setNetLikes((prev) => prev + data.delta);
+                              else setNetLikes((prev) => prev - 1);
+                            } else {
+                              setDisliked(true);
+                              setLiked(false);
+                              setNetLikes((prev) => prev - 1);
+                            }
+                          } else if (disliked) {
+                            const res = await fetch(`/api/question/${question.id}/dislike`, { method: 'DELETE' });
+                            if (res.ok) {
+                              setDisliked(false);
+                              const data = await res.json();
+                              if (typeof data.netLikes === 'number') setNetLikes(data.netLikes);
+                              else setNetLikes((prev) => prev + 1);
+                            } else {
+                              setDisliked(false);
+                              setNetLikes((prev) => prev + 1);
+                            }
+                          }
+                          setDislikeLoading(false);
+                        }}
+                      >
+                        <span role="img" aria-label="thumbs down">👎</span>
+                      </button>
+                      <span className="mx-2 text-xs text-white/60 select-none min-w-[2ch] text-center">{netLikes}</span>
+                      <button
+                        aria-label="Like question"
+                        className={`rounded-full p-2 transition border border-white/10 hover:bg-emerald-600/20 ${liked ? 'text-emerald-400 scale-125 animate-likepop' : 'text-white/40'}`}
+                        disabled={likeLoading || (!liked && likeLoading)}
+                        onClick={async () => {
+                          if (!question || likeLoading) return;
+                          setLikeLoading(true);
+                          if (!liked) {
+                            const res = await fetch(`/api/question/${question.id}/like`, { method: 'POST' });
+                            if (res.ok) {
+                              setLiked(true);
+                              setDisliked(false);
+                              const data = await res.json();
+                              if (typeof data.netLikes === 'number') setNetLikes(data.netLikes);
+                              else setNetLikes((prev) => prev + 1);
+                            }
+                          } else if (liked) {
+                            const res = await fetch(`/api/question/${question.id}/like`, { method: 'DELETE' });
+                            if (res.ok) {
+                              setLiked(false);
+                              const data = await res.json();
+                              if (typeof data.netLikes === 'number') setNetLikes(data.netLikes);
+                              else setNetLikes((prev) => prev - 1);
+                            }
+                          }
+                          setLikeLoading(false);
+                        }}
+                      >
+                        <span role="img" aria-label="thumbs up">👍</span>
+                      </button>
+                    </div>
+                    <Button onClick={loadQuestion}>
+                      Next →
+                    </Button>
+                  </div>
+                )}
               </div>
             </Card>
           </div>

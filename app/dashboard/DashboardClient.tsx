@@ -52,6 +52,8 @@ export default function DashboardClient({ isAdmin, scoreMap, calibrationMap }: {
           </div>
         </header>
         <AnnouncementBoardWrapper />
+        {/* SuggestionBox below announcements, above topic cards, minimal gap */}
+        <div className="mt-[-32px] mb-1"><SuggestionBox /></div>
         {/* Score view toggler below logo removed */}
         <ScoreGrid
           items={TOPICS.map((topic) => {

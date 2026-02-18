@@ -29,11 +29,11 @@ export default function SuggestionBox() {
   };
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2 mt-0 mb-2">
       <input
         type="text"
-        className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none transition focus:border-white/25"
-        placeholder="Make any suggestions for improvements, report any platform-wide issue…"
+        className="flex-1 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-400/40"
+        placeholder="Send any suggestions you have or mention any site-wide issue you are facing. I'll fix them"
         value={message}
         onChange={(e) => {
           setMessage(e.target.value);
@@ -49,11 +49,14 @@ export default function SuggestionBox() {
         disabled={status === "sending"}
       />
       <Button
+        variant="secondary"
         size="sm"
+        className="h-9 px-4 bg-emerald-500 text-white hover:bg-emerald-600 border-none shadow-sm"
         onClick={handleSubmit}
         disabled={!message.trim() || status === "sending"}
+        style={{ minWidth: 70 }}
       >
-        {status === "sending" ? "Sending…" : status === "sent" ? "Sent ✓" : "Submit"}
+        {status === "sending" ? "Sending…" : status === "sent" ? "Sent ✓" : "Send"}
       </Button>
     </div>
   );

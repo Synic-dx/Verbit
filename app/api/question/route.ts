@@ -112,7 +112,8 @@ export async function GET(req: Request) {
 
   // ── Daily limit check for RC / Conversation Sets ──
   const isSetTopic = topic === "Reading Comprehension Sets" || topic === "Conversation Sets";
-  if (isSetTopic) {
+  const isAdmin = session.user.isAdmin === true;
+  if (isSetTopic && !isAdmin) {
     const todayStart = getTodayStartIST();
     const todayCount = await ServedQuestionModel.countDocuments({
       userId,
@@ -318,7 +319,7 @@ export async function GET(req: Request) {
   // Compute daily usage for RC/Conversation so frontend can display it
   let dailyUsed: number | undefined;
   let dailyLimit: number | undefined;
-  if (isSetTopic) {
+  if (isSetTopic && !isAdmin) {
     const todayStart = getTodayStartIST();
     // Count after the new served record was inserted
     dailyUsed = await ServedQuestionModel.countDocuments({

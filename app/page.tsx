@@ -65,7 +65,6 @@ export default function Home() {
             </Link>
           </nav>
         </header>
-
         <section className="grid gap-12 lg:grid-cols-2">
           <div className="space-y-6">
             <Badge>LLM-powered verbal practice</Badge>
@@ -88,25 +87,44 @@ export default function Home() {
                 <h2 className="text-lg font-semibold text-white">
                   Adaptive Score Example Snapshot
                 </h2>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setViewMode((prev) =>
-                      prev === "verscore" ? "percentile" : "verscore"
-                    )
-                  }
-                  className="transition hover:-translate-y-0.5"
-                >
-                  <Badge
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setViewMode("verscore")}
                     className={
-                      viewMode === "verscore"
-                        ? "bg-blue-500/20 text-blue-200"
-                        : "bg-purple-500/20 text-purple-200"
+                      "transition hover:-translate-y-0.5" +
+                      (viewMode === "verscore" ? "" : " opacity-60")
                     }
                   >
-                    {viewMode === "verscore" ? "VerScore" : "Percentile"}
-                  </Badge>
-                </button>
+                    <Badge
+                      className={
+                        viewMode === "verscore"
+                          ? "bg-blue-500/20 text-blue-200 border border-blue-400/40"
+                          : "bg-blue-500/10 text-blue-200 border border-transparent"
+                      }
+                    >
+                      VerScore
+                    </Badge>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setViewMode("percentile")}
+                    className={
+                      "transition hover:-translate-y-0.5" +
+                      (viewMode === "percentile" ? "" : " opacity-60")
+                    }
+                  >
+                    <Badge
+                      className={
+                        viewMode === "percentile"
+                          ? "bg-purple-500/20 text-purple-200 border border-fuchsia-400/40"
+                          : "bg-purple-500/10 text-purple-200 border border-transparent"
+                      }
+                    >
+                      Percentile
+                    </Badge>
+                  </button>
+                </div>
               </div>
               <div
                 className="space-y-4"
@@ -131,20 +149,27 @@ export default function Home() {
                       </span>
                     </div>
                     <div className="h-2 rounded-full bg-white/10">
-                      <div
-                        className={
-                          viewMode === "verscore"
-                            ? "h-2 rounded-full bg-linear-to-r from-blue-400 via-sky-400 to-cyan-400"
-                            : "h-2 rounded-full bg-linear-to-r from-purple-400 via-fuchsia-400 to-indigo-400"
-                        }
-                        style={{
-                          width: `${
+                      {item.score === 0 ? (
+                        <div
+                          className="h-2 rounded-full bg-gradient-to-r from-green-400 via-lime-200 to-yellow-50"
+                          style={{ width: "100%", opacity: 0.7 }}
+                        />
+                      ) : ( (viewMode === "verscore" && item.score > 0) || (viewMode === "percentile" && verScoreToPercentile(item.score) > 0) ? (
+                        <div
+                          className={
                             viewMode === "verscore"
-                              ? item.score
-                              : verScoreToPercentile(item.score)
-                          }%`,
-                        }}
-                      />
+                              ? "h-2 rounded-full bg-linear-to-r from-blue-400 via-sky-400 to-cyan-400"
+                              : "h-2 rounded-full bg-linear-to-r from-purple-400 via-fuchsia-400 to-indigo-400"
+                          }
+                          style={{
+                            width: `${
+                              viewMode === "verscore"
+                                ? item.score
+                                : verScoreToPercentile(item.score)
+                            }%`,
+                          }}
+                        />
+                      ) : null )}
                     </div>
                   </div>
                 ))}
