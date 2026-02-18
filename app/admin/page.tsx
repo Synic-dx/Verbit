@@ -334,7 +334,7 @@ export default function AdminPage() {
               <StatCard label="Problems (24h)" value={stats.totalAttempts["1d"]} />
               <StatCard label="Problems (7d)" value={stats.totalAttempts["7d"]} />
               <StatCard label="Problems (30d)" value={stats.totalAttempts["30d"]} />
-              <StatCard label="Active Users (3/7d)" value={stats.active7d3 ?? 0} />
+              <StatCard label="Active Users (last 3d >30)" value={stats.users.filter((u: any) => u.active).length} />
             </div>
 
             {/* Timeframe and sort picker */}

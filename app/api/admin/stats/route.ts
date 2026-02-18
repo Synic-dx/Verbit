@@ -101,8 +101,16 @@ export async function GET() {
   const total30d = counts30d.reduce((s: number, i: any) => s + i.count, 0);
   const totalAll = countsAll.reduce((s: number, i: any) => s + i.count, 0);
 
+  const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
+  const counts3d = await AttemptModel.aggregate([
+    { $match: { createdAt: { $gte: threeDaysAgo } } },
+    { $group: { _id: "$userId", count: { $sum: 1 } } },
+  ]);
+  const map3d = toMap(counts3d);
+
   const userList = users.map((u: any) => {
     const uid = String(u._id);
+    const active = (map3d.get(uid) ?? 0) > 30;
     return {
       id: uid,
       name: u.name ?? "—",
@@ -117,6 +125,7 @@ export async function GET() {
         "30d": map30d.get(uid) ?? 0,
         all: mapAll.get(uid) ?? 0,
       },
+      active,
     };
   });
 

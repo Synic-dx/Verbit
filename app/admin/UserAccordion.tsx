@@ -81,6 +81,7 @@ export default function UserAccordion({ userId, onClose }: { userId: string; onC
           <div className="flex items-center gap-2">
             <span className="text-lg font-semibold text-white">{user.name}</span>
             {user.isAdmin && <Badge className="bg-amber-500/20 text-amber-300 text-[10px]">Admin</Badge>}
+            {user.active && <Badge className="bg-emerald-500/20 text-emerald-300 text-[10px]">Active</Badge>}
             <span className="ml-2 text-xs text-white/40">{user.email}</span>
           </div>
           <div className="flex gap-4 text-xs text-white/40">
