@@ -64,7 +64,7 @@ export async function DELETE(
     : "";
 
   const analysisResponse = await openai.chat.completions.create({
-    model: "gpt-4o",
+    model: "gpt-4.1-mini",
     temperature: 0.3,
     messages: [
       {
