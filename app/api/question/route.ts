@@ -156,7 +156,7 @@ export async function GET(req: Request) {
     // Normal adaptive flow
     const verScore = aptitude?.verScore ?? 0;
     const userPercentile = verScoreToPercentile(verScore);
-    const band = 6;
+    const band = 10;
     lower = percentileToVerScore(userPercentile - band);
     upper = percentileToVerScore(userPercentile + band);
     targetDifficulty = verScore;

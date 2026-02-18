@@ -44,7 +44,7 @@ export type GeneratedQuestion =
   | (z.infer<typeof pjSchema> & { topic: Topic; difficulty: number });
 
 /** Return a random integer difficulty within ±band of verScore, clamped to 0-100. */
-function randomDifficulty(verScore: number, band = 6): number {
+function randomDifficulty(verScore: number, band = 10): number {
   const lower = Math.max(0, verScore - band);
   const upper = Math.min(100, verScore + band);
   return Math.floor(lower + Math.random() * (upper - lower + 1));
