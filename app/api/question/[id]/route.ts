@@ -64,20 +64,13 @@ export async function DELETE(
     : "";
 
   const analysisResponse = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-4o",
     temperature: 0.3,
     messages: [
       {
         role: "system",
         content:
-          "You are a question-quality reviewer for a competitive exam prep app. " +
-          "A user reported the following question as bad. Your job is to OBJECTIVELY judge whether the question is actually problematic or perfectly valid. " +
-          "Check for: factual errors, ambiguous wording, wrong correct answer, obviously wrong distractors, " +
-          "grammatical issues, unclear instructions, or any quality issue. " +
-          "Return JSON with three keys: " +
-          '"isValid" (boolean — true if the question is fine and the report is unjustified, false if the question is genuinely problematic), ' +
-          '"analysis" (2-3 sentence explanation — if valid, explain why the question is correct; if invalid, explain what is wrong), and ' +
-          '"rule" (only if isValid is false: a single concise sentence starting with "Do not..." for future generation to avoid this mistake; if isValid is true, set to empty string).',
+          "You review flagged exam questions. OBJECTIVELY set isValid false if any: wrong/misleading answer, >1 plausible answer, duplicate options, missing stem/context, placeholder/missing options, illogical/contradictory answer, misleading explanation, unclear/incomplete/missing instructions, illogical sequence (parajumbles), no clear fix (correction), or grammatically wrong correct answer. Else, set isValid true. Return JSON: isValid (bool), analysis (2-3 sentences: why valid/invalid), rule (if false: 'Do not...'; if true: empty).",
       },
       { role: "user", content: snapshot + userHint },
     ],
