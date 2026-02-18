@@ -24,6 +24,7 @@ type UserEntry = {
   createdAt?: string | null;
   scores: UserScore[];
   attempts: UserAttempts;
+  active?: boolean;
 };
 
 type StatsData = {

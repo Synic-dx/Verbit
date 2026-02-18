@@ -19,6 +19,7 @@ export type UserDetail = {
   };
   scores: { topic: string; verScore: number; calibrated: boolean }[];
   lastAttemptTimes?: Record<string, string | null>;
+  active?: boolean;
   // Add more fields as needed
 };
 
