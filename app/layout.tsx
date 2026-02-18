@@ -3,7 +3,7 @@ import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import { getServerSession } from "next-auth";
 import "./globals.css";
 import Providers from "@/app/providers";
-import FooterVisibility from "@/components/FooterVisibility";
+import FooterClientWrapper from "@/components/FooterClientWrapper";
 import { authOptions } from "@/lib/auth";
 
 const spaceGrotesk = Space_Grotesk({
@@ -37,7 +37,7 @@ export default async function RootLayout({
         className={`${spaceGrotesk.variable} ${plexMono.variable} antialiased`}
       >
         <Providers session={session}>{children}</Providers>
-        <FooterVisibility />
+        <FooterClientWrapper />
       </body>
     </html>
   );

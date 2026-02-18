@@ -1,12 +1,9 @@
 "use client";
 import Footer from "@/components/Footer";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function FooterVisibility() {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    setShow(window.location.pathname !== "/");
-  }, []);
-  if (!show) return null;
+  const pathname = usePathname();
+  if (pathname === "/") return null;
   return <Footer />;
 }

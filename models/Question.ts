@@ -22,6 +22,7 @@ const QuestionSchema = new Schema({
   difficulty: { type: Number, required: true, min: 0, max: 100 },
   attemptCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
+  servedTo: { type: Number, default: 0 },
 });
 
 export const QuestionModel = models.Question || model("Question", QuestionSchema);

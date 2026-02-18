@@ -303,6 +303,12 @@ export async function GET(req: Request) {
     { upsert: true }
   );
 
+  // Increment servedTo count for this question
+  await QuestionModel.updateOne(
+    { _id: questionId },
+    { $inc: { servedTo: 1 } }
+  );
+
   const safeQuestions = (question?.questions ?? []).map((item) => ({
     text: item.text,
     options: item.options,
