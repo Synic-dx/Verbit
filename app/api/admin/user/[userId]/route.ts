@@ -58,8 +58,15 @@ export async function GET(req: NextRequest, context: { params: Promise<{ userId:
     },
   ]);
   const attempts = attemptsAgg[0] || { "1d": 0, "7d": 0, "30d": 0, all: 0 };
-  // Scores by topic
-  const scores = user.scores || [];
+  // Scores by topic: fetch from UserAptitudeModel
+  const aptitudeDocs = await (await import("@/models/UserAptitude")).UserAptitudeModel.find({ userId: user._id }).lean();
+  const scores = aptitudeDocs.map((doc: any) => ({
+    topic: doc.topic,
+    verScore: doc.verScore ?? 0,
+    calibrated: doc.calibrated ?? false,
+    calibrationAttempts: doc.calibrationAttempts ?? 0,
+    lastUpdated: doc.lastUpdated ?? null,
+  }));
 
   // Get last attempt timings per topic
   const topics = scores.map((s: { topic: string }) => s.topic);

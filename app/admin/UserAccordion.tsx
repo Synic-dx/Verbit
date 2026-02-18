@@ -97,7 +97,7 @@ export default function UserAccordion({ userId, onClose }: { userId: string; onC
               <div key={s.topic} className="rounded-xl border border-white/10 px-3 py-2">
                 <p className="text-xs text-white/50">{s.topic}</p>
                 <p className="text-lg font-semibold text-white">
-                  {s.verScore.toFixed(1)}
+                  VerScore: {s.verScore.toFixed(1)}
                   {!s.calibrated && <span className="ml-1 text-xs font-normal text-amber-300/70">cal</span>}
                 </p>
                 <p className="text-xs text-white/40 mt-1">

@@ -410,6 +410,9 @@ export default function AdminPage() {
                             {u.isAdmin ? (
                               <Badge className="ml-2 bg-amber-500/20 text-amber-300 text-[10px]">Admin</Badge>
                             ) : null}
+                            {u.active ? (
+                              <Badge className="ml-2 bg-emerald-500/20 text-emerald-300 text-[10px]">Active</Badge>
+                            ) : null}
                           </td>
                           <td className="px-4 py-3 text-white/60">{u.email}</td>
                           <td className="px-4 py-3 text-right text-white/80">{u.attempts[timeframe]}</td>
