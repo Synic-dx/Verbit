@@ -1,6 +1,118 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+// ── AnalyticsChart: SVG with axes, labels, tooltips ─────────────
+function AnalyticsChart({ chart, viewMode }: { chart: any; viewMode: "verscore" | "percentile" }) {
+  const [hovered, setHovered] = React.useState<number | null>(null);
+  return (
+    <div className="overflow-x-auto">
+      <svg
+        width="100%"
+        height={chart.height + 40}
+        viewBox={`0 0 ${chart.width} ${chart.height + 40}`}
+        style={{ minWidth: 400 }}
+      >
+        <defs>
+          <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor={viewMode === "verscore" ? "#60a5fa" : "#c084fc"} />
+            <stop offset="100%" stopColor={viewMode === "verscore" ? "#22d3ee" : "#818cf8"} />
+          </linearGradient>
+        </defs>
+        {/* Axes */}
+        <line x1={28} y1={chart.height - 28} x2={chart.width - 28} y2={chart.height - 28} stroke="rgba(255,255,255,0.18)" strokeWidth={1.5} />
+        <line x1={28} y1={28} x2={28} y2={chart.height - 28} stroke="rgba(255,255,255,0.18)" strokeWidth={1.5} />
+        {/* Y ticks and labels */}
+        {chart.yTicks.map((tick: any, i: number) => (
+          <g key={i}>
+            <line x1={24} y1={tick.y} x2={28} y2={tick.y} stroke="#fff" strokeWidth={1} />
+            <text x={12} y={tick.y + 4} fontSize={11} fill="#fff" textAnchor="end">{tick.value}</text>
+          </g>
+        ))}
+        {/* X ticks and labels: time (top), date (bottom) */}
+        {chart.xTicks.map((tick: any, i: number) => (
+          <g key={i}>
+            <line x1={tick.x} y1={chart.height - 28} x2={tick.x} y2={chart.height - 24} stroke="#fff" strokeWidth={1} />
+            <text x={tick.x} y={chart.height - 18} fontSize={11} fill="#fff" textAnchor="middle">{tick.label.time}</text>
+            <text x={tick.x} y={chart.height - 6} fontSize={10} fill="#fff" textAnchor="middle">{tick.label.date}</text>
+          </g>
+        ))}
+        {/* Axis labels */}
+        <text x={chart.width / 2} y={chart.height + 18} fontSize={13} fill="#fff" textAnchor="middle">Time</text>
+        <text
+          x={-32}
+          y={chart.height / 2}
+          fontSize={13}
+          fill="#fff"
+          textAnchor="middle"
+          fontWeight="600"
+          transform={`rotate(-90 -32,${chart.height / 2})`}
+        >
+          {viewMode === "verscore" ? "VerScore" : "Percentile"}
+        </text>
+        {/* Chart line */}
+        <path d={chart.path} fill="none" stroke="url(#lineGradient)" strokeWidth="3" />
+        {/* Dots and tooltips */}
+        {chart.dots.map((point: any, index: number) => (
+          <g key={index}>
+            <circle
+              cx={point.x}
+              cy={point.y}
+              r={hovered === index ? 7 : 4}
+              fill={viewMode === "verscore" ? "#7dd3fc" : "#d8b4fe"}
+              stroke="#fff"
+              strokeWidth={hovered === index ? 2 : 0}
+              style={{ cursor: "pointer" }}
+              onMouseEnter={() => setHovered(index)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => setHovered(index)}
+            />
+            {hovered === index && (
+              <foreignObject
+                x={point.x - 70}
+                y={point.y - 60}
+                width={140}
+                height={60}
+                style={{ pointerEvents: "none" }}
+              >
+                <div
+                  style={{
+                    background: "#222",
+                    border: "1px solid #fff",
+                    borderRadius: 8,
+                    opacity: 0.95,
+                    color: "#fff",
+                    fontWeight: 700,
+                    fontSize: 13,
+                    padding: "7px 12px 4px 12px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "100%",
+                    height: "100%",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <span style={{ whiteSpace: "nowrap" }}>
+                    {viewMode === "verscore"
+                      ? `VerScore: ${point.value.toFixed(1)}`
+                      : `Percentile: ${point.value.toFixed(1)}`}
+                  </span>
+                  <span style={{ fontWeight: 400, fontSize: 11, marginTop: 2 }}>
+                    {point.label.time}
+                  </span>
+                  <span style={{ fontWeight: 400, fontSize: 11, marginTop: 0 }}>
+                    {point.label.date}
+                  </span>
+                </div>
+              </foreignObject>
+            )}
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
@@ -87,7 +199,7 @@ export default function AnalyticsClient() {
     const height = 240;
     const padding = 28;
     if (!points.length) {
-      return { width, height, path: "", dots: [] as { x: number; y: number }[] };
+      return { width, height, path: "", dots: [], xTicks: [], yTicks: [], xLabels: [], yLabels: [] };
     }
 
     const scaledValues = points.map((item) => {
@@ -99,20 +211,46 @@ export default function AnalyticsClient() {
     const usableWidth = width - padding * 2;
     const usableHeight = height - padding * 2;
 
+    // X axis: time (hour:minute AM/PM) and date
+    const xLabels = points.map((item) => {
+      const d = new Date(item.createdAt);
+      return {
+        time: d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }),
+        date: d.toLocaleDateString()
+      };
+    });
+
     const dots = scaledValues.map((value, index) => {
       const x =
         points.length === 1
           ? width / 2
           : padding + (index / (points.length - 1)) * usableWidth;
       const y = padding + (1 - value / maxValue) * usableHeight;
-      return { x, y };
+      return { x, y, value, label: xLabels[index], raw: points[index] };
     });
 
     const path = dots
       .map((point, index) => `${index === 0 ? "M" : "L"}${point.x} ${point.y}`)
       .join(" ");
 
-    return { width, height, path, dots };
+    // X ticks: 5 evenly spaced
+    const xTicks = Array.from({ length: Math.min(5, points.length) }, (_, i) => {
+      const idx = Math.round((i / 4) * (points.length - 1));
+      const x =
+        points.length === 1
+          ? width / 2
+          : padding + (idx / (points.length - 1)) * usableWidth;
+      return { x, label: xLabels[idx] };
+    });
+
+    // Y ticks: 5 evenly spaced
+    const yTicks = Array.from({ length: 5 }, (_, i) => {
+      const value = maxValue - (i * maxValue) / 4;
+      const y = padding + (1 - value / maxValue) * usableHeight;
+      return { y, value: Math.round(value) };
+    });
+
+    return { width, height, path, dots, xTicks, yTicks };
   }, [points, viewMode]);
 
   const summary = data?.summary;
@@ -279,33 +417,7 @@ export default function AnalyticsClient() {
               No attempts in this range yet. Try a wider date range.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <svg
-                width="100%"
-                height="260"
-                viewBox={`0 0 ${chart.width} ${chart.height}`}
-              >
-                <defs>
-                  <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor={viewMode === "verscore" ? "#60a5fa" : "#c084fc"} />
-                    <stop offset="100%" stopColor={viewMode === "verscore" ? "#22d3ee" : "#818cf8"} />
-                  </linearGradient>
-                </defs>
-                <rect x="0" y="0" width="100%" height="100%" fill="transparent" />
-                <line x1="28" y1="212" x2="612" y2="212" stroke="rgba(255,255,255,0.12)" />
-                <line x1="28" y1="28" x2="28" y2="212" stroke="rgba(255,255,255,0.12)" />
-                <path d={chart.path} fill="none" stroke="url(#lineGradient)" strokeWidth="3" />
-                {chart.dots.map((point, index) => (
-                  <circle
-                    key={`${point.x}-${point.y}-${index}`}
-                    cx={point.x}
-                    cy={point.y}
-                    r="3"
-                    fill={viewMode === "verscore" ? "#7dd3fc" : "#d8b4fe"}
-                  />
-                ))}
-              </svg>
-            </div>
+            <AnalyticsChart chart={chart} viewMode={viewMode} />
           )}
         </section>
       </div>
