@@ -32,8 +32,9 @@ function AnalyticsChart({ chart, viewMode }: { chart: any; viewMode: "verscore" 
         {chart.xTicks.map((tick: any, i: number) => (
           <g key={i}>
             <line x1={tick.x} y1={chart.height - 28} x2={tick.x} y2={chart.height - 24} stroke="#fff" strokeWidth={1} />
-            <text x={tick.x} y={chart.height - 18} fontSize={11} fill="#fff" textAnchor="middle">{tick.label.time}</text>
-            <text x={tick.x} y={chart.height - 6} fontSize={10} fill="#fff" textAnchor="middle">{tick.label.date}</text>
+            {/* Add more space below the axis for labels */}
+            <text x={tick.x} y={chart.height - 10} fontSize={11} fill="#fff" textAnchor="middle">{tick.label.time}</text>
+            <text x={tick.x} y={chart.height + 6} fontSize={10} fill="#fff" textAnchor="middle">{tick.label.date}</text>
           </g>
         ))}
         {/* Axis labels */}
