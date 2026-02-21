@@ -76,6 +76,16 @@ export default async function AboutPage() {
           </div>
 
           <section className="space-y-4">
+            <h2 className="text-xl font-semibold text-white">Current Affairs & News Relevance</h2>
+            <p>
+              <strong>Reading Comprehension</strong> and <strong>Conversation Sets</strong> on Verbit are powered by a live news pipeline: every time you generate a set, the system fetches trending headlines from major global and Indian news sources using the NewsAPI. These headlines are woven into the prompts, so the passages and dialogues you see are often inspired by real, current events, viral topics, and issues that matter <em>right now</em>.
+            </p>
+            <p>
+              This means your RCs and Convo Sets are not just exam-relevant—they're also great for building perspectives on contemporary issues, which is invaluable for <strong>extempore rounds</strong>, <strong>group discussions</strong>, and <strong>interviews</strong>. Practicing with these up-to-date, context-rich passages helps you develop the awareness and articulation needed to tackle open-ended questions and real-world scenarios in any selection process.
+            </p>
+          </section>
+
+          <section className="space-y-4">
             <p>
               Hi, I&apos;m Shinjan — 1st Year IPM student at IIM Indore.
               I&apos;ve always guided aspirants to use carefully curated prompts to
