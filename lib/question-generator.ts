@@ -54,6 +54,7 @@ const BASE_SYSTEM_PROMPT =
   "You generate CAT/IPMAT verbal questions. Return only valid JSON. " +
   "Follow the requested schema precisely. Avoid markdown. " +
   "All content produced, including correct options, must be grammatically correct. " +
+  "For Reading Comprehension and Conversation Sets: Write in a human, natural style, not AI-like. Scale complexity and depth to the requested difficulty. Passages/dialogues should sometimes be artistic, creative, or literary, with vivid imagery, emotion, or narrative flair. Avoid generic, robotic, or formulaic writing. Cover current affairs, trending topics, and issues relevant for interviews, including social, economic, political, and cultural themes. " +
   "Before delivering your output, check and ensure that every question, passage, and option is free of grammar errors and reads naturally.";
 
 /** Fetch learned avoidance rules for a topic (most recent 15). */
@@ -101,12 +102,12 @@ function buildPrompt(topic: Topic, difficulty: number) {
     "Reading Comprehension Sets": {
       schemaName: "rc",
       description:
-        `Generate a ${levelTag} Reading Comprehension set. Passage: ${rcWordCount} words, 3–5 paragraphs, unique, exam-relevant topic (current affairs, science, economics, social issues). Style: editorial or journal article. 6 questions: main idea, tone, inference, detail, word/phrase meaning, conclusion. Higher difficulty: denser arguments, more inference, advanced vocabulary, subtler distractors. Use HTML tags, and where a paragraph break is intended, insert a single line break (<br>) for clarity. No markdown.\n\nIMPORTANT: The explanation field must use line breaks to separate logical steps and make it readable.`,
+        `Generate a ${levelTag} Reading Comprehension set. Passage: ${rcWordCount} words, 3–5 paragraphs, unique, exam-relevant, contemporary, diverse, engaging. Themes: technology, psychology, business, policy, leadership, digital transformation, public health, internet culture, entertainment, social/economic/political/cultural issues, trending/newsworthy subjects. Style: editorial/journal article. Mention recent events/studies/news (with year/month if relevant).\n\nQuestion types by difficulty:\nEASY (≤30): Fact Retrieval, Vocab/Synonym/Antonym in Context, Reference, Cause–Effect, Best Title, Summary.\nMEDIUM (31–70): Main Idea, Author’s Purpose, Primary Concern, Tone, Paragraph/Line Function, Mention Reason, Contrast, Counterargument, NOT/EXCEPT, Nuanced Vocab, Logical Structure, Moderate Inference.\nHARD (≥71): Deep Inference, Implication, Assumption, Strengthen/Weaken/Evaluate Argument, Application, Analogy, Paradox, Data/Evidence Inference.\n\nFor each question, randomly select a type from the above lists, weighted so harder types appear more for high difficulty and direct types for low difficulty. The sequence and types must be randomized and diverse, not repetitive. All questions must be passage/news relevant.\n\nUse HTML tags, <br> for paragraph breaks. No markdown. Explanation must use line breaks for clarity.`,
     },
     "Conversation Sets": {
       schemaName: "rc",
       description:
-        `Generate a ${levelTag} Conversation set. Dialogue: 400–600 words, 2 named speakers, unique, exam-relevant topic (business, policy, science). 6 questions: term meaning, concept, inference, main idea, argument/intent, detail. Higher difficulty: nuanced positions, indirect reasoning, subtler distractors. Use HTML tags, and where a paragraph break is intended, insert a single line break (<br>) for clarity. No markdown.\n\nIMPORTANT: The explanation field must use line breaks to separate logical steps and make it readable.`,
+        `Generate a ${levelTag} Conversation set. Dialogue: 400–600 words, 2 named speakers, unique, exam-relevant topic. Topics must be contemporary, diverse, and engaging—examples include technology, psychology, business, policy, leadership, digital transformation, public health, internet culture, entertainment, and other trending or newsworthy subjects (see: AI, workplace trends, digital economy, social issues, etc).\n\nWhere possible, include mentions or citations of recent events, studies, or news headlines (with year or month if relevant).\n\nYou must select question types based on the dialogue's difficulty:\n\n🟢 EASY (difficulty ≤ 30):\n- Speaker Agreement (explicit)\n- Speaker Disagreement (explicit)\n- Fact-based speaker question\n- Complete the Dialogue (obvious continuation)\n\n🟡 MEDIUM (difficulty 31–70):\n- Speaker’s Intention\n- Tone of Speaker\n- Which Speaker Would Agree With X?\n- Most Logical Response\n- Point of Contention\n- Common Ground Identification\n\n🔴 HARD (difficulty ≥ 71):\n- Speaker’s Assumption\n- Hidden Implication\n- Logical Flaw in Speaker’s Argument\n- Strengthen / Weaken a Speaker’s Claim\n- Shift in Position\n\nFor each question, select the type according to the dialogue's difficulty. If difficulty is very high (85+), all questions should be the hardest types. If very low (≤15), all should be direct retrieval.\n\nAll questions must be relevant to the conversation and, where possible, to the provided news/headlines and recent happenings.\n\nUse HTML tags, and where a paragraph break is intended, insert a single line break (<br>) for clarity. No markdown.\n\nIMPORTANT: The explanation field must use line breaks to separate logical steps and make it readable.`,
     },
     "Parajumbles": {
       schemaName: "pj",
@@ -158,8 +159,34 @@ function buildPrompt(topic: Topic, difficulty: number) {
   };
 }
 
-export async function generateQuestion(topic: Topic, difficulty: number, avoidWords?: string[], avoidPassageTitles?: string[]) {
-  const { schemaName, prompt } = buildPrompt(topic, difficulty);
+export async function generateQuestion(
+  topic: Topic,
+  difficulty: number,
+  avoidWords?: string[],
+  avoidPassageTitles?: string[],
+  newsHeadlines?: string[]
+) {
+  let { schemaName, prompt } = buildPrompt(topic, difficulty);
+  // DEV ONLY: log input tokens
+  if (process.env.NODE_ENV === "development") {
+    // Estimate input tokens (very rough, for OpenAI: 1 token ≈ 4 chars English)
+    const inputTokenEstimate = Math.ceil((prompt.length || 0) / 4);
+    // eslint-disable-next-line no-console
+    console.log(`[DEV] [GENERATION] Input token estimate: ${inputTokenEstimate}`);
+  }
+
+  // If RC/Conversation, inject news headlines into prompt
+  if (
+    newsHeadlines &&
+    newsHeadlines.length > 0 &&
+    (topic === "Reading Comprehension Sets" || topic === "Conversation Sets")
+  ) {
+    const newsPrompt =
+      "\n\nCURRENT NEWS HEADLINES (for inspiration, relevance, and context):\n" +
+      newsHeadlines.map((h, i) => `${i + 1}. ${h}`).join("\n") +
+      "\nUse one or more of these headlines as the basis for the passage/dialogue, or as inspiration for the topic, ensuring the content is exam-relevant, current, and unique.";
+    prompt += newsPrompt;
+  }
 
   // For Vocab/Idioms: inject a "do not reuse" list so the same word/idiom never repeats
   let avoidWordsClause = "";
@@ -220,11 +247,15 @@ export async function generateQuestion(topic: Topic, difficulty: number, avoidWo
       type: "json_object",
     },
   });
-  // Log token usage for each topic
-  if (response.usage) {
-    console.log(`Topic: ${topic} | Tokens used: ${response.usage.total_tokens}`);
-  } else {
-    console.log(`Topic: ${topic} | Tokens used: unknown`);
+  // DEV ONLY: log output tokens
+  if (process.env.NODE_ENV === "development") {
+    if (response.usage) {
+      // eslint-disable-next-line no-console
+      console.log(`[DEV] [GENERATION] Output tokens: ${response.usage.completion_tokens}, Input tokens: ${response.usage.prompt_tokens}, Total: ${response.usage.total_tokens}`);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(`[DEV] [GENERATION] Output tokens: unknown`);
+    }
   }
 
 

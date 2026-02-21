@@ -37,6 +37,7 @@ export async function POST(req: Request) {
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  const isAdmin = session.user.isAdmin === true;
 
   const body = bodySchema.parse(await req.json());
   const topic = body.topic as Topic;
@@ -327,18 +328,26 @@ export async function POST(req: Request) {
   });
 
   // Dynamic question difficulty update (IRT)
-  const updatedDiffNormal = updateQuestionDifficulty({
-    currentDifficulty: question.difficulty,
-    solverVerScore: verScore,
-    actual,
-    timeTaken: body.timeTaken,
-    idealTime,
-    attemptCount: question.attemptCount ?? 0,
-  });
-  await QuestionModel.updateOne(
-    { _id: question._id },
-    { $set: { difficulty: updatedDiffNormal }, $inc: { attemptCount: 1 } }
-  );
+  if (!isAdmin) {
+    const updatedDiffNormal = updateQuestionDifficulty({
+      currentDifficulty: question.difficulty,
+      solverVerScore: verScore,
+      actual,
+      timeTaken: body.timeTaken,
+      idealTime,
+      attemptCount: question.attemptCount ?? 0,
+    });
+    await QuestionModel.updateOne(
+      { _id: question._id },
+      { $set: { difficulty: updatedDiffNormal }, $inc: { attemptCount: 1 } }
+    );
+  } else {
+    // Admin attempts: only increment attemptCount, do not change difficulty
+    await QuestionModel.updateOne(
+      { _id: question._id },
+      { $inc: { attemptCount: 1 } }
+    );
+  }
 
   void (async () => {
     try {
