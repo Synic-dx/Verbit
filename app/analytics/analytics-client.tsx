@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from "react";
 function AnalyticsChart({ chart, viewMode }: { chart: any; viewMode: "verscore" | "percentile" }) {
   const [hovered, setHovered] = React.useState<number | null>(null);
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto relative" style={{ overflow: 'visible' }}>
       <svg
         width="100%"
         height={chart.height + 40}

@@ -76,7 +76,7 @@ export default function ScoreGrid({ items, viewMode, setViewMode }: ScoreGridPro
                   <p className="text-sm text-amber-300/80">
                     {item.calibrationAttempts === 0
                       ? "Not started — begin calibration"
-                      : `Calibrating ${item.calibrationAttempts}/10`}
+                      : `Calibrating ${item.calibrationAttempts}/${item.topic === "Reading Comprehension Sets" || item.topic === "Conversation Sets" ? 3 : 10}`}
                   </p>
                 ) : (
                   <p className="text-sm text-white/60">
@@ -90,7 +90,7 @@ export default function ScoreGrid({ items, viewMode, setViewMode }: ScoreGridPro
               </CardHeader>
               <CardContent>
                 {!item.calibrated ? (
-                  <Progress value={(item.calibrationAttempts / 10) * 100} />
+                  <Progress value={(item.calibrationAttempts / (item.topic === "Reading Comprehension Sets" || item.topic === "Conversation Sets" ? 3 : 10)) * 100} />
                 ) : (
                   <Progress value={progressValue} />
                 )}
