@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { VerificationModal } from "@/components/VerificationModal";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -97,6 +98,11 @@ function AnimatedLoading() {
 }
 
 export default function PracticePage() {
+  const [showVerifyModal, setShowVerifyModal] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [otpError, setOtpError] = useState("");
+  const [userEmail, setUserEmail] = useState("");
     // Like/Dislike state with netLikes
     const [liked, setLiked] = useState<boolean>(false);
     const [likeLoading, setLikeLoading] = useState<boolean>(false);
@@ -133,7 +139,54 @@ export default function PracticePage() {
     if (status === "unauthenticated") {
       router.replace("/auth/sign-in");
     }
-  }, [status, router]);
+    if (session?.user?.email) {
+      setUserEmail(session.user.email);
+      fetch("/api/user/me")
+        .then(res => res.json())
+        .then(data => {
+          if (!data.isVerified) setShowVerifyModal(true);
+        });
+    }
+  }, [status, router, session]);
+
+  const handleVerify = async () => {
+    setOtpLoading(true);
+    setOtpError("");
+    try {
+      const res = await fetch("/api/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: userEmail, code: otp }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setShowVerifyModal(false);
+        window.location.reload();
+      } else {
+        setOtpError(data.error || "Invalid code");
+      }
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    setOtpLoading(true);
+    setOtpError("");
+    try {
+      const res = await fetch("/api/auth/resend-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: userEmail }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setOtpError(data.error || "Could not resend code");
+      }
+    } finally {
+      setOtpLoading(false);
+    }
+  };
 
   const loadQuestion = useCallback(async () => {
     if (!TOPICS.includes(topic as any)) return;
@@ -298,6 +351,17 @@ export default function PracticePage() {
 
   if (!session?.user) {
     return <div className="min-h-screen bg-grid" />;
+  }
+  if (showVerifyModal) {
+    return <VerificationModal
+      open={showVerifyModal}
+      onVerify={handleVerify}
+      onResend={handleResend}
+      loading={otpLoading}
+      otp={otp}
+      setOtp={setOtp}
+      error={otpError}
+    />;
   }
 
   if (!TOPICS.includes(topic as any)) {

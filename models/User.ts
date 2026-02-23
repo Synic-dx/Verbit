@@ -7,6 +7,9 @@ const UserSchema = new Schema(
     image: { type: String },
     passwordHash: { type: String },
     isAdmin: { type: Boolean, default: false },
+    isVerified: { type: Boolean, default: false },
+    lastVerificationCode: { type: String },
+    lastVerificationSentAt: { type: Date },
     createdAt: { type: Date, default: Date.now },
   },
   { timestamps: false }
