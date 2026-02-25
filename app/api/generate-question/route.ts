@@ -24,40 +24,23 @@ export async function POST(req: Request) {
     topic === "Conversation Sets"
   ) {
     try {
-      // Define prioritized regions (excluding niche/irrelevant sources) and relevant themes (categories)
-      const prioritizedCountries = [
-        "us", "gb", "au", "ca", "sg", "za", "fr", "de", "it", "es", "ru", "cn", "jp", "kr", "br", "mx", "ae", "sa", "tr", "ng", "eg", "id", "ar"
-      ];
-      const themes = [
-        "general", "business", "science", "health", "technology", "politics", "economy", "psychology", "literature", "entertainment", "sports", "climate", "internet"
+      // Define broad queries to fetch diverse, high-impact news
+      const queries = [
+        "technology OR AI OR startup OR innovation",
+        "business OR economy OR market OR finance",
+        "politics OR policy OR election OR government",
+        "science OR health OR climate OR space",
+        "entertainment OR culture OR social media OR trending"
       ];
 
-      // India-specific feed (50% of total)
-      const indiaFeeds = await Promise.all(
-        themes.map((cat) => fetchTrendingHeadlines("in", cat))
-      );
-      let indiaHeadlines = indiaFeeds.flat().filter(Boolean);
-
-      // Global feed: prioritized countries and all themes
-      let globalHeadlines: string[] = [];
-      for (const region of prioritizedCountries) {
-        for (const category of themes) {
-          const headlines = await fetchTrendingHeadlines(region, category);
-          if (headlines && headlines.length) {
-            globalHeadlines.push(...headlines);
-          }
-        }
-      }
+      // Fetch from all queries in parallel
+      const fetchPromises = queries.map((q) => fetchTrendingHeadlines(q, 30));
+      const results = await Promise.all(fetchPromises);
+      let allHeadlines = results.flat().filter(Boolean);
 
       // Deduplicate (case-insensitive, ignoring whitespace/punctuation)
       const seen = new Set<string>();
-      indiaHeadlines = indiaHeadlines.filter((h) => {
-        const norm = h.replace(/[\s\W]+/g, "").toLowerCase();
-        if (seen.has(norm)) return false;
-        seen.add(norm);
-        return true;
-      });
-      globalHeadlines = globalHeadlines.filter((h) => {
+      allHeadlines = allHeadlines.filter((h) => {
         const norm = h.replace(/[\s\W]+/g, "").toLowerCase();
         if (seen.has(norm)) return false;
         seen.add(norm);
@@ -78,8 +61,9 @@ export async function POST(req: Request) {
         // Conversation/Interview/Podcast specific
         "podcast", "interview", "conversation", "talk show", "panel", "roundtable", "guest", "host", "Q&A", "fireside chat", "webinar", "livestream", "broadcast", "radio show", "audio", "voice", "discussion", "debate", "celebrity interview", "expert interview", "influencer", "YouTuber", "streamer", "Spotify", "Apple Podcasts", "Anchor", "Google Podcasts", "viral podcast", "trending podcast", "exclusive interview", "featured guest", "special guest"
       ];
-      // Filter for only widely relevant, trending, or major international headlines for all global countries
-      const prioritizedGlobal = globalHeadlines.filter(h => {
+      
+      // Filter for only widely relevant, trending, or major headlines
+      const prioritizedGlobal = allHeadlines.filter(h => {
         const lower = h.toLowerCase();
         // Must match at least one keyword and not be overly local or niche
         if (!priorityKeywords.some(kw => lower.includes(kw.toLowerCase()))) return false;
@@ -88,23 +72,8 @@ export async function POST(req: Request) {
         if (nichePatterns.some(rx => rx.test(lower))) return false;
         return true;
       });
-      let sortedGlobal = prioritizedGlobal;
-
-      // Now, combine: 50% Indian, 50% global (prioritized)
-      const totalCount = indiaHeadlines.length + sortedGlobal.length;
-      const half = Math.floor(totalCount / 2);
-      const selectedIndia = indiaHeadlines.slice(0, half);
-      const selectedGlobal = sortedGlobal.slice(0, totalCount - half);
-      let allHeadlines = [...selectedIndia, ...selectedGlobal];
-
-      // Final deduplication (should be minimal)
-      const seenFinal = new Set<string>();
-      newsHeadlines = allHeadlines.filter((h) => {
-        const norm = h.replace(/[\s\W]+/g, "").toLowerCase();
-        if (seenFinal.has(norm)) return false;
-        seenFinal.add(norm);
-        return true;
-      });
+      
+      newsHeadlines = prioritizedGlobal.length > 0 ? prioritizedGlobal : allHeadlines;
 
       // Fallback: if no headlines, use a default message
       if (!newsHeadlines.length) {

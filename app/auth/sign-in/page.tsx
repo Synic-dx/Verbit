@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -10,13 +11,101 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/logo";
+import { VerificationModal } from "@/components/VerificationModal";
 
 export default function SignInPage() {
   const [mode, setMode] = useState<"sign-in" | "sign-up">("sign-in");
   const [loading, setLoading] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
+  const [verificationEmail, setVerificationEmail] = useState("");
+  const [verificationPassword, setVerificationPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const [verificationError, setVerificationError] = useState("");
+  const [verificationLoading, setVerificationLoading] = useState(false);
+
+  const [resendTimer, setResendTimer] = useState(0);
+  const [resendDisabled, setResendDisabled] = useState(false);
+
+  React.useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (resendTimer > 0) {
+      interval = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    } else {
+      setResendDisabled(false);
+    }
+    return () => clearInterval(interval);
+  }, [resendTimer]);
 
   const switchMode = (target: "sign-in" | "sign-up") => {
     setMode(target);
+  };
+
+  const closeVerification = () => {
+    setShowVerification(false);
+    setOtp("");
+    setVerificationError("");
+  };
+
+  const handleVerify = async () => {
+    setVerificationLoading(true);
+    setVerificationError("");
+    try {
+      const res = await fetch("/api/auth/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: verificationEmail, code: otp }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setVerificationError(data.error ?? "Verification failed.");
+        setVerificationLoading(false);
+        return;
+      }
+      toast.success("Email verified! Signing you in...");
+      const result = await signIn("credentials", {
+        email: verificationEmail,
+        password: verificationPassword,
+        redirect: false,
+      });
+      if (result?.error) {
+        toast.error("Sign-in failed after verification.");
+        setVerificationLoading(false);
+        return;
+      }
+      window.location.href = "/dashboard";
+    } catch (err) {
+      setVerificationError("Network error. Please try again.");
+    }
+    setVerificationLoading(false);
+  };
+
+  const handleResend = async () => {
+    setVerificationLoading(true);
+    setVerificationError("");
+    try {
+      const res = await fetch("/api/auth/resend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: verificationEmail }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setVerificationError(data.error ?? "Failed to resend code.");
+        if (res.status === 429) {
+          // If the server says wait, we can try to parse the seconds or just set a generic timeout.
+          // The error string is "Please wait X seconds...". We'll just rely on the error string displaying.
+        }
+      } else {
+        toast.success(data.message || "Verification code resent.");
+        setResendTimer(120);
+        setResendDisabled(true);
+      }
+    } catch (err) {
+      setVerificationError("Network error. Please try again.");
+    }
+    setVerificationLoading(false);
   };
 
   const handleCredentials = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -87,7 +176,13 @@ export default function SignInPage() {
         return;
       }
 
-      toast.success("Account created! Signing you in...");
+      setVerificationEmail(email);
+      setVerificationPassword(password);
+      setShowVerification(true);
+      setResendTimer(120); // Initial block for 2 mins upon signup 
+      setResendDisabled(true);
+      setLoading(false);
+      return; // Wait for verification
     }
 
     /* ── sign-in ──────────────────────────────────────────────── */
@@ -133,6 +228,18 @@ export default function SignInPage() {
 
   return (
     <div className="min-h-screen bg-grid px-6 py-12">
+      <VerificationModal
+        open={showVerification}
+        otp={otp}
+        setOtp={setOtp}
+        loading={verificationLoading}
+        error={verificationError}
+        onVerify={handleVerify}
+        onResend={handleResend}
+        onClose={closeVerification}
+        resendDisabled={resendDisabled}
+        resendTimer={resendTimer}
+      />
       <div className="mx-auto flex max-w-4xl flex-col gap-8">
         <header className="flex items-center justify-between">
           <Logo />

@@ -1,4 +1,5 @@
 "use client";
+import * as React from "react";
 import { useEffect, useState } from "react";
 import type { Announcement } from "@/components/announcement-board";
 import SuggestionBox from "@/app/dashboard/suggestion-box";
@@ -7,6 +8,7 @@ import { Logo } from "@/components/logo";
 import Link from "next/link";
 import SignOutButton from "@/components/sign-out-button";
 import { TOPICS } from "@/lib/topics";
+import { VerificationModal } from "@/components/VerificationModal";
 
 function AnnouncementBoardClientOnly() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
@@ -43,14 +45,108 @@ function AnnouncementBoardClientOnly() {
   );
 }
 
-export default function DashboardClient({ isAdmin, scoreMap, calibrationMap }: {
+export default function DashboardClient({ isAdmin, scoreMap, calibrationMap, isVerified, email }: {
   isAdmin: boolean;
   scoreMap: Map<string, number>;
   calibrationMap: Map<string, { calibrated: boolean; calibrationAttempts: number }>;
+  isVerified: boolean;
+  email: string;
 }) {
   const [viewMode, setViewMode] = useState<ViewMode>("verscore");
+  const [showVerification, setShowVerification] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const [resendTimer, setResendTimer] = useState(0);
+  const [resendDisabled, setResendDisabled] = useState(false);
+
+  React.useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (resendTimer > 0) {
+      interval = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    } else {
+      setResendDisabled(false);
+    }
+    return () => clearInterval(interval);
+  }, [resendTimer]);
+
+  const closeVerification = () => {
+    setShowVerification(false);
+    setOtp("");
+    setError("");
+  };
+
+  const handleAction = (e: React.MouseEvent) => {
+    if (!isVerified) {
+      e.preventDefault();
+      setShowVerification(true);
+    }
+  };
+
+  const handleVerify = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/auth/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, code: otp }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.error ?? "Verification failed.");
+        setLoading(false);
+        return;
+      }
+      window.location.reload(); // Reload to get updated verified status from server
+    } catch {
+      setError("Network error. Please try again.");
+    }
+    setLoading(false);
+  };
+
+  const handleResend = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/auth/resend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.error ?? "Failed to resend.");
+      } else {
+        const data = await res.json();
+        setError("");
+        alert(data.message || "Verification code resent.");
+        setResendTimer(120);
+        setResendDisabled(true);
+      }
+    } catch {
+      setError("Network error. Please try again.");
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="min-h-screen bg-grid">
+      <VerificationModal
+        open={showVerification}
+        otp={otp}
+        setOtp={setOtp}
+        loading={loading}
+        error={error}
+        onVerify={handleVerify}
+        onResend={handleResend}
+        onClose={closeVerification}
+        resendDisabled={resendDisabled}
+        resendTimer={resendTimer}
+      />
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-10">
         <header className="flex items-center justify-between">
           <Logo />
@@ -108,6 +204,7 @@ export default function DashboardClient({ isAdmin, scoreMap, calibrationMap }: {
           })}
           viewMode={viewMode}
           setViewMode={setViewMode}
+          onAction={handleAction}
         />
       </div>
     </div>
