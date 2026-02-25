@@ -15,7 +15,7 @@ export async function sendVerificationEmail({ to, code }: { to: string; code: st
   </div>`;
 
   await resend.emails.send({
-    from: 'Verbit <verbit@resend.dev>',
+    from: 'Verbit <noreply@verbit.online>',
     to,
     subject: 'Verify your email for Verbit',
     html,
