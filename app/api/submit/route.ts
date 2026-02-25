@@ -44,42 +44,8 @@ export async function POST(req: Request) {
 
   await connectDb();
 
-  /* ── Skip / unattempted: question is already in ServedQuestion, just return ── */
-  if (body.skip) {
-    const question = (await QuestionModel.findById(body.questionId).lean()) as
-      | QuestionRecord
-      | null;
-
-    const correctIndex = question?.correctIndex ?? null;
-    const correctIndices = (question?.questions ?? []).map(
-      (q: { correctIndex?: number }) => q.correctIndex ?? null
-    );
-    const pjCorrectOrder = question?.pjCorrectOrder ?? null;
-
-    const aptitude = await UserAptitudeModel.findOne(
-      { userId: new Types.ObjectId(session.user.id), topic }
-    ).lean();
-    const isCalibrated =
-      (aptitude as any)?.calibrated === true ||
-      (aptitude as any)?.calibrated === undefined;
-    const calConfig = getCalibrationConfig(topic);
-    const calibrationStep: number = (aptitude as any)?.calibrationAttempts ?? 0;
-
-    return NextResponse.json({
-      correct: false,
-      skipped: true,
-      calibrating: !isCalibrated && calibrationStep < calConfig.total,
-      calibrationComplete: false,
-      calibrationStep,
-      calibrationTotal: calConfig.total,
-      newVerScore: (aptitude as any)?.verScore ?? 0,
-      percentile: verScoreToPercentile((aptitude as any)?.verScore ?? 0),
-      correctIndex,
-      correctIndices,
-      pjCorrectOrder,
-      pjExplanation: question?.pjExplanation ?? null,
-    });
-  }
+  /* ── Skip / unattempted: question is already in ServedQuestion, treat as actual=0, correct=false ── */
+  let skipTriggered = body.skip === true;
 
   const question = (await QuestionModel.findById(body.questionId).lean()) as
     | QuestionRecord
@@ -132,6 +98,11 @@ export async function POST(req: Request) {
   } else {
     actual = body.answer === question.correctIndex ? 1 : 0;
     correct = actual === 1;
+  }
+
+  if (skipTriggered) {
+    actual = 0;
+    correct = false;
   }
 
   // If question is faulty, do not update verScore or calibration, return previous state

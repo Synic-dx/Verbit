@@ -10,6 +10,8 @@ const UserSchema = new Schema(
     isVerified: { type: Boolean, default: false },
     lastVerificationCode: { type: String },
     lastVerificationSentAt: { type: Date },
+    lastOTP: { type: String },
+    lastOTPtime: { type: Date },
     createdAt: { type: Date, default: Date.now },
   },
   { timestamps: false }

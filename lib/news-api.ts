@@ -1,14 +1,19 @@
 // Fetch top 10 trending headlines from News API
 // Replace 'YOUR_NEWS_API_KEY' with your actual API key
 
-export async function fetchTrendingHeadlines(country = "in", category = "general") {
+export async function fetchTrendingHeadlines(query = "technology OR business OR science OR politics OR economy", days = 30) {
   const apiKey = process.env.NEWS_API_KEY || "YOUR_NEWS_API_KEY";
-  const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&pageSize=10&apiKey=${apiKey}`;
+  const dateFrom = new Date();
+  dateFrom.setDate(dateFrom.getDate() - days);
+  const fromISO = dateFrom.toISOString().split("T")[0];
+
+  const encodedQuery = encodeURIComponent(query);
+  const url = `https://newsapi.org/v2/everything?q=${encodedQuery}&from=${fromISO}&sortBy=popularity&pageSize=10&language=en&apiKey=${apiKey}`;
 
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch news headlines");
   const data = await res.json();
-  return data.articles.map((a: any) => a.title);
+  return data.articles?.map((a: any) => a.title) || [];
 }
 
 // Usage example:

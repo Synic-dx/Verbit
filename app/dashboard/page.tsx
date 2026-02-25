@@ -36,6 +36,8 @@ export default async function DashboardPage() {
       isAdmin={isAdmin}
       scoreMap={scoreMap}
       calibrationMap={calibrationMap}
+      isVerified={dbUser?.isVerified === true}
+      email={dbUser?.email || ""}
     />
   );
 }

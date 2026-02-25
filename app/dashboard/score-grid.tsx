@@ -25,9 +25,10 @@ interface ScoreGridProps {
   items: ScoreItem[];
   viewMode: ViewMode;
   setViewMode?: (mode: ViewMode) => void;
+  onAction?: (e: React.MouseEvent) => void;
 }
 
-export default function ScoreGrid({ items, viewMode, setViewMode }: ScoreGridProps) {
+export default function ScoreGrid({ items, viewMode, setViewMode, onAction }: ScoreGridProps) {
 
   const scored = useMemo(
     () =>
@@ -101,7 +102,7 @@ export default function ScoreGrid({ items, viewMode, setViewMode }: ScoreGridPro
                   {item.topic === "Parajumbles" ? (
                     <Button size="sm" disabled className="opacity-50 cursor-not-allowed">Practice</Button>
                   ) : (
-                    <Link href={`/practice/${encodeURIComponent(item.topic)}`}>
+                    <Link href={`/practice/${encodeURIComponent(item.topic)}`} onClick={onAction}>
                       <Button size="sm">{!item.calibrated ? "Calibrate" : "Practice"}</Button>
                     </Link>
                   )}
