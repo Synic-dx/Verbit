@@ -13,7 +13,7 @@ export async function fetchTrendingHeadlines(query = "technology OR business OR 
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch news headlines");
   const data = await res.json();
-  return data.articles?.map((a: any) => a.title) || [];
+  return data.articles?.map((a: { title: string }) => a.title) || [];
 }
 
 // Usage example:

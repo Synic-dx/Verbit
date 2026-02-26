@@ -70,7 +70,7 @@ async function getAvoidanceRules(topic: Topic): Promise<string> {
 
   if (reports.length === 0) return "";
 
-  const rules = reports.map((r: any) => `- ${r.rule}`).join("\n");
+  const rules = reports.map((r: { rule: string }) => `- ${r.rule}`).join("\n");
   return (
     "\n\nIMPORTANT — Avoid these mistakes that were flagged in previous questions:\n" +
     rules
@@ -166,12 +166,13 @@ export async function generateQuestion(
   avoidPassageTitles?: string[],
   newsHeadlines?: string[]
 ) {
-  let { schemaName, prompt } = buildPrompt(topic, difficulty);
+  const promptData = buildPrompt(topic, difficulty);
+  const schemaName = promptData.schemaName;
+  let prompt = promptData.prompt;
   // DEV ONLY: log input tokens
   if (process.env.NODE_ENV === "development") {
     // Estimate input tokens (very rough, for OpenAI: 1 token ≈ 4 chars English)
     const inputTokenEstimate = Math.ceil((prompt.length || 0) / 4);
-    // eslint-disable-next-line no-console
     console.log(`[DEV] [GENERATION] Input token estimate: ${inputTokenEstimate}`);
   }
 
@@ -250,10 +251,8 @@ export async function generateQuestion(
   // DEV ONLY: log output tokens
   if (process.env.NODE_ENV === "development") {
     if (response.usage) {
-      // eslint-disable-next-line no-console
       console.log(`[DEV] [GENERATION] Output tokens: ${response.usage.completion_tokens}, Input tokens: ${response.usage.prompt_tokens}, Total: ${response.usage.total_tokens}`);
     } else {
-      // eslint-disable-next-line no-console
       console.log(`[DEV] [GENERATION] Output tokens: unknown`);
     }
   }
@@ -300,7 +299,6 @@ export async function generateQuestion(
     const result = pjSchema.safeParse(parsed);
     if (!result.success) {
       // Print the error and the raw object for debugging
-      // eslint-disable-next-line no-console
       console.error("[Zod Validation Error]", result.error, parsed);
       throw new Error("AI did not return valid Parajumbles JSON: " + result.error.message);
     }
