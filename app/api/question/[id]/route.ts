@@ -7,6 +7,7 @@ import { authOptions } from "@/lib/auth";
 import { connectDb } from "@/lib/db";
 import { QuestionModel } from "@/models/Question";
 import { BadReportModel } from "@/models/BadReport";
+import { invalidateBadPatternCache } from "@/lib/rag";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -21,7 +22,6 @@ export async function DELETE(
 
   const { id } = await params;
 
-  // Parse optional reason from request body
   let reason = "";
   try {
     const body = await _req.json();
@@ -34,7 +34,7 @@ export async function DELETE(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  // ── Fast path: if user says it's a repeated question, delete immediately ──
+  // ── Fast path: repeated/duplicate ────────────────────────────────────────
   const isRepeated = /repeat|duplicate|same q|already (seen|done|answered)/i.test(reason);
   if (isRepeated) {
     await BadReportModel.create({
@@ -48,6 +48,7 @@ export async function DELETE(
       createdAt: new Date(),
       questionId: question._id,
     });
+    invalidateBadPatternCache();
     await QuestionModel.findByIdAndDelete(id);
     return NextResponse.json({
       ok: true,
@@ -57,20 +58,32 @@ export async function DELETE(
     });
   }
 
-  // ── AI evaluation with user's reason as a hint ──
+  // ── AI evaluation (gpt-4.1 — stronger than mini, still cost-efficient) ──
   const snapshot = JSON.stringify(question, null, 2);
   const userHint = reason
     ? `\n\nThe user's stated reason for reporting: "${reason}". Consider this hint carefully when evaluating.`
     : "";
 
   const analysisResponse = await openai.chat.completions.create({
-    model: "gpt-4.1-mini",
-    temperature: 0.3,
+    model: "gpt-4.1",
+    temperature: 0.2,
     messages: [
       {
         role: "system",
         content:
-          "You review flagged exam questions. OBJECTIVELY set isValid false if any: wrong/misleading answer, >1 plausible answer, duplicate options, missing stem/context, placeholder/missing options, illogical/contradictory answer, misleading explanation, unclear/incomplete/missing instructions, illogical sequence (parajumbles), no clear fix (correction), or grammatically wrong correct answer. Else, set isValid true. Return JSON: isValid (bool), analysis (2-3 sentences: why valid/invalid), rule (if false: 'Do not...'; if true: empty).",
+          "You are a senior verbal aptitude exam reviewer. A user has flagged a CAT/IPMAT question as faulty. " +
+          "Evaluate it STRICTLY and OBJECTIVELY. Set isValid=false if ANY of the following are true: " +
+          "(1) the marked correct answer is wrong or misleading; " +
+          "(2) more than one option is a plausible correct answer; " +
+          "(3) two or more options are identical or near-identical; " +
+          "(4) the question text is missing context, contains a blank where the target word/idiom should be, or is just an instruction without the actual sentence; " +
+          "(5) the explanation contradicts the correct answer or is factually wrong; " +
+          "(6) for Vocabulary Usage Incorrect-Usage questions: the option marked incorrect is actually correct (e.g. it uses an idiom, metaphor, or extended sense that is valid per standard dictionaries); " +
+          "(7) for Sentence Completion: the sentence with blanks is absent from the question field; " +
+          "(8) for Parajumbles: the stated correct order is logically indefensible; " +
+          "(9) for Sentence Correction: the 'correct' option does not actually fix the identified error, or options are not all distinct. " +
+          "If none of the above apply, set isValid=true. " +
+          "Return JSON ONLY: { isValid: bool, analysis: string (2-3 sentences explaining the verdict), rule: string (if isValid=false: a 'Do not...' instruction for future generation; if isValid=true: empty string) }.",
       },
       { role: "user", content: snapshot + userHint },
     ],
@@ -78,21 +91,17 @@ export async function DELETE(
   });
 
   const parsed = JSON.parse(
-    analysisResponse.choices[0]?.message?.content ?? '{"isValid":false,"analysis":"Unknown issue","rule":"Do not generate low-quality questions."}'
+    analysisResponse.choices[0]?.message?.content ??
+      '{"isValid":false,"analysis":"Unknown issue","rule":"Do not generate low-quality questions."}'
   );
 
   const isValid = parsed.isValid === true;
 
   if (isValid) {
-    // Question is fine — don't delete, don't save rule
-    return NextResponse.json({
-      ok: true,
-      valid: true,
-      analysis: parsed.analysis,
-    });
+    return NextResponse.json({ ok: true, valid: true, analysis: parsed.analysis });
   }
 
-  // Save bad report with questionId for direct lookup
+  // Question is genuinely bad — save report, invalidate RAG cache, delete question
   await BadReportModel.create({
     userId: new Types.ObjectId(session.user.id),
     userEmail: session.user.email ?? "",
@@ -105,17 +114,9 @@ export async function DELETE(
     questionId: question._id,
   });
 
-  // Question is genuinely bad — save report, create avoidance rule, delete question
-  await BadReportModel.create({
-    userId: new Types.ObjectId(session.user.id),
-    userEmail: session.user.email ?? "",
-    userName: session.user.name ?? "",
-    topic: (question as any).topic,
-    questionSnapshot: question,
-    analysis: parsed.analysis,
-    rule: parsed.rule,
-    createdAt: new Date(),
-  });
+  // Immediately invalidate the bad-pattern cache so the new rule is picked
+  // up by the very next question generation for this topic (no 20-min lag).
+  invalidateBadPatternCache();
 
   await QuestionModel.findByIdAndDelete(id);
 

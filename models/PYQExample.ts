@@ -19,6 +19,12 @@ const PYQExampleSchema = new Schema({
   /** Source exam / year if known */
   source: { type: String, default: "PYQ" },
 
+  /**
+   * text-embedding-3-small vector (1536 dims).
+   * Not selected by default — query explicitly with .select("+embedding").
+   */
+  embedding: { type: [Number], select: false },
+
   createdAt: { type: Date, default: Date.now },
 });
 

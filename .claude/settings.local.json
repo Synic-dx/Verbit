@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const d=require\\('./scripts/extracted-pyqs.json'\\); const topics={}; d.forEach\\(q=>{ topics[q.topic]=\\(topics[q.topic]||0\\)+1; }\\); console.log\\('Total PYQs:', d.length\\); console.log\\('By topic:', JSON.stringify\\(topics, null, 2\\)\\);\")",
+      "Bash(node -e \"const d=require\\('./scripts/extracted-pyqs.json'\\); const inc=d.filter\\(q=>q.topic==='Incorrect Words'\\); console.log\\(JSON.stringify\\(inc[0], null, 2\\)\\);\")",
+      "Bash(node -e ' *)",
+      "Bash(npx tsc *)"
+    ]
+  }
+}

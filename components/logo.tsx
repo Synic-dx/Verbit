@@ -3,11 +3,15 @@
 import type { HTMLAttributes } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 export function Logo({ className }: HTMLAttributes<HTMLDivElement>) {
   const { data: session, status } = useSession();
+  const pathname = usePathname();
   const href = status === "authenticated" ? "/dashboard" : "/";
+  // Don't show name on public pages — avoids a flash before AuthRedirect kicks in
+  const showName = status === "authenticated" && !!session?.user?.name && pathname !== "/" && !pathname.startsWith("/auth");
 
   return (
     <Link
@@ -26,11 +30,11 @@ export function Logo({ className }: HTMLAttributes<HTMLDivElement>) {
         </div>
       </div>
       
-      {status === "authenticated" && session?.user?.name && (
+      {showName && (
         <>
           <div className="h-6 w-px bg-white/20" />
           <div className="text-base font-medium text-white">
-            {session.user.name.split(" ")[0]}
+            {session!.user!.name!.split(" ")[0]}
           </div>
         </>
       )}

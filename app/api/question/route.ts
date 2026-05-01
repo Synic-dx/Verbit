@@ -113,16 +113,18 @@ export async function GET(req: Request) {
   // ── Daily limit check for RC / Conversation Sets ──
   const isSetTopic = topic === "Reading Comprehension Sets" || topic === "Conversation Sets";
   const isAdmin = session.user.isAdmin === true;
+  let todayCountBefore = 0;
+  let todayStartIST: Date | undefined;
   if (isSetTopic && !isAdmin) {
-    const todayStart = getTodayStartIST();
-    const todayCount = await ServedQuestionModel.countDocuments({
+    todayStartIST = getTodayStartIST();
+    todayCountBefore = await ServedQuestionModel.countDocuments({
       userId,
       topic,
-      createdAt: { $gte: todayStart },
+      createdAt: { $gte: todayStartIST },
     });
-    if (todayCount >= DAILY_SET_LIMIT) {
+    if (todayCountBefore >= DAILY_SET_LIMIT) {
       return NextResponse.json(
-        { error: "daily_limit", message: `You have exhausted your daily limit of ${DAILY_SET_LIMIT} ${topic} sets. Wait for 12:00 AM IST to attempt more.`, used: todayCount, limit: DAILY_SET_LIMIT },
+        { error: "daily_limit", message: `You have exhausted your daily limit of ${DAILY_SET_LIMIT} ${topic} sets. Wait for 12:00 AM IST to attempt more.`, used: todayCountBefore, limit: DAILY_SET_LIMIT },
         { status: 429 }
       );
     }
@@ -316,17 +318,12 @@ export async function GET(req: Request) {
     explanation: item.explanation,
   }));
 
-  // Compute daily usage for RC/Conversation so frontend can display it
+  // Compute daily usage for RC/Conversation so frontend can display it.
+  // We already counted before serving; the upsert just added one record.
   let dailyUsed: number | undefined;
   let dailyLimit: number | undefined;
   if (isSetTopic && !isAdmin) {
-    const todayStart = getTodayStartIST();
-    // Count after the new served record was inserted
-    dailyUsed = await ServedQuestionModel.countDocuments({
-      userId,
-      topic,
-      createdAt: { $gte: todayStart },
-    });
+    dailyUsed = todayCountBefore + 1;
     dailyLimit = DAILY_SET_LIMIT;
   }
 
