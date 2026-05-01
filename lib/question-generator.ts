@@ -229,11 +229,7 @@ export async function generateQuestion(
     BASE_SYSTEM_PROMPT + ragContext + avoidanceContext + avoidWordsClause + avoidPassagesClause;
 
   const finetunedModel = process.env.FINETUNED_MODEL;
-  const model = isLongForm
-    ? "gpt-4o"
-    : finetunedModel
-    ? finetunedModel
-    : "gpt-4.1-mini";
+  const model = finetunedModel && !isLongForm ? finetunedModel : "gpt-4o";
   const maxTokens = isLongForm ? 4096 : 1024;
 
   const response = await openai.chat.completions.create({

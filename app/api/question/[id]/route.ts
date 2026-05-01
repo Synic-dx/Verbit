@@ -58,15 +58,15 @@ export async function DELETE(
     });
   }
 
-  // ── AI evaluation (gpt-4.1 — stronger than mini, still cost-efficient) ──
+  // ── AI evaluation (o4-mini — reasoning model for thorough, nuanced verdict) ──
   const snapshot = JSON.stringify(question, null, 2);
   const userHint = reason
     ? `\n\nThe user's stated reason for reporting: "${reason}". Consider this hint carefully when evaluating.`
     : "";
 
   const analysisResponse = await openai.chat.completions.create({
-    model: "gpt-4.1",
-    temperature: 0.2,
+    model: "o4-mini",
+    max_completion_tokens: 1024,
     messages: [
       {
         role: "system",
