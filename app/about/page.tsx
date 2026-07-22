@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function AboutPage() {
   const session = await getServerSession(authOptions);
   const isAdmin = session?.user?.isAdmin === true;
-  const dailyLimit = Number(process.env.DAILY_SET_LIMIT) || 5;
+  const dailyLimit = 5; // Pro tier limit; free users get 1/day, Cracker gets 8/day
 
   return (
     <div className="min-h-screen bg-grid">

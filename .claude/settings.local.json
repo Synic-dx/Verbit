@@ -6,7 +6,25 @@
       "Bash(node -e ' *)",
       "Bash(npx tsc *)",
       "Bash(node scripts/seed-pyq-embeddings.js)",
-      "Bash(node scripts/seed-pyqs.js)"
+      "Bash(node scripts/seed-pyqs.js)",
+      "Bash(npm install *)",
+      "WebSearch",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "WebFetch(domain:razorpay.com)",
+      "PowerShell([Convert]::ToBase64String\\([Text.Encoding]::UTF8.GetBytes\\(\"rzp_live_SkEjBxyt45W3YW:p3T4Hbw7vNe8IIVMJdQHQZaA\"\\)\\))",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\shinj\\\\OneDrive\\\\Documents\\\\Github\\\\Verbit\" -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\shinj\\\\OneDrive\\\\Documents\\\\Github\\\\Verbit\\\\app\\\\api\\\\subscription\" -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object Name)",
+      "Bash(curl -s -X POST https://api.razorpay.com/v1/plans -u rzp_live_SkEjBxyt45W3YW:p3T4Hbw7vNe8IIVMJdQHQZaA -H 'Content-Type: application/json' -d '{\"period\":\"monthly\",\"interval\":1,\"item\":{\"name\":\"Verbit Pro\",\"amount\":24900,\"currency\":\"INR\",\"description\":\"Verbit Pro — 20 PJ/day, 5 RC/day, 5 Convo/day, 30 free topics/day\"}}')",
+      "Bash(curl -s -X POST https://api.razorpay.com/v1/plans -u rzp_live_SkEjBxyt45W3YW:p3T4Hbw7vNe8IIVMJdQHQZaA -H 'Content-Type: application/json' -d '{\"period\":\"monthly\",\"interval\":1,\"item\":{\"name\":\"Verbit Pro\",\"amount\":24900,\"currency\":\"INR\",\"description\":\"Verbit Pro — 20 PJ/day, 5 RC/day, 5 Convo/day\"}}')",
+      "Bash(curl -s -X POST https://api.razorpay.com/v1/plans -u rzp_live_SkEjBxyt45W3YW:p3T4Hbw7vNe8IIVMJdQHQZaA -H 'Content-Type: application/json' --data-raw '{\"period\":\"monthly\",\"interval\":1,\"item\":{\"name\":\"Verbit Pro\",\"amount\":24900,\"currency\":\"INR\",\"description\":\"Verbit Pro monthly\"}}')",
+      "Bash(curl -s -X POST https://api.razorpay.com/v1/plans -u rzp_live_SkEjBxyt45W3YW:p3T4Hbw7vNe8IIVMJdQHQZaA -H 'Content-Type: application/json' --data-raw '{\"period\":\"monthly\",\"interval\":1,\"item\":{\"name\":\"Verbit Cracker\",\"amount\":44900,\"currency\":\"INR\",\"description\":\"Verbit Cracker monthly\"}}')",
+      "Bash(curl -s -X POST https://api.razorpay.com/v1/webhooks -u rzp_live_SkEjBxyt45W3YW:p3T4Hbw7vNe8IIVMJdQHQZaA -H 'Content-Type: application/json' --data-raw '{\"url\":\"https://verbit.online/api/subscription/webhook\",\"alert_email\":\"shinjan1280@gmail.com\",\"secret\":\"verbit_webhook_secret_2024\",\"active\":true,\"subscriptions_enabled\":true,\"events\":{\"subscription.charged\":true,\"subscription.cancelled\":true,\"subscription.halted\":true,\"subscription.activated\":true,\"payment.captured\":true,\"payment.failed\":true}}')",
+      "Bash(vercel --version)",
+      "Bash(npx vercel *)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\shinj\\\\OneDrive\\\\Documents\\\\Github\\\\Verbit\\\\app\\\\account\" -ErrorAction SilentlyContinue)"
     ]
   }
 }

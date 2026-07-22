@@ -8,6 +8,7 @@ import { QuestionModel } from "@/models/Question";
 import { UserAptitudeModel } from "@/models/UserAptitude";
 import { AttemptModel } from "@/models/Attempt";
 import { ServedQuestionModel } from "@/models/ServedQuestion";
+import { UserModel } from "@/models/User";
 import { generateQuestion } from "@/lib/question-generator";
 import {
   percentileToVerScore,
@@ -16,26 +17,57 @@ import {
 } from "@/lib/scoring";
 import type { Topic } from "@/lib/topics";
 
+// ── Daily limits per tier ────────────────────────────────────────────────────
+const LIMITS = {
+  free:    { rc: 1,  convo: 1,  pj: 3,  normal: 20 },
+  pro:     { rc: 5,  convo: 5,  pj: 20, normal: 30 },
+  cracker: { rc: 8,  convo: 8,  pj: 30, normal: Infinity },
+} as const;
+
+type Tier = keyof typeof LIMITS;
+
+function getUserTier(sub: any): Tier {
+  if (
+    sub?.status === "active" &&
+    sub.currentPeriodEnd &&
+    new Date(sub.currentPeriodEnd) > new Date()
+  ) {
+    return sub.tier === "cracker" ? "cracker" : "pro";
+  }
+  return "free";
+}
+
+function getLimitForTopic(tier: Tier, topic: Topic): number {
+  if (topic === "Reading Comprehension Sets") return LIMITS[tier].rc;
+  if (topic === "Conversation Sets")          return LIMITS[tier].convo;
+  if (topic === "Parajumbles")                return LIMITS[tier].pj;
+  return LIMITS[tier].normal;
+}
+
+/** Get the start of today in IST (UTC+5:30). */
+function getTodayStartIST(): Date {
+  const now = new Date();
+  const istOffset = 5.5 * 60 * 60 * 1000;
+  const istNow = new Date(now.getTime() + istOffset);
+  const istMidnight = new Date(istNow);
+  istMidnight.setUTCHours(0, 0, 0, 0);
+  return new Date(istMidnight.getTime() - istOffset);
+}
+
 /** Extract the target word or idiom from a question's text for dedup. */
 function extractTargetWord(questionText: string, topic: string): string | null {
   if (!questionText) return null;
   if (topic === "Idioms & Phrases") {
-    // Format A: "What is the meaning of the idiom/phrase: [IDIOM]?"
     const meaningMatch = questionText.match(/idiom\/phrase[:\s]+['"]?([^'"?]+?)['"]?\s*\?/i);
     if (meaningMatch) return meaningMatch[1].trim().toLowerCase();
-    // Format B: "In which sentence is the idiom/phrase used correctly?"
-    // The idiom is typically in the options/sentences — extract from question if embedded
     const usageMatch = questionText.match(/idiom\/phrase[:\s]+['"]?([^'"?]+?)['"]?\s+used/i);
     if (usageMatch) return usageMatch[1].trim().toLowerCase();
-    // Fallback: look for quoted text
-    const quoted = questionText.match(/['“”‘’"]([^'"]+)['“”‘’"]/); 
+    const quoted = questionText.match(/['""''"]([^'"]+)['""''"]/);
     if (quoted) return quoted[1].trim().toLowerCase();
   }
   if (topic === "Vocabulary Usage") {
-    // Format A: "...contains the word [WORD] used incorrectly..."
     const wordMatch = questionText.match(/the word[:\s]+['"]?([a-zA-Z]+)['"]?/i);
     if (wordMatch) return wordMatch[1].trim().toLowerCase();
-    // Format B: fill-in-the-blank — no single target word, skip
   }
   return null;
 }
@@ -61,7 +93,6 @@ type QuestionRecord = {
   difficulty: number;
 };
 
-/** Helper to persist a generated question to the DB. */
 async function saveGenerated(generated: Awaited<ReturnType<typeof generateQuestion>>) {
   return QuestionModel.create({
     topic: (generated as any).topic,
@@ -79,21 +110,6 @@ async function saveGenerated(generated: Awaited<ReturnType<typeof generateQuesti
   });
 }
 
-/** Max RC/Conversation sets per user per day (configurable via env). */
-const DAILY_SET_LIMIT = Number(process.env.DAILY_SET_LIMIT) || 5;
-
-/** Get the start of today in IST (UTC+5:30). */
-function getTodayStartIST(): Date {
-  const now = new Date();
-  // IST is UTC+5:30
-  const istOffset = 5.5 * 60 * 60 * 1000;
-  const istNow = new Date(now.getTime() + istOffset);
-  const istMidnight = new Date(istNow);
-  istMidnight.setUTCHours(0, 0, 0, 0);
-  // Convert back to UTC
-  return new Date(istMidnight.getTime() - istOffset);
-}
-
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
@@ -109,22 +125,38 @@ export async function GET(req: Request) {
   await connectDb();
 
   const userId = new Types.ObjectId(session.user.id);
-
-  // ── Daily limit check for RC / Conversation Sets ──
-  const isSetTopic = topic === "Reading Comprehension Sets" || topic === "Conversation Sets";
   const isAdmin = session.user.isAdmin === true;
-  let todayCountBefore = 0;
-  let todayStartIST: Date | undefined;
-  if (isSetTopic && !isAdmin) {
-    todayStartIST = getTodayStartIST();
-    todayCountBefore = await ServedQuestionModel.countDocuments({
+
+  // ── Fetch user tier ──────────────────────────────────────────────────────
+  const dbUser = await UserModel.findById(session.user.id, { subscription: 1 }).lean() as any;
+  const tier: Tier = isAdmin ? "cracker" : getUserTier(dbUser?.subscription);
+
+  // ── Daily limit check ─────────────────────────────────────────────────────
+  const dailyLimit = getLimitForTopic(tier, topic);
+
+  if (dailyLimit !== Infinity && !isAdmin) {
+    const todayStart = getTodayStartIST();
+    const todayCount = await ServedQuestionModel.countDocuments({
       userId,
       topic,
-      createdAt: { $gte: todayStartIST },
+      createdAt: { $gte: todayStart },
     });
-    if (todayCountBefore >= DAILY_SET_LIMIT) {
+
+    if (todayCount >= dailyLimit) {
+      const upgradeRequired = tier === "free";
       return NextResponse.json(
-        { error: "daily_limit", message: `You have exhausted your daily limit of ${DAILY_SET_LIMIT} ${topic} sets. Wait for 12:00 AM IST to attempt more.`, used: todayCountBefore, limit: DAILY_SET_LIMIT },
+        {
+          error: "daily_limit",
+          message: `You have exhausted your daily limit of ${dailyLimit} ${topic}. ${
+            upgradeRequired
+              ? "Upgrade to Pro for more."
+              : "Limit resets at 12:00 AM IST."
+          }`,
+          used: todayCount,
+          limit: dailyLimit,
+          tier,
+          upgradeRequired,
+        },
         { status: 429 }
       );
     }
@@ -136,8 +168,6 @@ export async function GET(req: Request) {
     { upsert: true, new: true }
   ).lean();
 
-  // Determine if user is still in calibration phase.
-  // Existing users without the `calibrated` field are treated as already calibrated.
   const isCalibrated =
     (aptitude as any).calibrated === true ||
     (aptitude as any).calibrated === undefined;
@@ -150,13 +180,11 @@ export async function GET(req: Request) {
   let upper: number;
 
   if (!isCalibrated && calibrationStep < calConfig.total) {
-    // Calibration: use the next predetermined difficulty
     targetDifficulty = calConfig.difficulties[calibrationStep];
     const band = 5;
     lower = Math.max(0, targetDifficulty - band);
     upper = Math.min(100, targetDifficulty + band);
   } else {
-    // Normal adaptive flow
     const verScore = aptitude?.verScore ?? 0;
     const userPercentile = verScoreToPercentile(verScore);
     const band = 10;
@@ -165,31 +193,22 @@ export async function GET(req: Request) {
     targetDifficulty = verScore;
   }
 
-  // ── Strict exclusion: collect ALL question IDs ever served OR attempted ──
   const [servedDocs, attemptedDocs] = await Promise.all([
     ServedQuestionModel.find({ userId, topic }, { questionId: 1 }).lean(),
     AttemptModel.find({ userId, topic }, { questionId: 1 }).lean(),
   ]);
 
   const seenSet = new Set<string>();
-  for (const doc of servedDocs) {
-    seenSet.add(String((doc as any).questionId));
-  }
-  for (const doc of attemptedDocs) {
-    seenSet.add(String((doc as any).questionId));
-  }
+  for (const doc of servedDocs) seenSet.add(String((doc as any).questionId));
+  for (const doc of attemptedDocs) seenSet.add(String((doc as any).questionId));
   const excludedIds = [...seenSet].map((id) => new Types.ObjectId(id));
 
-  // Pick a random unseen question in the difficulty band
   const matchFilter: Record<string, unknown> = {
     topic,
     difficulty: { $gte: lower, $lte: upper },
   };
-  if (excludedIds.length > 0) {
-    matchFilter._id = { $nin: excludedIds };
-  }
+  if (excludedIds.length > 0) matchFilter._id = { $nin: excludedIds };
 
-  // For Vocab/Idioms, collect past words so we can avoid repeats even from the pool
   let avoidWords: string[] = [];
   if (topic === "Vocabulary Usage" || topic === "Idioms & Phrases") {
     if (excludedIds.length > 0) {
@@ -203,7 +222,6 @@ export async function GET(req: Request) {
     }
   }
 
-  // For RC/Conversation, collect past passage titles so we avoid repeating the same passage topic
   let avoidPassageTitles: string[] = [];
   if (topic === "Reading Comprehension Sets" || topic === "Conversation Sets") {
     if (excludedIds.length > 0) {
@@ -218,52 +236,38 @@ export async function GET(req: Request) {
   }
 
   let question: QuestionRecord | null = null;
+  const isSetTopic = topic === "Reading Comprehension Sets" || topic === "Conversation Sets";
 
-  if (topic === "Reading Comprehension Sets" || topic === "Conversation Sets") {
-    // RC/Conversation: always prefer existing DB questions to avoid unnecessary generation.
-    // Step 1: Try within difficulty band
+  if (isSetTopic) {
     const candidates = await QuestionModel.aggregate<QuestionRecord>([
       { $match: matchFilter },
       { $sample: { size: 10 } },
     ]);
     for (const c of candidates) {
       const title = (c as any).passageTitle as string | undefined;
-      if (!title || !avoidPassageTitles.includes(title)) {
-        question = c;
-        break;
-      }
+      if (!title || !avoidPassageTitles.includes(title)) { question = c; break; }
     }
 
-    // Step 2: If nothing in-band, try ANY unseen question for this topic (ignore difficulty band)
     if (!question) {
       const widerFilter: Record<string, unknown> = { topic };
-      if (excludedIds.length > 0) {
-        widerFilter._id = { $nin: excludedIds };
-      }
+      if (excludedIds.length > 0) widerFilter._id = { $nin: excludedIds };
       const widerCandidates = await QuestionModel.aggregate<QuestionRecord>([
         { $match: widerFilter },
         { $sample: { size: 10 } },
       ]);
       for (const c of widerCandidates) {
         const title = (c as any).passageTitle as string | undefined;
-        if (!title || !avoidPassageTitles.includes(title)) {
-          question = c;
-          break;
-        }
+        if (!title || !avoidPassageTitles.includes(title)) { question = c; break; }
       }
     }
   } else if (avoidWords.length > 0) {
-    // Sample several candidates and pick the first whose word hasn't been used
     const candidates = await QuestionModel.aggregate<QuestionRecord>([
       { $match: matchFilter },
       { $sample: { size: 10 } },
     ]);
     for (const c of candidates) {
       const word = extractTargetWord(c.question ?? "", topic);
-      if (!word || !avoidWords.includes(word)) {
-        question = c;
-        break;
-      }
+      if (!word || !avoidWords.includes(word)) { question = c; break; }
     }
   } else {
     const candidates = await QuestionModel.aggregate<QuestionRecord>([
@@ -274,28 +278,48 @@ export async function GET(req: Request) {
   }
 
   if (!question) {
-    if (isSetTopic) {
-      // RC/Conversation: generate only ONE set to conserve tokens
-      const gen = await generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles);
-      const saved = await saveGenerated(gen);
-      question = saved as unknown as QuestionRecord;
-    } else {
-      // Other topics: generate TWO fresh questions, save both, serve the first
-      const [gen1, gen2] = await Promise.all([
-        generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles),
-        generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles),
-      ]);
+    try {
+      if (isSetTopic) {
+        const gen = await generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles);
+        const saved = await saveGenerated(gen);
+        question = saved as unknown as QuestionRecord;
+      } else {
+        const [gen1, gen2] = await Promise.all([
+          generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles),
+          generateQuestion(topic, targetDifficulty, avoidWords, avoidPassageTitles),
+        ]);
+        const [saved1] = await Promise.all([saveGenerated(gen1), saveGenerated(gen2)]);
+        question = saved1 as unknown as QuestionRecord;
+      }
+    } catch (genErr) {
+      // Question bank exhausted (no unseen match) and AI generation failed.
+      // Fall back to a previously attempted question so the user isn't interrupted.
+      console.error("[question] generation failed, falling back to a repeat question", genErr);
 
-      const [saved1] = await Promise.all([
-        saveGenerated(gen1),
-        saveGenerated(gen2),
+      const fallbackInBand = await QuestionModel.aggregate<QuestionRecord>([
+        { $match: { topic, difficulty: { $gte: lower, $lte: upper } } },
+        { $sample: { size: 1 } },
       ]);
+      question = fallbackInBand[0] ?? null;
 
-      question = saved1 as unknown as QuestionRecord;
+      if (!question) {
+        const fallbackAny = await QuestionModel.aggregate<QuestionRecord>([
+          { $match: { topic } },
+          { $sample: { size: 1 } },
+        ]);
+        question = fallbackAny[0] ?? null;
+      }
+
+      if (!question) {
+        // No questions exist for this topic at all yet — nothing to fall back to.
+        return NextResponse.json(
+          { error: "no_questions_available", message: "No questions are available for this topic yet. Please try again shortly." },
+          { status: 503 }
+        );
+      }
     }
   }
 
-  // ── Record that this question has been served (prevents re-serving) ──
   const questionId = question._id instanceof Types.ObjectId
     ? question._id
     : new Types.ObjectId(String(question._id));
@@ -306,26 +330,26 @@ export async function GET(req: Request) {
     { upsert: true }
   );
 
-  // Increment servedTo count for this question
-  await QuestionModel.updateOne(
-    { _id: questionId },
-    { $inc: { servedTo: 1 } }
-  );
+  await QuestionModel.updateOne({ _id: questionId }, { $inc: { servedTo: 1 } });
+
+  // ── Compute updated daily usage for frontend ─────────────────────────────
+  let dailyUsed: number | undefined;
+  let dailyLimitOut: number | undefined;
+  if (dailyLimit !== Infinity && !isAdmin) {
+    const todayStart = getTodayStartIST();
+    dailyUsed = await ServedQuestionModel.countDocuments({
+      userId,
+      topic,
+      createdAt: { $gte: todayStart },
+    });
+    dailyLimitOut = dailyLimit;
+  }
 
   const safeQuestions = (question?.questions ?? []).map((item) => ({
     text: item.text,
     options: item.options,
     explanation: item.explanation,
   }));
-
-  // Compute daily usage for RC/Conversation so frontend can display it.
-  // We already counted before serving; the upsert just added one record.
-  let dailyUsed: number | undefined;
-  let dailyLimit: number | undefined;
-  if (isSetTopic && !isAdmin) {
-    dailyUsed = todayCountBefore + 1;
-    dailyLimit = DAILY_SET_LIMIT;
-  }
 
   return NextResponse.json({
     id: String(question._id),
@@ -342,6 +366,7 @@ export async function GET(req: Request) {
     calibrating: !isCalibrated && calibrationStep < calConfig.total,
     calibrationStep: calibrationStep,
     calibrationTotal: calConfig.total,
-    ...(dailyUsed !== undefined && { dailyUsed, dailyLimit }),
+    tier,
+    ...(dailyUsed !== undefined && { dailyUsed, dailyLimit: dailyLimitOut }),
   });
 }

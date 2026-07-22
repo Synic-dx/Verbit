@@ -133,6 +133,7 @@ export default function PracticePage() {
   const [dailyUsed, setDailyUsed] = useState(0);
   const [dailyLimit, setDailyLimit] = useState(0);
   const [showLimitModal, setShowLimitModal] = useState(false);
+  const [showPaywall, setShowPaywall] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -202,7 +203,11 @@ export default function PracticePage() {
           const errData = await res.json();
           setDailyUsed(errData.used ?? 0);
           setDailyLimit(errData.limit ?? 5);
-          setShowLimitModal(true);
+          if (errData.upgradeRequired) {
+            setShowPaywall(true);
+          } else {
+            setShowLimitModal(true);
+          }
         } else {
           setError('Failed to load question. Please try again.');
         }
@@ -399,6 +404,11 @@ export default function PracticePage() {
             {dailyLimit > 0 && (topic === "Reading Comprehension Sets" || topic === "Conversation Sets") ? (
               <p className="mt-1 text-xs text-white/40">
                 Sets today: {dailyUsed}/{dailyLimit}
+              </p>
+            ) : null}
+            {dailyLimit > 0 && topic === "Parajumbles" ? (
+              <p className="mt-1 text-xs text-white/40">
+                Today: {dailyUsed}/{dailyLimit}
               </p>
             ) : null}
           </div>
@@ -861,13 +871,35 @@ export default function PracticePage() {
         </div>
       )}
 
+      {/* Subscription paywall modal */}
+      {showPaywall && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <Card className="mx-4 w-full max-w-md border-white/10 bg-zinc-900 p-8 text-center space-y-4">
+            <p className="text-xs uppercase tracking-[0.3em] text-white/40">Verbit Pro</p>
+            <h3 className="text-xl font-semibold text-white">Pro Topic</h3>
+            <p className="text-sm text-white/60">
+              <strong className="text-white">{topic}</strong> is included in Verbit Pro.
+              Subscribe from ₹249/month to unlock Parajumbles, Reading Comprehension Sets, and Conversation Sets.
+            </p>
+            <div className="flex flex-col gap-3 pt-2">
+              <Link href="/subscribe">
+                <Button className="w-full">Subscribe from ₹249/month</Button>
+              </Link>
+              <Link href="/dashboard">
+                <Button variant="secondary" className="w-full">Back to Dashboard</Button>
+              </Link>
+            </div>
+          </Card>
+        </div>
+      )}
+
       {/* Daily limit exhausted modal */}
       {showLimitModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
           <Card className="mx-4 w-full max-w-md border-white/10 bg-zinc-900 p-6 text-center">
             <h3 className="text-lg font-semibold text-white">Daily Limit Reached</h3>
             <p className="mt-3 text-sm text-white/60">
-              You have exhausted your daily limit of <strong className="text-white">{dailyLimit}</strong> {topic} sets.
+              You have exhausted your daily limit of <strong className="text-white">{dailyLimit}</strong> {topic === "Parajumbles" ? "Parajumbles" : `${topic} sets`}.
               Wait for <strong className="text-white">12:00 AM IST</strong> to attempt more.
             </p>
             <div className="mt-5">

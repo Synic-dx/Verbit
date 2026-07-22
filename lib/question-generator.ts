@@ -229,20 +229,24 @@ export async function generateQuestion(
     BASE_SYSTEM_PROMPT + ragContext + avoidanceContext + avoidWordsClause + avoidPassagesClause;
 
   const finetunedModel = process.env.FINETUNED_MODEL;
-  const model = finetunedModel && !isLongForm ? finetunedModel : "gpt-4o";
+  const isPJModel = schemaName === "pj";
+  const model = isLongForm
+    ? "gpt-4o"
+    : isPJModel
+    ? "o4-mini"
+    : finetunedModel ?? "gpt-4o";
   const maxTokens = isLongForm ? 4096 : 1024;
 
   const response = await openai.chat.completions.create({
     model,
-    temperature: 0.7,
-    max_tokens: maxTokens,
+    ...(isPJModel
+      ? { max_completion_tokens: maxTokens }
+      : { temperature: 0.7, max_tokens: maxTokens }),
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: prompt },
     ],
-    response_format: {
-      type: "json_object",
-    },
+    response_format: { type: "json_object" },
   });
   // DEV ONLY: log output tokens
   if (process.env.NODE_ENV === "development") {

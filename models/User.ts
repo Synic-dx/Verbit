@@ -13,6 +13,20 @@ const UserSchema = new Schema(
     lastOTP: { type: String },
     lastOTPtime: { type: Date },
     createdAt: { type: Date, default: Date.now },
+    subscription: {
+      status: {
+        type: String,
+        enum: ["active", "inactive", "cancelled", "halted"],
+        default: "inactive",
+      },
+      tier: {
+        type: String,
+        enum: ["pro", "cracker"],
+        default: "pro",
+      },
+      razorpaySubscriptionId: { type: String },
+      currentPeriodEnd: { type: Date },
+    },
   },
   { timestamps: false }
 );
